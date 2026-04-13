@@ -58,6 +58,8 @@ After writing any code, Claude Code must run a self-validation checklist before 
 - [ ] Are there any obvious bugs or edge cases unhandled?
 - [ ] Are hardcoded values that should be configurable called out?
 - [ ] Is error handling present for external calls (API, fetch)?
+- [ ] Are there any unused imports? (Caught: `import sys`, `from calendar import monthrange` in digest scripts)
+- [ ] Do all tooltip texts, comments, and UI descriptions precisely match the code's *actual* behaviour — not the intended behaviour? (Caught: tooltip said "3+ domains" but code used a 60% threshold)
 
 **For GitHub Actions workflows:**
 - [ ] Are all required secrets named and documented?
@@ -142,20 +144,33 @@ Claude Code must not say a phase is complete until it has explicitly confirmed e
 ```
 /src                    — React frontend
   /components           — Reusable UI components
+    Tooltip.jsx         — Hover tooltip with ? icon, used on dashboard metrics
   /pages                — Page-level views
   /utils                — Helper functions (data loading, graph computation)
 /data
   /articles             — One JSON file per ingested article ({slug}.json)
   /books                — One JSON file per book (Phase 5)
-  /digests              — Weekly and monthly digest files
+  /digests              — One JSON file per month ({YYYY-MM}.json)
   queue.json            — URL drop zone (user adds URLs here)
   graph.json            — Nodes and edges
   opinions.json         — Per-theme intellectual positions (Phase 3)
   alerts.json           — Surprise connection alerts (Phase 3)
-  dashboard.json        — Precomputed dashboard stats (Phase 6)
+  dashboard.json        — Precomputed dashboard stats (recomputed after every ingestion)
   config.json           — Topic colour map and app settings
 /.github
   /workflows            — All agent logic lives here
+    ingest.yml          — Triggered on queue.json push; runs ingest.py then compute_dashboard.py
+    connect.yml         — Triggered after ingest; finds connections with Haiku
+    alerts.yml          — Triggered after connect; sends surprise alert emails
+    opinions.yml        — Weekly cron; synthesises opinions with Sonnet
+    digest.yml          — Monthly cron (1st of month); generates digest with Sonnet; supports target_month override
+  /scripts
+    ingest.py           — Article extraction (Haiku)
+    connect.py          — Connection finding (Haiku); adds date_added to new edges
+    alerts.py           — Surprise alert emails (no Claude)
+    opinions.py         — Opinion synthesis (Sonnet)
+    digest.py           — Monthly digest synthesis (Sonnet); idempotent (skips if file exists)
+    compute_dashboard.py — Dashboard stat computation (no Claude, pure Python)
 CLAUDE.md               — This file
 README.md               — Setup instructions for Debjyoti
 ```
@@ -243,13 +258,13 @@ If Claude Code is about to implement something that would increase API costs mea
 
 | Phase | Name | Status |
 |-------|------|--------|
-| 1 | Foundation — URL intake + article processing | Not started |
-| 2 | Graph — connection finding + visual map | Not started |
-| 3 | Analyst — opinion tracker + surprise email alerts | Not started |
-| 4 | Memory — cadence digests + time-filtered graph | Not started |
+| 1 | Foundation — URL intake + article processing | Complete |
+| 2 | Graph — connection finding + visual map | Complete |
+| 3 | Analyst — opinion tracker + surprise email alerts | Complete |
+| 4 | Memory — monthly digests + time-filtered graph | Complete |
 | 5 | Books — anchor nodes (parked for now) | Parked |
-| 6 | Dashboard — momentum + reading intelligence | Not started |
-| 7 | Public repo — one-time MVP export with demo data | Not started (after Phase 4 complete) |
+| 6 | Dashboard — momentum + reading intelligence | Complete |
+| 7 | Public repo — one-time MVP export with demo data | Not started (after Phases 1–6 complete) |
 
 ---
 

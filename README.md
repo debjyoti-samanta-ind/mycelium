@@ -92,10 +92,10 @@ Add these in your GitHub repo under **Settings → Secrets and variables → Act
 | 1 | URL intake, article processing, article list view |
 | 2 | Connection finding, interactive knowledge graph |
 | 3 | Opinion tracker, surprise email alerts |
-| 4 | Weekly/monthly digests, time-filtered graph |
+| 4 | Monthly digests (emailed + in-app), time-filtered graph |
 | 5 | Books (parked) |
 | 6 | Dashboard with momentum tracking |
-| 7 | Public repo MVP export with demo data (after Phase 4) |
+| 7 | Public repo MVP export with demo data (after Phases 1–6 complete) |
 
 ---
 
