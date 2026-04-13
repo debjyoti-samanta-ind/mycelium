@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '0 8 1 * *'  # 1st of every month at 8am UTC — covers previous calendar month
   workflow_dispatch:
+    inputs:
+      target_month:
+        description: 'Month to generate digest for (YYYY-MM). Leave blank to use previous calendar month.'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -34,6 +39,7 @@ jobs:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           GMAIL_RECIPIENT: ${{ secrets.GMAIL_RECIPIENT }}
+          TARGET_MONTH: ${{ github.event.inputs.target_month }}
         run: python .github/scripts/digest.py
 
       - name: Commit digest file

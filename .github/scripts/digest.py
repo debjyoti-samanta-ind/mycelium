@@ -212,8 +212,31 @@ def send_digest_email(
         server.sendmail(gmail_user, gmail_recipient, msg.as_string())
 
 
+def month_range_for(month_str: str) -> tuple[date, date]:
+    """Return (start_date, end_date) for a given 'YYYY-MM' string."""
+    year, month = int(month_str[:4]), int(month_str[5:7])
+    start = date(year, month, 1)
+    # Last day: first day of next month minus 1
+    if month == 12:
+        end = date(year + 1, 1, 1) - timedelta(days=1)
+    else:
+        end = date(year, month + 1, 1) - timedelta(days=1)
+    return start, end
+
+
 def main() -> None:
-    start, end, month_str = previous_month_range()
+    target = os.environ.get("TARGET_MONTH", "").strip()
+    if target:
+        try:
+            start, end = month_range_for(target)
+            month_str = target
+            print(f"Using TARGET_MONTH override: {month_str}")
+        except (ValueError, IndexError):
+            print(f"ERROR: Invalid TARGET_MONTH '{target}'. Expected YYYY-MM.", file=sys.stderr)
+            sys.exit(1)
+    else:
+        start, end, month_str = previous_month_range()
+
     print(f"Generating digest for {month_str} (articles from {start} to {end})")
 
     # Check if digest already exists (idempotency)
