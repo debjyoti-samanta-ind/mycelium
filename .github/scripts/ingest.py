@@ -82,7 +82,7 @@ Rules:
 - topic_tags: 2–4 lowercase single-word tags from: ai, technology, productivity, business, society, science, health, politics, economics, culture
 - slug: lowercase, hyphens only, max 60 chars, derived from title"""
 
-    MODEL = "claude-sonnet-4-6"  # TEMPORARY — swap back to claude-haiku-4-5-20251001 after test
+    MODEL = "claude-haiku-4-5-20251001"
 
     response = client.messages.create(
         model=MODEL,
