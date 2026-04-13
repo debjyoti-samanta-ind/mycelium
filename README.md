@@ -79,8 +79,9 @@ Add these in your GitHub repo under **Settings → Secrets and variables → Act
 | Secret name | What it is | When needed |
 |-------------|-----------|-------------|
 | `ANTHROPIC_API_KEY` | Your Anthropic API key from platform.anthropic.com | Phase 1 |
-| `GMAIL_USER` | Your Gmail address | Phase 3 |
+| `GMAIL_USER` | Gmail address used to send alerts | Phase 3 |
 | `GMAIL_APP_PASSWORD` | Gmail app password (Google Account → Security → App passwords) | Phase 3 |
+| `GMAIL_RECIPIENT` | Email address where you want to receive alerts (can be different from sender) | Phase 3 |
 
 ---
 
