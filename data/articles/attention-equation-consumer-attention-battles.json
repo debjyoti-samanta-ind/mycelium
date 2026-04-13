@@ -1,0 +1,36 @@
+{
+  "slug": "attention-equation-consumer-attention-battles",
+  "title": "The 'Attention Equation': Winning the Right Battles for Consumer Attention",
+  "source": "McKinsey & Company",
+  "url": "https://www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/the-attention-equation-winning-the-right-battles-for-consumer-attention?cid=soc-app#/",
+  "date_added": "2026-04-13",
+  "published_date": null,
+  "content_type": "summary",
+  "read_depth": "full",
+  "summary": "McKinsey's research reveals that media companies have misunderstood consumer attention by focusing on quantity (time spent) rather than quality (focus and intent). The attention equation—valuable time driven by focus and intent—explains why digital media generates disproportionately small revenue and profit relative to its consumption share. Live experiences and premium content command vastly higher per-hour attention value ($33 for live sports versus $0.05 for podcasts), and understanding this value hierarchy is critical for media stakeholders competing in an increasingly fragmented attention economy.",
+  "central_argument": "Media monetization fails because the industry measures attention by hours consumed rather than by the quality of focus and intent that actually drives revenue.",
+  "key_claims": [
+    "Attention value ranges from $33 per hour for live sports to $0.05 per hour for podcasts across 20 media formats",
+    "Digital media generates a smaller share of revenue and profit compared with its share of consumption",
+    "Consumer daily media engagement has reached roughly 13 hours per day, but total daily consumption hours have grown only 1-2% annually over the past decade",
+    "There are 25,000 times more hours of content produced annually on YouTube than on traditional television networks and streaming services combined",
+    "The attention equation is: valuable time spent = focus + intent, not simply time consumed"
+  ],
+  "key_tensions": [
+    "The article challenges the industry's conflation of consumption with monetization—high consumption does not guarantee high revenue",
+    "It complicates the assumption that more content and more platforms automatically increase media engagement and profitability",
+    "It pushes back against treating all audience attention as equal, arguing quality of attention varies fundamentally across media types"
+  ],
+  "domain": "media economics",
+  "stance": "neutral",
+  "key_entities": [
+    "The attention equation framework",
+    "McKinsey 7,000-consumer survey (3,000 US-based)"
+  ],
+  "topic_tags": [
+    "business",
+    "technology",
+    "economics",
+    "culture"
+  ]
+}
