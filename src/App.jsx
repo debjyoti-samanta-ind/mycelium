@@ -2,6 +2,7 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import SubmitPage from './pages/SubmitPage.jsx'
 import ArticleListPage from './pages/ArticleListPage.jsx'
 import GraphPage from './pages/GraphPage.jsx'
+import OpinionsPage from './pages/OpinionsPage.jsx'
 
 export default function App() {
   const location = useLocation()
@@ -25,6 +26,7 @@ export default function App() {
             {navLink('/', 'Add Article')}
             {navLink('/articles', 'Articles')}
             {navLink('/graph', 'Graph')}
+            {navLink('/opinions', 'Opinions')}
           </div>
         </div>
       </nav>
@@ -39,6 +41,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<SubmitPage />} />
             <Route path="/articles" element={<ArticleListPage />} />
+            <Route path="/opinions" element={<OpinionsPage />} />
           </Routes>
         </main>
       )}

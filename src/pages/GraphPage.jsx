@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useMemo, useEffect } from 'react'
 import ForceGraph2D from 'react-force-graph-2d'
 import GraphSidePanel from '../components/GraphSidePanel.jsx'
 import graphData from '../../data/graph.json'
+import opinionsData from '../../data/opinions.json'
 
 // Load all article JSONs at server start
 const articleModules = import.meta.glob('../../data/articles/*.json', { eager: true })
@@ -47,6 +48,7 @@ export default function GraphPage() {
   const [hoveredNode,  setHoveredNode]    = useState(null)
   const [searchQuery,  setSearchQuery]    = useState('')
   const [activeFilters, setActiveFilters] = useState(new Set(ALL_EDGE_TYPES))
+  const [showOpinions, setShowOpinions]   = useState(false)
   const containerRef = useRef(null)
   const [dimensions, setDimensions]       = useState({ width: 800, height: 600 })
 
@@ -185,8 +187,55 @@ export default function GraphPage() {
               {type}
             </button>
           ))}
+          <div className="w-px h-4 bg-stone-200 mx-1" />
+          <button
+            onClick={() => setShowOpinions(v => !v)}
+            className={`text-xs px-2.5 py-1 rounded-full font-medium border transition-all ${
+              showOpinions
+                ? 'bg-stone-800 text-white border-transparent'
+                : 'bg-white text-stone-500 border-stone-200 hover:border-stone-300'
+            }`}
+          >
+            Opinions {opinionsData.opinions?.length > 0 ? `(${opinionsData.opinions.length})` : ''}
+          </button>
         </div>
       </div>
+
+      {/* Graph canvas + opinions panel */}
+      <div className="flex flex-1 overflow-hidden">
+
+      {/* Opinions panel — left side */}
+      {showOpinions && (
+        <div className="w-72 flex-shrink-0 border-r border-stone-200 bg-white overflow-y-auto">
+          <div className="px-4 py-3 border-b border-stone-100 sticky top-0 bg-white">
+            <p className="text-xs font-medium text-stone-500 uppercase tracking-wide">Opinions</p>
+            {opinionsData.generated_at && (
+              <p className="text-xs text-stone-400 mt-0.5">Updated {opinionsData.generated_at}</p>
+            )}
+          </div>
+          {!opinionsData.opinions?.length ? (
+            <div className="p-4">
+              <p className="text-xs text-stone-400 leading-relaxed">
+                Opinions appear here after 3+ articles are ingested and the weekly synthesis runs.
+              </p>
+            </div>
+          ) : (
+            <div className="divide-y divide-stone-100">
+              {opinionsData.opinions.map((op, i) => (
+                <div key={i} className="p-4">
+                  <p className="text-xs font-semibold text-stone-800 leading-snug mb-2">{op.theme}</p>
+                  <p className="text-xs text-stone-600 leading-relaxed mb-2">{op.position}</p>
+                  {op.tension && (
+                    <p className="text-xs text-stone-400 leading-relaxed pl-2 border-l border-stone-200">
+                      {op.tension}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Graph canvas */}
       <div ref={containerRef} className="flex-1 relative overflow-hidden">
@@ -234,6 +283,8 @@ export default function GraphPage() {
           />
         )}
       </div>
+
+      </div> {/* end flex row */}
     </div>
   )
 }
