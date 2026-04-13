@@ -23,6 +23,12 @@
       "target": "ai-pm-learning-roadmap",
       "type": "adjacent",
       "explanation": "Both articles argue that successful adaptation to transformative technology (AI for PM; AI integration for business leaders) requires mastering domain-specific skills and practical implementation strategies rather than treating the technology as a universal solution, with both identifying common failure modes that arise from oversimplification."
+    },
+    {
+      "source": "2026-business-leaders-outlook-expectations-trends",
+      "target": "geopolitics-geometry-global-trade-2026-update",
+      "type": "reinforce",
+      "explanation": "Both articles argue that despite significant macroeconomic disruption from tariffs and geopolitical realignment, businesses and trade patterns demonstrate resilience and adaptation rather than collapse, with AI-related sectors emerging as growth engines offsetting traditional trade losses."
     }
   ]
 }
