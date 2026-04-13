@@ -69,24 +69,32 @@ Return exactly this JSON structure:
   "title": "full article title",
   "source": "publication name (e.g. The Atlantic, Wired, Nature)",
   "published_date": "YYYY-MM-DD or null if not found",
-  "content_type": "essay|news|research|opinion|interview|other",
-  "summary": "3-sentence summary covering the main argument and key insight",
-  "key_claims": ["specific claim 1", "specific claim 2", "specific claim 3"],
-  "topic_tags": ["tag1", "tag2"],
+  "content_type": "essay|news|thread|summary",
+  "summary": "3 sentences capturing what the article argues, not just what it covers",
+  "central_argument": "one sentence — the single strongest claim the article makes",
+  "key_claims": ["atomic claim 1", "atomic claim 2"],
+  "key_tensions": ["thing the article argues against 1", "idea it complicates 2"],
+  "domain": "the intellectual discipline this article comes from",
+  "stance": "optimistic|pessimistic|neutral|ambivalent",
+  "key_entities": ["named framework, theory, person, or study 1", "named reference 2"],
   "slug": "human-readable-slug-derived-from-title"
 }}
 
-Rules:
-- summary: exactly 3 sentences, factual, no fluff
-- key_claims: 3–5 specific, falsifiable claims from the article
-- topic_tags: 2–4 lowercase single-word tags from: ai, technology, productivity, business, society, science, health, politics, economics, culture
+Extraction rules — follow precisely:
+- summary: exactly 3 sentences, factual, captures the argument not just the topic
+- central_argument: one sentence only; must commit to a position ("X causes Y", "Z fails because..."); never hedge or describe ("the article explores...", "it argues that...")
+- key_claims: extract only specific, atomic, falsifiable claims from the article; do NOT pad to hit a number; a short punchy article might yield 2–3, a dense essay might yield 8–9; omit vague or general observations
+- key_tensions: 2–3 things the article explicitly argues against, pushes back on, or complicates — things the article itself names, not general counterarguments you infer
+- domain: return the intellectual discipline or tradition, NOT the subject matter or topic; "AI" is a topic, "cognitive science" is a domain; valid examples: cognitive science, economics, philosophy, organisational behaviour, political theory, sociology, complexity theory, evolutionary biology, media studies
+- stance: one word only, chosen from exactly these four: optimistic, pessimistic, neutral, ambivalent — toward the article's own central argument
+- key_entities: named frameworks, theories, people, or studies the article explicitly engages with as intellectual references or lineage; NOT illustrative examples or passing mentions; e.g. "dual-process theory (Kahneman)", "Herbert Simon", "Dunbar's number"
 - slug: lowercase, hyphens only, max 60 chars, derived from title"""
 
     MODEL = "claude-haiku-4-5-20251001"
 
     response = client.messages.create(
         model=MODEL,
-        max_tokens=1024,
+        max_tokens=2048,
         messages=[{"role": "user", "content": prompt}],
     )
 
@@ -189,11 +197,15 @@ def main() -> None:
                 "url": url,
                 "date_added": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
                 "published_date": extracted.get("published_date"),
-                "content_type": extracted.get("content_type", "other"),
-                "summary": extracted.get("summary", ""),
-                "key_claims": extracted.get("key_claims", []),
-                "topic_tags": extracted.get("topic_tags", []),
+                "content_type": extracted.get("content_type", "essay"),
                 "read_depth": "full",
+                "summary": extracted.get("summary", ""),
+                "central_argument": extracted.get("central_argument", ""),
+                "key_claims": extracted.get("key_claims", []),
+                "key_tensions": extracted.get("key_tensions", []),
+                "domain": extracted.get("domain", ""),
+                "stance": extracted.get("stance", "neutral"),
+                "key_entities": extracted.get("key_entities", []),
             }
 
             # Save article file

@@ -85,7 +85,7 @@ Before writing any file to disk, Claude Code must show Debjyoti:
 
 ### 4. Token efficiency is a first-class concern
 This is a personal project with a target cost of ~$1–2/month. Every Claude API call in the workflows must be scrutinised:
-- Pass summaries and key_claims arrays to Claude — never full article text after initial ingestion
+- Pass enriched article fields to Claude — summary, central_argument, key_claims, key_tensions, domain, stance, key_entities — never full article text after initial ingestion
 - Use Haiku for: ingestion, connection-finding, book processing, dashboard computation
 - Use Sonnet for: opinion synthesis, surprise detection, weekly/monthly digests
 - Never call Claude when the answer can be computed from existing JSON data
@@ -170,10 +170,14 @@ README.md               — Setup instructions for Debjyoti
   "date_added": "2026-04-12",
   "published_date": "2026-04-10",
   "content_type": "essay",
-  "summary": "3-sentence summary here",
-  "key_claims": ["claim 1", "claim 2", "claim 3"],
-  "topic_tags": ["attention", "media", "cognition"],
-  "read_depth": "full"
+  "read_depth": "full",
+  "summary": "3 sentences capturing what the article argues, not just what it covers",
+  "central_argument": "One sentence — the single strongest claim the article makes. Must commit to a position, not hedge.",
+  "key_claims": ["specific and atomic claim", "another — no padding to hit a number"],
+  "key_tensions": ["thing the article explicitly argues against", "idea it complicates"],
+  "domain": "cognitive science",
+  "stance": "pessimistic",
+  "key_entities": ["attention economy (concept)", "Herbert Simon", "Flow (Csikszentmihalyi)"]
 }
 ```
 
