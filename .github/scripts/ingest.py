@@ -77,6 +77,7 @@ Return exactly this JSON structure:
   "domain": "the intellectual discipline this article comes from",
   "stance": "optimistic|pessimistic|neutral|ambivalent",
   "key_entities": ["named framework, theory, person, or study 1", "named reference 2"],
+  "topic_tags": ["tag1", "tag2"],
   "slug": "human-readable-slug-derived-from-title"
 }}
 
@@ -88,6 +89,7 @@ Extraction rules — follow precisely:
 - domain: return the intellectual discipline or tradition, NOT the subject matter or topic; "AI" is a topic, "cognitive science" is a domain; valid examples: cognitive science, economics, philosophy, organisational behaviour, political theory, sociology, complexity theory, evolutionary biology, media studies
 - stance: one word only, chosen from exactly these four: optimistic, pessimistic, neutral, ambivalent — toward the article's own central argument
 - key_entities: named frameworks, theories, people, or studies the article explicitly engages with as intellectual references or lineage; NOT illustrative examples or passing mentions; e.g. "dual-process theory (Kahneman)", "Herbert Simon", "Dunbar's number"
+- topic_tags: 2–4 lowercase single-word tags from: ai, technology, productivity, business, society, science, health, politics, economics, culture
 - slug: lowercase, hyphens only, max 60 chars, derived from title"""
 
     MODEL = "claude-haiku-4-5-20251001"
@@ -206,6 +208,7 @@ def main() -> None:
                 "domain": extracted.get("domain", ""),
                 "stance": extracted.get("stance", "neutral"),
                 "key_entities": extracted.get("key_entities", []),
+                "topic_tags": extracted.get("topic_tags", []),
             }
 
             # Save article file

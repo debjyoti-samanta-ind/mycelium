@@ -177,7 +177,8 @@ README.md               — Setup instructions for Debjyoti
   "key_tensions": ["thing the article explicitly argues against", "idea it complicates"],
   "domain": "cognitive science",
   "stance": "pessimistic",
-  "key_entities": ["attention economy (concept)", "Herbert Simon", "Flow (Csikszentmihalyi)"]
+  "key_entities": ["attention economy (concept)", "Herbert Simon", "Flow (Csikszentmihalyi)"],
+  "topic_tags": ["attention", "media", "cognition"]
 }
 ```
 

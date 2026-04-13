@@ -1,8 +1,14 @@
-const STANCE_COLOURS = {
-  optimistic: '#4a7c59',
-  pessimistic: '#c0392b',
-  neutral: '#888780',
-  ambivalent: '#e17055',
+const TOPIC_COLOURS = {
+  ai: '#7F77DD',
+  technology: '#7F77DD',
+  productivity: '#1D9E75',
+  business: '#BA7517',
+  society: '#D85A30',
+  science: '#888780',
+  health: '#4a7c59',
+  politics: '#c0392b',
+  economics: '#e17055',
+  culture: '#F4C0D1',
 }
 
 const CONTENT_TYPE_LABELS = {
@@ -23,14 +29,11 @@ export default function ArticleCard({ article }) {
     content_type,
     summary,
     key_claims,
-    domain,
-    stance,
-    key_entities,
+    topic_tags,
   } = article
 
   const displayDate = published_date || date_added
   const typeLabel = CONTENT_TYPE_LABELS[content_type] ?? ''
-  const stanceColour = STANCE_COLOURS[stance] ?? '#B4B2A9'
 
   return (
     <div className="bg-white border border-stone-200 rounded-xl p-5 hover:border-stone-300 transition-colors">
@@ -63,31 +66,22 @@ export default function ArticleCard({ article }) {
         </ul>
       )}
 
-      <div className="flex flex-wrap items-center gap-1.5 mt-3">
-        {stance && (
-          <span
-            className="text-xs px-2 py-0.5 rounded-full text-white font-medium"
-            style={{ backgroundColor: stanceColour }}
-          >
-            {stance}
-          </span>
-        )}
-
-        {domain && (
-          <span className="text-xs px-2 py-0.5 rounded-full bg-stone-100 text-stone-600 font-medium">
-            {domain}
-          </span>
-        )}
-
-        {key_entities && key_entities.map(entity => (
-          <span
-            key={entity}
-            className="text-xs px-2 py-0.5 rounded-full bg-stone-50 text-stone-400 border border-stone-200"
-          >
-            {entity}
-          </span>
-        ))}
-      </div>
+      {topic_tags && topic_tags.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 mt-3">
+          {topic_tags.map(tag => {
+            const colour = TOPIC_COLOURS[tag.toLowerCase()] ?? '#B4B2A9'
+            return (
+              <span
+                key={tag}
+                className="text-xs px-2 py-0.5 rounded-full text-white font-medium"
+                style={{ backgroundColor: colour }}
+              >
+                {tag}
+              </span>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }
