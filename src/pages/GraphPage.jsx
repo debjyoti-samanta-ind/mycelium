@@ -41,6 +41,22 @@ function matchesSearch(node, query) {
   )
 }
 
+const PRESETS = [
+  { label: 'Last 7d',  days: 7 },
+  { label: 'Last 30d', days: 30 },
+  { label: 'Last 90d', days: 90 },
+]
+
+function isoToday() {
+  return new Date().toISOString().slice(0, 10)
+}
+
+function isoOffset(days) {
+  const d = new Date()
+  d.setDate(d.getDate() - days)
+  return d.toISOString().slice(0, 10)
+}
+
 export default function GraphPage({ graphData }) {
   const [selectedNode, setSelectedNode]   = useState(null)
   const [selectedLink, setSelectedLink]   = useState(null)
@@ -48,6 +64,10 @@ export default function GraphPage({ graphData }) {
   const [searchQuery,  setSearchQuery]    = useState('')
   const [activeFilters, setActiveFilters] = useState(new Set(ALL_EDGE_TYPES))
   const [showOpinions, setShowOpinions]   = useState(false)
+  const [dateFrom, setDateFrom]           = useState('')
+  const [dateTo,   setDateTo]             = useState('')
+  const [appliedFrom, setAppliedFrom]     = useState('')
+  const [appliedTo,   setAppliedTo]       = useState('')
   const containerRef = useRef(null)
   const [dimensions, setDimensions]       = useState({ width: 800, height: 600 })
 
@@ -85,13 +105,27 @@ export default function GraphPage({ graphData }) {
     return new Set(graphData.nodes?.map(n => n.id).filter(id => !connected.has(id)))
   }, [graphData])
 
-  // Graph data filtered by active edge type filters
-  const fgData = useMemo(() => ({
-    nodes: (graphData.nodes || []).map(n => ({ id: n.id, article: articleMap[n.id] })),
-    links: (graphData.edges || [])
-      .filter(e => activeFilters.has(e.type))
-      .map(e => ({ source: e.source, target: e.target, type: e.type, explanation: e.explanation })),
-  }), [activeFilters])
+  // Graph data filtered by active edge type filters and optional date range
+  const fgData = useMemo(() => {
+    let nodes = (graphData.nodes || []).map(n => ({ id: n.id, article: articleMap[n.id] }))
+
+    if (appliedFrom || appliedTo) {
+      nodes = nodes.filter(n => {
+        const added = n.article?.date_added
+        if (!added) return true  // keep nodes with no date info
+        if (appliedFrom && added < appliedFrom) return false
+        if (appliedTo   && added > appliedTo)   return false
+        return true
+      })
+    }
+
+    const visibleIds = new Set(nodes.map(n => n.id))
+    const links = (graphData.edges || [])
+      .filter(e => activeFilters.has(e.type) && visibleIds.has(e.source) && visibleIds.has(e.target))
+      .map(e => ({ source: e.source, target: e.target, type: e.type, explanation: e.explanation }))
+
+    return { nodes, links }
+  }, [activeFilters, appliedFrom, appliedTo])
 
   // Node colour based on interaction state
   const getNodeColor = useCallback((node) => {
@@ -169,6 +203,59 @@ export default function GraphPage({ graphData }) {
             Clear
           </button>
         )}
+
+        {/* Time filter */}
+        <div className="flex items-center gap-1.5 ml-4">
+          <span className="text-xs text-stone-400">Date:</span>
+          {PRESETS.map(p => (
+            <button
+              key={p.label}
+              onClick={() => {
+                const from = isoOffset(p.days)
+                const to = isoToday()
+                setDateFrom(from)
+                setDateTo(to)
+                setAppliedFrom(from)
+                setAppliedTo(to)
+              }}
+              className="text-xs px-2 py-1 rounded border border-stone-200 text-stone-500 hover:border-stone-400 hover:text-stone-700 transition-colors"
+            >
+              {p.label}
+            </button>
+          ))}
+          <input
+            type="date"
+            value={dateFrom}
+            onChange={e => setDateFrom(e.target.value)}
+            className="text-xs px-2 py-1 border border-stone-200 rounded focus:outline-none focus:ring-1 focus:ring-stone-400"
+            title="From date"
+          />
+          <span className="text-xs text-stone-300">–</span>
+          <input
+            type="date"
+            value={dateTo}
+            onChange={e => setDateTo(e.target.value)}
+            className="text-xs px-2 py-1 border border-stone-200 rounded focus:outline-none focus:ring-1 focus:ring-stone-400"
+            title="To date"
+          />
+          <button
+            onClick={() => { setAppliedFrom(dateFrom); setAppliedTo(dateTo) }}
+            className="text-xs px-2.5 py-1 bg-stone-800 text-white rounded hover:bg-stone-700 transition-colors"
+          >
+            Apply
+          </button>
+          {(appliedFrom || appliedTo) && (
+            <button
+              onClick={() => {
+                setDateFrom(''); setDateTo('')
+                setAppliedFrom(''); setAppliedTo('')
+              }}
+              className="text-xs text-stone-400 hover:text-stone-600"
+            >
+              Clear
+            </button>
+          )}
+        </div>
 
         <div className="flex items-center gap-2 ml-auto">
           <span className="text-xs text-stone-400 mr-1">Filter:</span>

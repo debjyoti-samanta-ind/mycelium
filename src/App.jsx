@@ -4,6 +4,7 @@ import SubmitPage from './pages/SubmitPage.jsx'
 import ArticleListPage from './pages/ArticleListPage.jsx'
 import GraphPage from './pages/GraphPage.jsx'
 import OpinionsPage from './pages/OpinionsPage.jsx'
+import DigestsPage from './pages/DigestsPage.jsx'
 import graphDataStatic from '../data/graph.json'
 
 export default function App() {
@@ -38,6 +39,7 @@ export default function App() {
             {navLink('/articles', 'Articles')}
             {navLink('/graph', 'Graph')}
             {navLink('/opinions', 'Opinions')}
+            {navLink('/digests', 'Digests')}
           </div>
         </div>
       </nav>
@@ -53,6 +55,7 @@ export default function App() {
             <Route path="/" element={<SubmitPage />} />
             <Route path="/articles" element={<ArticleListPage onArticleDeleted={removeFromGraph} />} />
             <Route path="/opinions" element={<OpinionsPage />} />
+            <Route path="/digests" element={<DigestsPage />} />
           </Routes>
         </main>
       )}

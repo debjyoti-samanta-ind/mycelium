@@ -11,6 +11,7 @@ import json
 import os
 import re
 import sys
+from datetime import date
 from itertools import combinations
 from pathlib import Path
 
@@ -146,6 +147,7 @@ def main() -> None:
                     "target": slug_b,
                     "type": connection["type"],
                     "explanation": connection["explanation"],
+                    "date_added": date.today().isoformat(),
                 }
                 new_edges.append(edge)
                 print(f"  → {connection['type'].upper()}: {connection['explanation']}")
