@@ -262,9 +262,10 @@ If Claude Code is about to implement something that would increase API costs mea
 | 2 | Graph — connection finding + visual map | Complete |
 | 3 | Analyst — opinion tracker + surprise email alerts | Complete |
 | 4 | Memory — monthly digests + time-filtered graph | Complete |
-| 5 | Books — anchor nodes (parked for now) | Parked |
+| 5 | Books — anchor nodes | Parked |
 | 6 | Dashboard — momentum + reading intelligence | Complete |
-| 7 | Public repo — one-time MVP export with demo data | Not started (after Phases 1–6 complete) |
+| 7 | Opinion evolution — track how intellectual positions change over time | Parked |
+| 8 | Public repo — one-time MVP export with demo data | Parked |
 
 ---
 
