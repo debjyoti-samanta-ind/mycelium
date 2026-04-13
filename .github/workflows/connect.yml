@@ -1,0 +1,46 @@
+name: Find Connections
+
+on:
+  workflow_run:
+    workflows: ["Ingest Articles"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Prevent simultaneous data-writing workflows
+concurrency:
+  group: mycelium-data
+  cancel-in-progress: false
+
+jobs:
+  connect:
+    # Only run after successful ingestion (or when manually triggered)
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: pip install anthropic
+
+      - name: Run connection finder
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python .github/scripts/connect.py
+
+      - name: Commit updated graph
+        run: |
+          git config user.name "Mycelium Bot"
+          git config user.email "mycelium@users.noreply.github.com"
+          git add data/graph.json
+          git diff --staged --quiet && echo "No new connections found." || git commit -m "chore: update graph connections [skip ci]"
+          git push
