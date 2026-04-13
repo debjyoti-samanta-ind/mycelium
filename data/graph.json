@@ -1,4 +1,9 @@
 {
-  "nodes": [],
+  "nodes": [
+    {
+      "id": "ai-pm-learning-roadmap",
+      "type": "article"
+    }
+  ],
   "edges": []
 }

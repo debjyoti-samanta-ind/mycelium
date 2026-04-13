@@ -83,7 +83,7 @@ Rules:
 - slug: lowercase, hyphens only, max 60 chars, derived from title"""
 
     response = client.messages.create(
-        model="claude-haiku-4-5-20251001",
+        model="claude-sonnet-4-6",  # TEMPORARY — swap back to claude-haiku-4-5-20251001 after test
         max_tokens=1024,
         messages=[{"role": "user", "content": prompt}],
     )
