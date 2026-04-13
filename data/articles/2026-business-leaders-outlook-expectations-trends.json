@@ -1,0 +1,41 @@
+{
+  "slug": "2026-business-leaders-outlook-expectations-trends",
+  "title": "2026 Business Leaders Outlook: Expectations & Trends",
+  "source": "J.P. Morgan",
+  "url": "https://www.jpmorgan.com/insights/markets-and-economy/business-leaders-outlook/2026-us-business-leaders-outlook#:~:text=The%20results%20are%20in:&text=Business%20leaders%20maintain%20a%20cautious,we%27re%20already%20experiencing%20one.",
+  "date_added": "2026-04-13",
+  "published_date": null,
+  "content_type": "summary",
+  "read_depth": "full",
+  "summary": "Business leaders maintain cautious optimism about their own company performance in 2026 (71% optimistic) despite a subdued national economic outlook (39% optimistic), down from 65% a year prior. Tariffs have negatively impacted 61% of businesses, while AI adoption is influencing workforce planning with 27% expecting headcount changes. Innovation economy companies report higher optimism for their own performance (82%) but also higher recession expectations (33%), suggesting bifurcated confidence across business segments.",
+  "central_argument": "Business leaders demonstrate resilience by maintaining strong confidence in their own company performance despite weakened macroeconomic sentiment, as they adapt to tariffs and integrate AI into operations.",
+  "key_claims": [
+    "39% of business leaders are optimistic about the national economy for 2026, down from 65% a year ago",
+    "71% of leaders are optimistic about their own company's performance in 2026",
+    "73% of midsize business owners expect to increase revenue in 2026, while 64% project higher profits",
+    "61% of respondents report negative tariff impacts on their costs",
+    "27% of leaders anticipate AI-related headcount impact in 2026",
+    "73% of business leaders maintain a cautious or pessimistic global outlook",
+    "Innovation Economy respondents report 82% company optimism but 33% expect recession or believe we are already in one",
+    "48% of midsize business owners plan to expand their workforce despite AI incorporation"
+  ],
+  "key_tensions": [
+    "The article complicates assumptions about macro-to-micro confidence alignment: national economic pessimism coexists with strong company-level optimism",
+    "Innovation Economy companies simultaneously report the highest company performance optimism (82%) and the highest recession expectations (33%), revealing internal sector contradictions",
+    "Local economic optimism (44%) has declined from 59% despite stable national sentiment, suggesting policy shifts are fragmenting regional confidence"
+  ],
+  "domain": "economics",
+  "stance": "ambivalent",
+  "key_entities": [
+    "J.P. Morgan Commercial Banking",
+    "Ginger Chambless (Head of Market Insights, J.P. Morgan Commercial Banking)",
+    "Business Leaders Outlook survey",
+    "2025 Midyear Pulse survey"
+  ],
+  "topic_tags": [
+    "business",
+    "economics",
+    "ai",
+    "technology"
+  ]
+}
