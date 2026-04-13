@@ -82,8 +82,10 @@ Rules:
 - topic_tags: 2–4 lowercase single-word tags from: ai, technology, productivity, business, society, science, health, politics, economics, culture
 - slug: lowercase, hyphens only, max 60 chars, derived from title"""
 
+    MODEL = "claude-sonnet-4-6"  # TEMPORARY — swap back to claude-haiku-4-5-20251001 after test
+
     response = client.messages.create(
-        model="claude-sonnet-4-6",  # TEMPORARY — swap back to claude-haiku-4-5-20251001 after test
+        model=MODEL,
         max_tokens=1024,
         messages=[{"role": "user", "content": prompt}],
     )
@@ -91,7 +93,7 @@ Rules:
     # Log token usage for cost monitoring
     usage = response.usage
     print(
-        f"  Claude Haiku usage — input: {usage.input_tokens} tokens, "
+        f"  Model: {MODEL} — input: {usage.input_tokens} tokens, "
         f"output: {usage.output_tokens} tokens"
     )
 
@@ -170,8 +172,8 @@ def main() -> None:
             if not article_text.strip():
                 raise ValueError("Fetched text is empty — article may be inaccessible.")
 
-            # Extract structured data with Claude Haiku
-            print("  Calling Claude Haiku for extraction...")
+            # Extract structured data
+            print("  Calling Claude for extraction...")
             extracted = extract_with_claude(article_text, url)
 
             # Ensure slug uniqueness
