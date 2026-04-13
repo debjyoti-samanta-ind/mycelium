@@ -141,6 +141,18 @@ export async function deleteArticle(slug, url) {
   await putFile('data/queue.json', queueSha, queue, `chore: remove deleted article from queue [skip ci]`)
 }
 
+export async function deleteDigest(month) {
+  if (!TOKEN || !REPO) {
+    throw new Error('GitHub credentials not configured.')
+  }
+  const { sha } = await getFile(`data/digests/${month}.json`)
+  await deleteFileOnGitHub(
+    `data/digests/${month}.json`,
+    sha,
+    `chore: delete digest ${month} [skip ci]`
+  )
+}
+
 export async function dismissFailed(url) {
   if (!TOKEN || !REPO) {
     throw new Error('GitHub credentials not configured.')
