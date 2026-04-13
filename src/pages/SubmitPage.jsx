@@ -1,14 +1,60 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+import * as pdfjs from 'pdfjs-dist'
 import { submitUrl } from '../utils/github.js'
+
+// Use the bundled PDF.js worker via Vite's asset URL handling
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url
+).href
+
+async function extractTextFromPdf(file) {
+  const arrayBuffer = await file.arrayBuffer()
+  const pdf = await pdfjs.getDocument({ data: arrayBuffer }).promise
+  let fullText = ''
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i)
+    const textContent = await page.getTextContent()
+    fullText += textContent.items.map(item => item.str).join(' ') + '\n\n'
+  }
+  return fullText.trim()
+}
 
 export default function SubmitPage() {
   const [url, setUrl] = useState('')
   const [showTextFallback, setShowTextFallback] = useState(false)
   const [pastedText, setPastedText] = useState('')
+  const [pdfStatus, setPdfStatus] = useState('idle') // idle | extracting | done | error
+  const [pdfError, setPdfError] = useState('')
   const [status, setStatus] = useState('idle') // idle | loading | success | error
   const [errorMessage, setErrorMessage] = useState('')
+  const fileInputRef = useRef(null)
 
   const isConfigured = import.meta.env.VITE_GITHUB_TOKEN && import.meta.env.VITE_GITHUB_REPO
+
+  async function handlePdfUpload(e) {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setPdfStatus('extracting')
+    setPdfError('')
+    setShowTextFallback(true)
+
+    try {
+      const text = await extractTextFromPdf(file)
+      if (!text) {
+        throw new Error('No text found — this may be a scanned PDF. Try copying the text manually.')
+      }
+      setPastedText(text)
+      setPdfStatus('done')
+    } catch (err) {
+      setPdfStatus('error')
+      setPdfError(err.message)
+    } finally {
+      // Reset file input so the same file can be re-selected if needed
+      if (fileInputRef.current) fileInputRef.current.value = ''
+    }
+  }
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -22,6 +68,7 @@ export default function SubmitPage() {
       setStatus('success')
       setUrl('')
       setPastedText('')
+      setPdfStatus('idle')
       setShowTextFallback(false)
     } catch (err) {
       setStatus('error')
@@ -72,6 +119,7 @@ export default function SubmitPage() {
           />
         </div>
 
+        {/* Fallback toggle */}
         <button
           type="button"
           onClick={() => setShowTextFallback(v => !v)}
@@ -79,30 +127,68 @@ export default function SubmitPage() {
         >
           {showTextFallback
             ? 'Hide text field'
-            : "r.jina.ai failed or article is paywalled? Paste the text instead."}
+            : 'r.jina.ai failed or article is paywalled? Paste text or upload a PDF instead.'}
         </button>
 
         {showTextFallback && (
-          <div>
-            <label htmlFor="pastedText" className="block text-sm font-medium text-stone-700 mb-1.5">
-              Article text{' '}
-              <span className="text-stone-400 font-normal">(overrides URL fetch when provided)</span>
-            </label>
-            <textarea
-              id="pastedText"
-              value={pastedText}
-              onChange={e => setPastedText(e.target.value)}
-              placeholder="Paste the full article text here..."
-              rows={8}
-              className="w-full px-3 py-2 text-sm border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-400 bg-white resize-y font-mono leading-relaxed"
-              disabled={status === 'loading'}
-            />
+          <div className="space-y-3">
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label htmlFor="pastedText" className="block text-sm font-medium text-stone-700">
+                  Article text{' '}
+                  <span className="text-stone-400 font-normal">(overrides URL fetch when provided)</span>
+                </label>
+
+                {/* PDF upload button */}
+                <div>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".pdf"
+                    onChange={handlePdfUpload}
+                    className="hidden"
+                    id="pdfUpload"
+                    disabled={status === 'loading' || pdfStatus === 'extracting'}
+                  />
+                  <label
+                    htmlFor="pdfUpload"
+                    className={`text-xs px-2.5 py-1 rounded-lg border cursor-pointer transition-colors ${
+                      pdfStatus === 'extracting'
+                        ? 'bg-stone-50 text-stone-400 border-stone-200 cursor-wait'
+                        : pdfStatus === 'done'
+                        ? 'bg-green-50 text-green-700 border-green-200'
+                        : 'bg-white text-stone-500 border-stone-300 hover:border-stone-400'
+                    }`}
+                  >
+                    {pdfStatus === 'extracting' ? 'Extracting…' : pdfStatus === 'done' ? 'PDF extracted ✓' : 'Upload PDF'}
+                  </label>
+                </div>
+              </div>
+
+              {/* PDF error */}
+              {pdfStatus === 'error' && (
+                <p className="text-xs text-red-600 mb-1.5">{pdfError}</p>
+              )}
+
+              <textarea
+                id="pastedText"
+                value={pastedText}
+                onChange={e => {
+                  setPastedText(e.target.value)
+                  if (pdfStatus === 'done') setPdfStatus('idle')
+                }}
+                placeholder="Paste the full article text here, or upload a PDF above to populate this automatically…"
+                rows={8}
+                className="w-full px-3 py-2 text-sm border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-400 bg-white resize-y font-mono leading-relaxed"
+                disabled={status === 'loading' || pdfStatus === 'extracting'}
+              />
+            </div>
           </div>
         )}
 
         <button
           type="submit"
-          disabled={status === 'loading' || !url.trim()}
+          disabled={status === 'loading' || !url.trim() || pdfStatus === 'extracting'}
           className="px-5 py-2 bg-stone-800 text-white text-sm font-medium rounded-lg hover:bg-stone-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
           {status === 'loading' ? 'Submitting…' : 'Submit'}
