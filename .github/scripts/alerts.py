@@ -32,7 +32,7 @@ def load_articles() -> dict:
     return articles
 
 
-def send_email(gmail_user: str, gmail_password: str, article_a: dict, article_b: dict, connection: dict) -> None:
+def send_email(gmail_user: str, gmail_password: str, gmail_recipient: str, article_a: dict, article_b: dict, connection: dict) -> None:
     """Send a surprise connection alert email."""
     subject = f"Mycelium: Unexpected connection found"
 
@@ -130,7 +130,7 @@ def main() -> None:
 
         print(f"  Sending alert: {src_slug} ↔ {tgt_slug} ({domain_a} ↔ {domain_b})")
         try:
-            send_email(gmail_user, gmail_password, article_a, article_b, edge)
+            send_email(gmail_user, gmail_password, gmail_recipient, article_a, article_b, edge)
             print(f"  ✓ Alert sent.")
             new_alerts.append({
                 "source": src_slug,
