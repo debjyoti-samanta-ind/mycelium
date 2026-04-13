@@ -17,6 +17,7 @@ import anthropic
 import requests
 
 QUEUE_PATH = Path("data/queue.json")
+FAILED_PATH = Path("data/queue_failed.json")
 ARTICLES_DIR = Path("data/articles")
 GRAPH_PATH = Path("data/graph.json")
 
@@ -150,6 +151,14 @@ def main() -> None:
     processed_count = 0
     error_count = 0
 
+    # --- Load existing failures ---
+    if FAILED_PATH.exists():
+        with open(FAILED_PATH) as f:
+            failed_data = json.load(f)
+    else:
+        failed_data = {"failed": []}
+    new_failures = []
+
     # --- Process each entry ---
     for entry in entries:
         # Support both plain string URLs and {url, text, added_at} objects
@@ -228,6 +237,11 @@ def main() -> None:
         except Exception as e:
             print(f"  ERROR processing {url}: {e}", file=sys.stderr)
             error_count += 1
+            new_failures.append({
+                "url": url,
+                "reason": str(e),
+                "failed_at": datetime.now(timezone.utc).isoformat(),
+            })
             continue
 
     # --- Persist graph if changed ---
@@ -235,6 +249,13 @@ def main() -> None:
         with open(GRAPH_PATH, "w") as f:
             json.dump(graph, f, indent=2, ensure_ascii=False)
         print(f"\nGraph updated with {processed_count} new node(s).")
+
+    # --- Persist failures ---
+    if new_failures:
+        failed_data["failed"] = failed_data.get("failed", []) + new_failures
+        with open(FAILED_PATH, "w") as f:
+            json.dump(failed_data, f, indent=2, ensure_ascii=False)
+        print(f"\nLogged {len(new_failures)} failure(s) to data/queue_failed.json.")
 
     # --- Summary ---
     print(f"\n--- Done ---")

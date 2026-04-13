@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 const TOPIC_COLOURS = {
   ai: '#7F77DD',
   technology: '#7F77DD',
@@ -19,7 +21,9 @@ const CONTENT_TYPE_LABELS = {
   other: '',
 }
 
-export default function ArticleCard({ article }) {
+export default function ArticleCard({ article, onDelete, isDeleting }) {
+  const [confirming, setConfirming] = useState(false)
+
   const {
     title,
     source,
@@ -66,22 +70,58 @@ export default function ArticleCard({ article }) {
         </ul>
       )}
 
-      {topic_tags && topic_tags.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mt-3">
-          {topic_tags.map(tag => {
-            const colour = TOPIC_COLOURS[tag.toLowerCase()] ?? '#B4B2A9'
-            return (
-              <span
-                key={tag}
-                className="text-xs px-2 py-0.5 rounded-full text-white font-medium"
-                style={{ backgroundColor: colour }}
+      <div className="flex items-end justify-between mt-3">
+        {topic_tags && topic_tags.length > 0 ? (
+          <div className="flex flex-wrap gap-1.5">
+            {topic_tags.map(tag => {
+              const colour = TOPIC_COLOURS[tag.toLowerCase()] ?? '#B4B2A9'
+              return (
+                <span
+                  key={tag}
+                  className="text-xs px-2 py-0.5 rounded-full text-white font-medium"
+                  style={{ backgroundColor: colour }}
+                >
+                  {tag}
+                </span>
+              )
+            })}
+          </div>
+        ) : (
+          <span />
+        )}
+
+        {/* Delete control */}
+        {onDelete && (
+          <div className="flex items-center gap-2 ml-4 shrink-0">
+            {confirming ? (
+              <>
+                <span className="text-xs text-stone-500">Delete this article?</span>
+                <button
+                  onClick={() => onDelete(article)}
+                  disabled={isDeleting}
+                  className="text-xs px-2.5 py-1 rounded-lg bg-red-600 text-white hover:bg-red-700 disabled:opacity-50 transition-colors"
+                >
+                  {isDeleting ? 'Deleting…' : 'Yes, delete'}
+                </button>
+                <button
+                  onClick={() => setConfirming(false)}
+                  disabled={isDeleting}
+                  className="text-xs px-2.5 py-1 rounded-lg border border-stone-300 text-stone-600 hover:border-stone-400 transition-colors"
+                >
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={() => setConfirming(true)}
+                className="text-xs text-stone-400 hover:text-red-500 transition-colors"
               >
-                {tag}
-              </span>
-            )
-          })}
-        </div>
-      )}
+                Delete
+              </button>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   )
 }
