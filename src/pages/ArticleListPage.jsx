@@ -13,7 +13,7 @@ const failedModules = import.meta.glob('../../data/queue_failed.json', { eager: 
 const failedData = Object.values(failedModules)[0]?.default ?? { failed: [] }
 const initialFailed = (failedData.failed ?? []).slice().reverse() // newest first
 
-export default function ArticleListPage() {
+export default function ArticleListPage({ onArticleDeleted }) {
   const [articles, setArticles] = useState(initialArticles)
   const [failedItems, setFailedItems] = useState(initialFailed)
   const [deletingSlug, setDeletingSlug] = useState(null)
@@ -27,6 +27,7 @@ export default function ArticleListPage() {
     try {
       await deleteArticle(article.slug, article.url)
       setArticles(prev => prev.filter(a => a.slug !== article.slug))
+      onArticleDeleted?.(article.slug)
     } catch (err) {
       setDeleteError(err.message)
     } finally {

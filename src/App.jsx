@@ -1,12 +1,23 @@
+import { useState } from 'react'
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import SubmitPage from './pages/SubmitPage.jsx'
 import ArticleListPage from './pages/ArticleListPage.jsx'
 import GraphPage from './pages/GraphPage.jsx'
 import OpinionsPage from './pages/OpinionsPage.jsx'
+import graphDataStatic from '../data/graph.json'
 
 export default function App() {
   const location = useLocation()
   const isGraph = location.pathname === '/graph'
+
+  const [graphData, setGraphData] = useState(graphDataStatic)
+
+  function removeFromGraph(slug) {
+    setGraphData(prev => ({
+      nodes: prev.nodes.filter(n => n.id !== slug),
+      edges: prev.edges.filter(e => e.source !== slug && e.target !== slug),
+    }))
+  }
 
   const navLink = (to, label) => (
     <Link
@@ -34,13 +45,13 @@ export default function App() {
       {/* Graph page is full-width/full-height; other pages use the standard container */}
       {isGraph ? (
         <Routes>
-          <Route path="/graph" element={<GraphPage />} />
+          <Route path="/graph" element={<GraphPage graphData={graphData} />} />
         </Routes>
       ) : (
         <main className="max-w-4xl mx-auto px-6 py-8">
           <Routes>
             <Route path="/" element={<SubmitPage />} />
-            <Route path="/articles" element={<ArticleListPage />} />
+            <Route path="/articles" element={<ArticleListPage onArticleDeleted={removeFromGraph} />} />
             <Route path="/opinions" element={<OpinionsPage />} />
           </Routes>
         </main>

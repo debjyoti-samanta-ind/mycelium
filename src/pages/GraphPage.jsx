@@ -1,7 +1,6 @@
 import { useState, useRef, useCallback, useMemo, useEffect } from 'react'
 import ForceGraph2D from 'react-force-graph-2d'
 import GraphSidePanel from '../components/GraphSidePanel.jsx'
-import graphData from '../../data/graph.json'
 import opinionsData from '../../data/opinions.json'
 
 // Load all article JSONs at server start
@@ -42,7 +41,7 @@ function matchesSearch(node, query) {
   )
 }
 
-export default function GraphPage() {
+export default function GraphPage({ graphData }) {
   const [selectedNode, setSelectedNode]   = useState(null)
   const [selectedLink, setSelectedLink]   = useState(null)
   const [hoveredNode,  setHoveredNode]    = useState(null)
@@ -77,14 +76,14 @@ export default function GraphPage() {
       map.get(edge.target).add(edge.source)
     })
     return map
-  }, [])
+  }, [graphData])
 
   // Nodes with no connections
   const islandNodes = useMemo(() => {
     const connected = new Set()
     graphData.edges?.forEach(e => { connected.add(e.source); connected.add(e.target) })
     return new Set(graphData.nodes?.map(n => n.id).filter(id => !connected.has(id)))
-  }, [])
+  }, [graphData])
 
   // Graph data filtered by active edge type filters
   const fgData = useMemo(() => ({
