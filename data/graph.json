@@ -33,6 +33,55 @@
       "target": "geopolitics-geometry-global-trade-2026-update",
       "type": "reinforce",
       "explanation": "Both articles argue that despite significant macroeconomic disruption from tariffs and geopolitical realignment, businesses and trade patterns demonstrate resilience and adaptation rather than collapse, with AI-related sectors emerging as growth engines offsetting traditional trade losses."
+    },
+    {
+      "source": "attention-equation-consumer-attention-battles",
+      "target": "2026-business-leaders-outlook-expectations-trends",
+      "type": "adjacent",
+      "explanation": "Both articles apply the same underlying logic of quality-over-quantity metrics to their respective domains: Article A argues that attention value depends on focus and intent rather than hours consumed, while Article B demonstrates that business confidence depends on company-specific factors rather than macroeconomic conditions, revealing a shared structural insight that aggregate measures (time spent, national sentiment) systematically misrepresent actual value and decision-making drivers.",
+      "date_added": "2026-04-13"
+    },
+    {
+      "source": "attention-equation-consumer-attention-battles",
+      "target": "attention-equation-consumer-attention-media",
+      "type": "evolve",
+      "explanation": "Article B appears to be a refined or updated version of Article A, presenting the same attention equation framework and nearly identical empirical claims (the $33/0.05 ratio, 25,000x YouTube hours statistic, 13 hours daily consumption) with slightly expanded scope (global vs. US survey) and marginally more developed articulation of the core argument about focus and intent determining monetization value.",
+      "date_added": "2026-04-13"
+    },
+    {
+      "source": "attention-equation-consumer-attention-battles",
+      "target": "ai-pm-learning-roadmap",
+      "type": "adjacent",
+      "explanation": "Both articles argue that measuring aggregate consumption metrics (hours watched vs. tokens processed) masks the true value of engagement, which depends instead on quality of focus/intent (Article A) and precision of task-specific optimization (Article B)—applying the same critique of naive quantification to different domains.",
+      "date_added": "2026-04-13"
+    },
+    {
+      "source": "attention-equation-consumer-attention-battles",
+      "target": "geopolitics-geometry-global-trade-2026-update",
+      "type": "adjacent",
+      "explanation": "Both articles apply the same underlying logic of structural mismatch—that raw quantitative metrics (consumption hours in media, trade volume in geopolitics) fail to predict economic value, which instead depends on quality factors (focus/intent in attention, geopolitical alignment in trade flows) that traditional measurement obscures.",
+      "date_added": "2026-04-13"
+    },
+    {
+      "source": "2026-business-leaders-outlook-expectations-trends",
+      "target": "attention-equation-consumer-attention-media",
+      "type": "adjacent",
+      "explanation": "Both articles apply the same underlying logic: that quantitative metrics (macroeconomic indicators, consumption hours) fail to predict value outcomes (company performance, revenue generation) without accounting for qualitative factors (business leaders' adaptive capacity, consumer focus and intent).",
+      "date_added": "2026-04-13"
+    },
+    {
+      "source": "attention-equation-consumer-attention-media",
+      "target": "ai-pm-learning-roadmap",
+      "type": "adjacent",
+      "explanation": "Both articles argue that raw quantitative metrics (consumption hours in media, model performance scores in AI) are insufficient proxies for value, and that qualitative dimensions (focus/intent in attention, prompt engineering/context in AI) are the critical but often-overlooked determinants of actual utility and monetization potential.",
+      "date_added": "2026-04-13"
+    },
+    {
+      "source": "attention-equation-consumer-attention-media",
+      "target": "geopolitics-geometry-global-trade-2026-update",
+      "type": "adjacent",
+      "explanation": "Both articles apply a scarcity-plus-reallocation framework to explain why markets fail to distribute value proportionally to consumption share: attention markets mismatch consumption hours with monetization value (focus/intent gap), while trade markets mismatch trade volume with geopolitical alignment, revealing that structural factors beyond simple quantity metrics determine economic value capture.",
+      "date_added": "2026-04-13"
     }
   ]
 }
