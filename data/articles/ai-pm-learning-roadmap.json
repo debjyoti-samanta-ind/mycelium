@@ -1,0 +1,24 @@
+{
+  "slug": "ai-pm-learning-roadmap",
+  "title": "AI PM Learning Roadmap",
+  "source": "aakashg.com",
+  "url": "https://www.aakashg.com/ai-pm-learning-roadmap/",
+  "date_added": "2026-04-13",
+  "published_date": "2025-10-09",
+  "content_type": "other",
+  "summary": "The article presents a structured self-learning roadmap for becoming an AI Product Manager, covering nine key areas including prompt engineering, RAG, AI prototyping, agent workflows, and evals. The author argues that AI PM is a subset of traditional PM but requires greater technical depth, heavier use of AI tools, and the ability to build and evaluate AI-specific features. The roadmap is positioned as a free alternative to expensive paid courses, curating tools, frameworks, and guides across each competency area.",
+  "key_claims": [
+    "AI PM is a subset of traditional PM, but requires greater technical depth and higher expectation of AI tool use than conventional product management.",
+    "Prompt engineering is described as the number-one skill for building great agents and improving productivity.",
+    "RAG should be used when retrieving specific knowledge or documents, fine-tuning for specialized domains with consistent style needs, and prompting for simple or general tasks.",
+    "Common mistakes when building AI products include having no fallback strategy, ignoring latency and cost, building without evaluations, and overfitting to demos.",
+    "Breaking into AI PM requires building a portfolio, updating a resume and LinkedIn, obtaining referrals, and being over-prepared for unique interview formats including vibe coding and AI ethics questions."
+  ],
+  "topic_tags": [
+    "ai",
+    "technology",
+    "productivity",
+    "business"
+  ],
+  "read_depth": "full"
+}
