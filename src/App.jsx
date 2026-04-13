@@ -5,6 +5,7 @@ import ArticleListPage from './pages/ArticleListPage.jsx'
 import GraphPage from './pages/GraphPage.jsx'
 import OpinionsPage from './pages/OpinionsPage.jsx'
 import DigestsPage from './pages/DigestsPage.jsx'
+import DashboardPage from './pages/DashboardPage.jsx'
 import graphDataStatic from '../data/graph.json'
 
 export default function App() {
@@ -35,6 +36,7 @@ export default function App() {
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <span className="text-lg font-semibold text-stone-800">Mycelium</span>
           <div className="flex gap-6 text-sm">
+            {navLink('/dashboard', 'Dashboard')}
             {navLink('/', 'Add Article')}
             {navLink('/articles', 'Articles')}
             {navLink('/graph', 'Graph')}
@@ -56,6 +58,7 @@ export default function App() {
             <Route path="/articles" element={<ArticleListPage onArticleDeleted={removeFromGraph} />} />
             <Route path="/opinions" element={<OpinionsPage />} />
             <Route path="/digests" element={<DigestsPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
           </Routes>
         </main>
       )}

@@ -1,0 +1,53 @@
+{
+  "computed_at": "2026-04-13",
+  "reading": {
+    "total_articles": 3,
+    "this_month": 3,
+    "last_month": 0,
+    "month_delta": 3,
+    "active_since": "2026-04",
+    "months_active": 1,
+    "domain_distribution": [
+      {
+        "domain": "economics",
+        "count": 2
+      },
+      {
+        "domain": "product management",
+        "count": 1
+      }
+    ],
+    "depth_vs_breadth": {
+      "mode": "deep",
+      "top_domain": "economics",
+      "top_domain_count": 2,
+      "domains_this_month": 2,
+      "last_broad_month": null
+    },
+    "neglected_topic": null
+  },
+  "graph": {
+    "total_nodes": 3,
+    "total_edges": 2,
+    "density": 0.667,
+    "island_count": 0,
+    "island_rate": 0.0,
+    "most_connected_node": {
+      "slug": "2026-business-leaders-outlook-expectations-trends",
+      "edge_count": 2
+    },
+    "edge_type_distribution": {
+      "reinforce": 1,
+      "contradict": 0,
+      "evolve": 0,
+      "adjacent": 1
+    },
+    "contradiction_density": 0.0
+  },
+  "opinions": {
+    "total": 4,
+    "strong": 0,
+    "forming": 4,
+    "thin": 0
+  }
+}

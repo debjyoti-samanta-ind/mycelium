@@ -1,0 +1,282 @@
+import dashboardData from '../../data/dashboard.json'
+import Tooltip from '../components/Tooltip.jsx'
+
+const d = dashboardData
+
+function monthLabel(monthStr) {
+  if (!monthStr) return '—'
+  try {
+    return new Date(monthStr + '-02').toLocaleString('default', { month: 'short', year: 'numeric' })
+  } catch {
+    return monthStr
+  }
+}
+
+function DeltaBadge({ delta }) {
+  if (delta === 0 || delta == null) return null
+  const positive = delta > 0
+  return (
+    <span className={`text-xs font-medium ml-1.5 ${positive ? 'text-green-600' : 'text-red-500'}`}>
+      {positive ? `+${delta}` : delta} vs last month
+    </span>
+  )
+}
+
+function StatCard({ label, value, sub, tooltip }) {
+  return (
+    <div className="bg-white border border-stone-200 rounded-xl p-4">
+      <div className="flex items-center mb-1">
+        <p className="text-xs text-stone-400 uppercase tracking-wide">{label}</p>
+        {tooltip && <Tooltip text={tooltip} />}
+      </div>
+      <p className="text-2xl font-semibold text-stone-900">{value}</p>
+      {sub && <p className="text-xs text-stone-400 mt-0.5">{sub}</p>}
+    </div>
+  )
+}
+
+function SectionHeader({ title }) {
+  return (
+    <p className="text-xs font-semibold text-stone-400 uppercase tracking-widest mb-4">{title}</p>
+  )
+}
+
+export default function DashboardPage() {
+  const r = d.reading   || {}
+  const g = d.graph     || {}
+  const o = d.opinions  || {}
+
+  const dist    = r.domain_distribution || []
+  const maxCount = dist[0]?.count || 1
+  const dvb     = r.depth_vs_breadth || {}
+  const etd     = g.edge_type_distribution || {}
+  const totalEdges = g.total_edges || 0
+
+  return (
+    <div className="space-y-10">
+
+      {/* ── Reading Intelligence ── */}
+      <section>
+        <SectionHeader title="Reading Intelligence" />
+
+        {/* Stat row */}
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          <StatCard
+            label="Articles"
+            value={r.total_articles ?? 0}
+            sub={`${r.months_active ?? 0} active month${r.months_active !== 1 ? 's' : ''}`}
+          />
+          <StatCard
+            label="This month"
+            value={r.this_month ?? 0}
+            sub={<DeltaBadge delta={r.month_delta} />}
+          />
+          <StatCard
+            label="Reading since"
+            value={monthLabel(r.active_since)}
+            sub={r.active_since ? `started ${r.active_since}` : '—'}
+          />
+        </div>
+
+        {/* Domain distribution */}
+        {dist.length > 0 && (
+          <div className="bg-white border border-stone-200 rounded-xl p-5 mb-4">
+            <div className="flex items-center mb-4">
+              <p className="text-xs font-medium text-stone-500 uppercase tracking-wide">Domain distribution</p>
+              <Tooltip text="How your reading is spread across intellectual disciplines — all time." />
+            </div>
+            <div className="space-y-2">
+              {dist.map(({ domain, count }) => (
+                <div key={domain} className="flex items-center gap-3">
+                  <span className="text-xs text-stone-500 w-36 truncate capitalize">{domain}</span>
+                  <div className="flex-1 bg-stone-100 rounded-full h-1.5">
+                    <div
+                      className="bg-stone-600 h-1.5 rounded-full"
+                      style={{ width: `${(count / maxCount) * 100}%` }}
+                    />
+                  </div>
+                  <span className="text-xs text-stone-400 w-4 text-right">{count}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Depth vs breadth + neglected topic */}
+        <div className="grid grid-cols-2 gap-4">
+
+          <div className="bg-white border border-stone-200 rounded-xl p-4">
+            <div className="flex items-center mb-2">
+              <p className="text-xs text-stone-400 uppercase tracking-wide">Reading mode</p>
+              <Tooltip text="Deep: more than 60% of this month's articles are in one domain. Broad: your reading spans 3 or more domains." />
+            </div>
+            {dvb.mode ? (
+              <>
+                <p className="text-lg font-semibold text-stone-900 capitalize">{dvb.mode}</p>
+                {dvb.mode === 'deep' && dvb.top_domain && (
+                  <p className="text-xs text-stone-400 mt-0.5">
+                    {dvb.top_domain_count} of {r.this_month} articles in{' '}
+                    <span className="text-stone-600 capitalize">{dvb.top_domain}</span>
+                  </p>
+                )}
+                {dvb.mode === 'broad' && (
+                  <p className="text-xs text-stone-400 mt-0.5">
+                    {dvb.domains_this_month} domains this month
+                  </p>
+                )}
+                {dvb.last_broad_month && dvb.mode === 'deep' && (
+                  <p className="text-xs text-stone-300 mt-1">
+                    Last broad month: {monthLabel(dvb.last_broad_month)}
+                  </p>
+                )}
+              </>
+            ) : (
+              <p className="text-xs text-stone-400 mt-1">No articles this month yet.</p>
+            )}
+          </div>
+
+          <div className="bg-white border border-stone-200 rounded-xl p-4">
+            <div className="flex items-center mb-2">
+              <p className="text-xs text-stone-400 uppercase tracking-wide">Neglected topic</p>
+              <Tooltip text="A domain you've read in before, but haven't touched in over 30 days. A nudge, not a judgement." />
+            </div>
+            {r.neglected_topic ? (
+              <>
+                <p className="text-lg font-semibold text-stone-900 capitalize">
+                  {r.neglected_topic.domain}
+                </p>
+                <p className="text-xs text-stone-400 mt-0.5">
+                  Last read {r.neglected_topic.weeks_ago} week{r.neglected_topic.weeks_ago !== 1 ? 's' : ''} ago
+                </p>
+              </>
+            ) : (
+              <p className="text-xs text-stone-400 mt-1">No neglected topics — you're reading broadly.</p>
+            )}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── Graph Intelligence ── */}
+      <section>
+        <SectionHeader title="Graph Intelligence" />
+
+        {/* Stat row */}
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          <StatCard
+            label="Graph density"
+            value={`${Math.round((g.density ?? 0) * 100)}%`}
+            sub={`${g.total_edges ?? 0} edges across ${g.total_nodes ?? 0} nodes`}
+            tooltip="What percentage of all possible connections between your articles have been found. 100% would mean every article connects to every other."
+          />
+          <StatCard
+            label="Most connected"
+            value={g.most_connected_node ? `${g.most_connected_node.edge_count} links` : '—'}
+            sub={g.most_connected_node
+              ? g.most_connected_node.slug.replace(/-/g, ' ').slice(0, 32)
+              : 'No connections yet'}
+            tooltip="The article with the most connections in your graph — the most central idea in your reading."
+          />
+          <StatCard
+            label="Island rate"
+            value={g.island_count ?? 0}
+            sub={g.island_count === 0
+              ? 'All articles connected'
+              : `article${g.island_count !== 1 ? 's' : ''} with no links yet`}
+            tooltip="Articles with zero connections. A high number means the connect workflow hasn't run yet, or these articles are genuinely isolated from the rest of your reading."
+          />
+        </div>
+
+        {/* Contradiction density + opinion confidence side by side */}
+        <div className="grid grid-cols-2 gap-4">
+
+          {/* Contradiction density */}
+          <div className="bg-white border border-stone-200 rounded-xl p-5">
+            <div className="flex items-center mb-4">
+              <p className="text-xs font-medium text-stone-500 uppercase tracking-wide">Connection types</p>
+              <Tooltip text="How your graph's connections break down by type. A reading diet heavy in 'reinforce' connections may mean you're reading inside an echo chamber. More 'contradict' and 'adjacent' connections mean your reading is genuinely challenging itself." />
+            </div>
+            {totalEdges === 0 ? (
+              <p className="text-xs text-stone-400">No connections found yet.</p>
+            ) : (
+              <div className="space-y-2.5">
+                {[
+                  { type: 'reinforce', colour: '#4a7c59' },
+                  { type: 'contradict', colour: '#c0392b' },
+                  { type: 'evolve',    colour: '#6c5ce7' },
+                  { type: 'adjacent',  colour: '#e17055' },
+                ].map(({ type, colour }) => {
+                  const count = etd[type] || 0
+                  const pct = Math.round((count / totalEdges) * 100)
+                  return (
+                    <div key={type} className="flex items-center gap-3">
+                      <span className="text-xs text-stone-500 w-20 capitalize">{type}</span>
+                      <div className="flex-1 bg-stone-100 rounded-full h-1.5">
+                        <div
+                          className="h-1.5 rounded-full"
+                          style={{ width: `${pct}%`, backgroundColor: colour }}
+                        />
+                      </div>
+                      <span className="text-xs text-stone-400 w-12 text-right">{count} ({pct}%)</span>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+            {totalEdges > 0 && (
+              <p className="text-xs text-stone-400 mt-3 pt-3 border-t border-stone-100">
+                {g.contradiction_density === 0
+                  ? 'No contradictions yet — consider seeking out dissenting views.'
+                  : `${Math.round((g.contradiction_density ?? 0) * 100)}% of connections challenge your existing views.`}
+              </p>
+            )}
+          </div>
+
+          {/* Opinion confidence */}
+          <div className="bg-white border border-stone-200 rounded-xl p-5">
+            <div className="flex items-center mb-4">
+              <p className="text-xs font-medium text-stone-500 uppercase tracking-wide">Opinion confidence</p>
+              <Tooltip text="How well-supported your current intellectual positions are. Strong = 4+ articles behind the position. Forming = 2–3 articles. Thin = only 1 article — still early signal." />
+            </div>
+            {o.total === 0 ? (
+              <p className="text-xs text-stone-400">
+                Opinions appear after 3+ articles are ingested and the weekly synthesis runs.
+              </p>
+            ) : (
+              <div className="space-y-3">
+                {[
+                  { label: 'Strong',  key: 'strong',  sub: '4+ articles',  colour: '#4a7c59' },
+                  { label: 'Forming', key: 'forming', sub: '2–3 articles', colour: '#e17055' },
+                  { label: 'Thin',    key: 'thin',    sub: '1 article',    colour: '#c0392b' },
+                ].map(({ label, key, sub, colour }) => {
+                  const count = o[key] || 0
+                  const pct   = Math.round((count / (o.total || 1)) * 100)
+                  return (
+                    <div key={key} className="flex items-center gap-3">
+                      <div className="w-20">
+                        <p className="text-xs text-stone-600">{label}</p>
+                        <p className="text-xs text-stone-400">{sub}</p>
+                      </div>
+                      <div className="flex-1 bg-stone-100 rounded-full h-1.5">
+                        <div
+                          className="h-1.5 rounded-full"
+                          style={{ width: `${pct}%`, backgroundColor: colour }}
+                        />
+                      </div>
+                      <span className="text-xs text-stone-400 w-4 text-right">{count}</span>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+
+        </div>
+      </section>
+
+      <p className="text-xs text-stone-300 text-right">
+        Last computed: {d.computed_at || '—'}
+      </p>
+    </div>
+  )
+}
