@@ -7,7 +7,6 @@ Runs as the final step of the ingest workflow after new articles are saved.
 """
 
 import json
-import sys
 from collections import Counter, defaultdict
 from datetime import date, timedelta
 from pathlib import Path

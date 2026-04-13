@@ -74,7 +74,7 @@ export default function DashboardPage() {
           <StatCard
             label="Reading since"
             value={monthLabel(r.active_since)}
-            sub={r.active_since ? `started ${r.active_since}` : '—'}
+            sub={`${r.months_active ?? 0} month${r.months_active !== 1 ? 's' : ''} with articles`}
           />
         </div>
 
@@ -108,7 +108,7 @@ export default function DashboardPage() {
           <div className="bg-white border border-stone-200 rounded-xl p-4">
             <div className="flex items-center mb-2">
               <p className="text-xs text-stone-400 uppercase tracking-wide">Reading mode</p>
-              <Tooltip text="Deep: more than 60% of this month's articles are in one domain. Broad: your reading spans 3 or more domains." />
+              <Tooltip text="Deep: more than 60% of this month's articles are in one domain. Broad: no single domain dominates — your reading is more varied." />
             </div>
             {dvb.mode ? (
               <>
