@@ -40,10 +40,19 @@ Key tensions (what it argues against):
 Key intellectual references: {entities}"""
 
 
+def parse_response(raw: str) -> dict:
+    """Strip markdown fences and parse JSON from a Haiku response."""
+    raw = raw.strip()
+    raw = re.sub(r"^```(?:json)?\s*", "", raw)
+    raw = re.sub(r"\s*```$", "", raw)
+    return json.loads(raw)
+
+
 def find_connection(article_a: dict, article_b: dict) -> dict | None:
     """
     Ask Claude Haiku whether two articles have a meaningful intellectual connection.
     Returns {type, explanation} if connected, None otherwise.
+    Retries once with a stricter prompt if the first response fails to parse.
     Logs token usage for cost monitoring.
     """
     prompt = f"""You are building a personal knowledge graph. Evaluate whether these two articles have a meaningful intellectual connection.
@@ -67,28 +76,49 @@ Reply with ONLY valid JSON — no markdown fences, no commentary:
 or
 {{"connected": false}}"""
 
-    response = client.messages.create(
-        model=MODEL,
-        max_tokens=256,
-        messages=[{"role": "user", "content": prompt}],
-    )
+    retry_prompt = """Reply with ONLY valid JSON. No markdown, no commentary, no special characters outside the JSON values.
+Use one of these two forms exactly:
+{"connected": true, "type": "reinforce", "explanation": "One sentence."}
+{"connected": false}"""
 
-    usage = response.usage
-    print(
-        f"    Model: {MODEL} — input: {usage.input_tokens} tokens, "
-        f"output: {usage.output_tokens} tokens"
-    )
+    for attempt in range(2):
+        if attempt == 1:
+            print(f"    Retrying with stricter prompt (attempt 2)...")
 
-    raw = response.content[0].text.strip()
-    raw = re.sub(r"^```(?:json)?\s*", "", raw)
-    raw = re.sub(r"\s*```$", "", raw)
-    result = json.loads(raw)
+        response = client.messages.create(
+            model=MODEL,
+            max_tokens=256,
+            messages=(
+                [{"role": "user", "content": prompt}]
+                if attempt == 0
+                else [
+                    {"role": "user", "content": prompt},
+                    {"role": "assistant", "content": response.content[0].text},
+                    {"role": "user", "content": retry_prompt},
+                ]
+            ),
+        )
 
-    if result.get("connected"):
-        return {
-            "type": result["type"],
-            "explanation": result["explanation"],
-        }
+        usage = response.usage
+        print(
+            f"    Model: {MODEL} — input: {usage.input_tokens} tokens, "
+            f"output: {usage.output_tokens} tokens"
+        )
+
+        try:
+            result = parse_response(response.content[0].text)
+            if result.get("connected"):
+                return {
+                    "type": result["type"],
+                    "explanation": result["explanation"],
+                }
+            return None
+        except (json.JSONDecodeError, KeyError) as e:
+            if attempt == 0:
+                print(f"    Parse error on attempt 1 ({e}) — retrying...", file=sys.stderr)
+            else:
+                raise
+
     return None
 
 
@@ -171,7 +201,11 @@ def main() -> None:
     print(f"Connections found: {len(new_edges)}  |  Errors: {error_count}")
 
     if error_count > 0:
-        sys.exit(1)
+        print(
+            f"Warning: {error_count} pair(s) were skipped due to parse errors. "
+            f"They will be re-evaluated on the next run.",
+            file=sys.stderr,
+        )
 
 
 if __name__ == "__main__":
