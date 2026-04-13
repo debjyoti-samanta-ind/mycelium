@@ -66,7 +66,8 @@ async function deleteFileOnGitHub(path, sha, message) {
   return res.json()
 }
 
-export async function submitUrl(url, pastedText = null) {
+export async function submitUrls(entries) {
+  // entries: [{url: string, text: string|null}]
   if (!TOKEN || !REPO) {
     throw new Error('GitHub credentials not configured. See README.md for setup instructions.')
   }
@@ -87,22 +88,20 @@ export async function submitUrl(url, pastedText = null) {
   const { content, sha } = await getRes.json()
   const current = JSON.parse(fromBase64(content))
 
-  // Step 2: Append new entry
-  const entry = {
-    url,
-    added_at: new Date().toISOString(),
-    text: pastedText || null,
+  // Step 2: Append all entries in one write
+  const now = new Date().toISOString()
+  for (const { url, text } of entries) {
+    current.urls.push({ url, added_at: now, text: text || null })
   }
-  current.urls.push(entry)
 
-  // Step 3: Write updated queue.json back
+  // Step 3: Write updated queue.json back once
   const putRes = await fetch(
     `https://api.github.com/repos/${REPO}/contents/data/queue.json`,
     {
       method: 'PUT',
       headers: { ...GITHUB_HEADERS, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        message: 'queue: add article',
+        message: `queue: add ${entries.length} article${entries.length !== 1 ? 's' : ''}`,
         content: toBase64(JSON.stringify(current, null, 2)),
         sha,
       }),
@@ -115,6 +114,10 @@ export async function submitUrl(url, pastedText = null) {
   }
 
   return putRes.json()
+}
+
+export async function submitUrl(url, pastedText = null) {
+  return submitUrls([{ url, text: pastedText }])
 }
 
 export async function deleteArticle(slug, url) {
