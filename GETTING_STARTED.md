@@ -25,14 +25,13 @@
 ### 3. Install Node.js if you don't have it
 - Check: `node --version` in your terminal
 - If missing: download from nodejs.org (LTS version)
-- Then in your Mycelium folder: `npm install`
+- **Do not run `npm install` yourself** — Claude Code will do this as part of Phase 1 scaffolding
 
-### 4. Verify everything works locally
-```
-cd ~/Mycelium
-npm run dev
-```
-You should see the app at `localhost:5173` in your browser. It will be empty — that's expected.
+### 4. Verify you are ready to start
+- Confirm the repo exists at `github.com/debjyoti-samanta-ind/mycelium-private`
+- Confirm `ANTHROPIC_API_KEY` is visible under repo Settings → Secrets and variables → Actions
+- Confirm `node --version` returns a version number in your terminal
+- **Do not run `npm install` or `npm run dev` yet** — Claude Code handles both during Phase 1 scaffolding
 
 ---
 
@@ -62,7 +61,7 @@ We are building Mycelium — a personal knowledge graph. Read CLAUDE.md fully be
 
 We are starting Phase 1. The goal of Phase 1 is:
 1. Scaffold a React + Vite + Tailwind app (light theme only, no dark mode, no GitHub Pages deployment)
-2. The app runs locally via npm run dev — localhost:5173
+2. The app runs locally via npm run dev — localhost:5174
 3. Build a URL submission form that commits URLs to data/queue.json via the GitHub API
 4. Build a GitHub Actions ingestion workflow that triggers on queue.json changes, fetches article text via r.jina.ai (auto-prepended — user always pastes raw URLs), calls Claude Haiku to extract structured data, and saves to data/articles/
 5. Build an article list page showing all processed articles, reading from data/articles/
@@ -89,7 +88,7 @@ Before writing any code, summarise your understanding and ask me any questions.
 ## Daily workflow once the app is built
 
 1. Open terminal: `cd ~/Mycelium && git pull && npm run dev`
-2. Open browser: `localhost:5173`
+2. Open browser: `localhost:5174`
 3. Paste a URL into the app
 4. Close the browser when done — the GitHub Actions workflow processes it in the background
 5. Next time you open the app, `git pull` first to get the latest processed articles

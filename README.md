@@ -15,12 +15,9 @@ Add these in your GitHub repo under Settings → Secrets and variables → Actio
 ## Setup
 
 1. Clone this repo locally
-2. Run `npm install`
-3. Run `npm run dev` to start the app at localhost:5173
-4. Add secrets to GitHub repo settings (see Required Secrets above)
-5. Push to main — GitHub Actions agent workflows will run automatically from here
+2. Push to main — GitHub Actions agent workflows will run automatically from here
 
-Note: this is a **private repo**. The app runs locally only. There is no public deployment during active development phases. A separate public repo (`mycelium`) will be created manually at Phase 7 as a one-time MVP snapshot with demo data.
+Note: **`npm install` and `npm run dev` are handled by Claude Code during Phase 1** — you do not need to run these manually. See GETTING_STARTED.md for details.
 
 ## How to add an article
 
@@ -33,7 +30,7 @@ For paywalled articles: paste the article text directly into the text field inst
 ```
 cd ~/Mycelium
 git pull          # get latest processed articles from GitHub Actions
-npm run dev       # open app at localhost:5173
+npm run dev       # open app at localhost:5174
 ```
 
 ## Build phases

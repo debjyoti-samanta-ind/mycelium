@@ -17,7 +17,7 @@ The user is Debjyoti. He is building this for himself. Every decision should opt
 - This is where all development happens across all phases
 - GitHub Actions runs all agent jobs here (ingestion, connections, opinions, alerts, digests)
 - Frontend runs locally via `npm run dev` — not deployed to GitHub Pages
-- Debjyoti accesses the app at `localhost:5173` on his machine
+- Debjyoti accesses the app at `localhost:5174` on his machine
 
 ### Public repo — `mycelium` (created only when Phases 1–4 are complete)
 - Contains only the React frontend code copied from `/src` of the private repo
@@ -95,13 +95,43 @@ The project is built in 6 phases. Claude Code must not implement features from a
 
 Current phase is always stated at the top of the session. If it isn't stated, ask.
 
+### 6. Phase completion gate — validate before closing a phase
+Before declaring any phase complete and before Debjyoti moves to the next phase, Claude Code must run a full phase-level validation. This is distinct from the per-feature checklist in rule 2 — it is a holistic end-of-phase review.
+
+Claude Code must explicitly work through the following and report the result to Debjyoti:
+
+**Functional check**
+- [ ] Every deliverable listed for this phase in the phases reference section is built and working
+- [ ] The app runs without errors at localhost:5174 (`npm run dev`)
+- [ ] Any GitHub Actions workflows introduced in this phase have been tested with a real trigger (not just written)
+- [ ] No placeholder logic, hardcoded test data, or TODO stubs remain in phase-critical code paths
+
+**Integration check**
+- [ ] New code reads from and writes to the correct JSON files in /data/
+- [ ] New workflows commit back to the repo correctly and the local app reflects the result after `git pull`
+- [ ] No phase 1 assumptions are broken by new phase code (e.g. article schema still valid)
+
+**Cost check**
+- [ ] Token usage per workflow run has been logged and reviewed
+- [ ] No Sonnet calls exist where Haiku was specified
+- [ ] No new Claude calls were added beyond what was planned for this phase
+
+**Handoff summary**
+Claude Code must write a short handoff note to Debjyoti covering:
+- What was built this phase (2–3 sentences)
+- Any known limitations or edge cases to be aware of
+- Any decisions made that deviate from the original plan, and why
+- What the first step of the next phase will touch
+
+Claude Code must not say a phase is complete until it has explicitly confirmed every item above with Debjyoti. If any item fails, fix it before closing the phase.
+
 ---
 
 ## Project architecture
 
 ### Stack
 - **Frontend:** React + Vite + Tailwind CSS (light theme only, no dark mode)
-- **Local hosting:** `npm run dev` → `localhost:5173` — no deployment during active phases
+- **Local hosting:** `npm run dev` → `localhost:5174` — no deployment during active phases
 - **Public hosting:** GitHub Pages in public repo — created only at Phase 7, not now
 - **Data store:** JSON flat files in /data/ — no database, no backend
 - **Agent jobs:** GitHub Actions workflows in the private repo
