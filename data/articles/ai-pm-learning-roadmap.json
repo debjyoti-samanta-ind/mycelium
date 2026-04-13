@@ -1,0 +1,24 @@
+{
+  "slug": "ai-pm-learning-roadmap",
+  "title": "AI PM Learning Roadmap",
+  "source": "aakashg.com",
+  "url": "https://www.aakashg.com/ai-pm-learning-roadmap/",
+  "date_added": "2026-04-13",
+  "published_date": "2025-10-09",
+  "content_type": "essay",
+  "summary": "This roadmap provides a structured learning path for product managers entering AI, covering nine core competency areas from prompt engineering to career resources. The guide emphasizes that AI PM is fundamentally a specialized subset of traditional product management with higher technical requirements and reliance on AI tooling. Key differentiators include mastery of prompt engineering, context engineering with RAG, AI prototyping, agent workflows, and proper evaluation frameworks rather than building AI products through trial-and-error.",
+  "key_claims": [
+    "Prompt engineering is the #1 skill for great AI agents and productivity",
+    "RAG should be used for retrieving specific knowledge or documents, while fine-tuning is best for specialized domains with consistent style/format needs",
+    "Common mistakes in AI product building include lacking fallback strategies, ignoring latency/cost tradeoffs, building without evals, and overfitting to demos",
+    "AI PM requires greater technical depth than traditional PM while still maintaining core product management fundamentals",
+    "Evaluation and testing should follow a virtuous cycle of build, evaluate, iterate, and observe"
+  ],
+  "topic_tags": [
+    "ai",
+    "productivity",
+    "technology",
+    "business"
+  ],
+  "read_depth": "full"
+}
