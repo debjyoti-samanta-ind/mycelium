@@ -1,0 +1,45 @@
+{
+  "slug": "ai-pm-learning-roadmap",
+  "title": "AI PM Learning Roadmap",
+  "source": "aakashg.com",
+  "url": "https://www.aakashg.com/ai-pm-learning-roadmap/",
+  "date_added": "2026-04-13",
+  "published_date": "2025-10-09",
+  "content_type": "summary",
+  "read_depth": "full",
+  "summary": "This roadmap outlines a structured learning path for becoming an AI Product Manager, covering nine core areas from prompt engineering to foundation models. The author argues that AI PM is fundamentally traditional PM applied to AI-native products, requiring deeper technical skills and hands-on experimentation with AI tools. The guide emphasizes practical tools, frameworks, and common mistakes to avoid when building AI products.",
+  "central_argument": "AI product management requires mastery of prompt engineering, context engineering, prototyping, and evaluation techniques—core skills distinct from traditional PM that enable you to build and iterate on AI-native products effectively.",
+  "key_claims": [
+    "AI PM is a subset of PM with the same tasks but applied to AI features and products",
+    "Prompt engineering is the #1 skill for great agents and productivity",
+    "RAG should be used for retrieving specific knowledge, fine-tuning for specialized domains, and prompting for simple instructions",
+    "Common mistakes in AI product building include lacking fallback strategies, ignoring latency/cost, building without evaluations, and overfitting to demos",
+    "Foundation models vary by strength: Claude excels at reasoning, GPT-4 is most versatile, Gemini leads in multimodal, Perplexity has real-time data",
+    "AI PM interviews uniquely test vibe coding ability and understanding of AI ethics and guardrails"
+  ],
+  "key_tensions": [
+    "Building AI products requires balancing performance metrics (accuracy, latency, cost) against user satisfaction",
+    "The tension between no-code prototyping tools and IDE-first approaches for different use cases",
+    "Choosing between RAG, fine-tuning, and prompting based on specific task requirements rather than treating them as equivalent"
+  ],
+  "domain": "product management",
+  "stance": "optimistic",
+  "key_entities": [
+    "Prompt Engineering",
+    "Context Engineering (RAG)",
+    "AI Evals & Testing",
+    "ReAct",
+    "LLM Judge",
+    "A/B Tests",
+    "Mixture of Experts (MoE)",
+    "Claude (Anthropic)",
+    "GPT-4",
+    "Gemini"
+  ],
+  "topic_tags": [
+    "ai",
+    "productivity",
+    "business",
+    "technology"
+  ]
+}
