@@ -68,17 +68,18 @@ def send_email(gmail_user: str, gmail_password: str, article_a: dict, article_b:
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
     msg["From"] = gmail_user
-    msg["To"] = gmail_user  # sends to yourself
+    msg["To"] = gmail_recipient
     msg.attach(MIMEText(html, "html"))
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login(gmail_user, gmail_password)
-        server.sendmail(gmail_user, gmail_user, msg.as_string())
+        server.sendmail(gmail_user, gmail_recipient, msg.as_string())
 
 
 def main() -> None:
     gmail_user = os.environ.get("GMAIL_USER", "").strip()
     gmail_password = os.environ.get("GMAIL_APP_PASSWORD", "").strip()
+    gmail_recipient = os.environ.get("GMAIL_RECIPIENT", gmail_user).strip()
 
     if not gmail_user or not gmail_password:
         print("GMAIL_USER or GMAIL_APP_PASSWORD not set. Skipping alerts.")
