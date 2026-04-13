@@ -2,7 +2,7 @@ name: Ingest Articles
 
 on:
   push:
-    branches: [main]
+    branches: [master]
     paths:
       - 'data/queue.json'
   workflow_dispatch:
