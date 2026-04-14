@@ -17,6 +17,50 @@
       "type": "article"
     }
   ],
-  "edges": [],
-  "evaluated_pairs": []
+  "edges": [
+    {
+      "source": "attention-equation-consumer-attention-battles",
+      "target": "geopolitics-geometry-global-trade-2026-update",
+      "type": "adjacent",
+      "claim_a": "There are 25,000 times more hours of content produced annually on YouTube than on traditional television networks and streaming services combined, yet digital media generates a smaller share of revenue and profit compared with its share of consumption.",
+      "claim_b": "Chinese exporters cut prices by an average of 8 percent to find buyers in new markets as US–China bilateral trade fell by approximately 30 percent due to tariffs.",
+      "explanation": "Across genuinely different disciplines, near-infinite supply collapses per-unit economics while the scarce complement (focused, high-intent attention in media; geopolitically trusted trade partnerships in global commerce) captures disproportionate value — a structural prediction that neither article makes alone but both independently instantiate: abundance destroys unit economics, and the scarce, high-trust complement becomes the true value driver.",
+      "date_added": "2026-04-14"
+    },
+    {
+      "source": "2026-business-leaders-outlook-expectations-trends",
+      "target": "geopolitics-geometry-global-trade-2026-update",
+      "type": "reinforce",
+      "claim_a": "61% of respondents report negative tariff impacts on their costs, yet 71% of leaders are optimistic about their own company's performance in 2026",
+      "claim_b": "The United States replaced about two-thirds of the tariff-induced import gap with goods from other sellers, while trade grew faster than global output in 2025 despite dire predictions of retrenchment",
+      "explanation": "Both claims independently demonstrate that tariff-induced disruption failed to produce the aggregate contraction it predicted: at the firm level, cost pain coexists with sustained performance optimism, and at the macro trade level, import displacement coexisted with accelerating trade volume — the same non-obvious finding that tariff shocks redistribute rather than contract economic activity, appearing independently at micro and macro scales.",
+      "date_added": "2026-04-14"
+    }
+  ],
+  "evaluated_pairs": [
+    [
+      "attention-equation-consumer-attention-battles",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "twenty-years-lasting-lessons-enron",
+      "geopolitics-geometry-global-trade-2026-update"
+    ]
+  ]
 }
