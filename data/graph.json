@@ -1,10 +1,6 @@
 {
   "nodes": [
     {
-      "id": "ai-pm-learning-roadmap",
-      "type": "article"
-    },
-    {
       "id": "2026-business-leaders-outlook-expectations-trends",
       "type": "article"
     },
@@ -20,12 +16,6 @@
   "edges": [
     {
       "source": "2026-business-leaders-outlook-expectations-trends",
-      "target": "ai-pm-learning-roadmap",
-      "type": "adjacent",
-      "explanation": "Both articles argue that successful adaptation to transformative technology (AI for PM; AI integration for business leaders) requires mastering domain-specific skills and practical implementation strategies rather than treating the technology as a universal solution, with both identifying common failure modes that arise from oversimplification."
-    },
-    {
-      "source": "2026-business-leaders-outlook-expectations-trends",
       "target": "geopolitics-geometry-global-trade-2026-update",
       "type": "reinforce",
       "explanation": "Both articles argue that despite significant macroeconomic disruption from tariffs and geopolitical realignment, businesses and trade patterns demonstrate resilience and adaptation rather than collapse, with AI-related sectors emerging as growth engines offsetting traditional trade losses."
@@ -35,13 +25,6 @@
       "target": "2026-business-leaders-outlook-expectations-trends",
       "type": "adjacent",
       "explanation": "Both articles apply the same underlying logic of quality-over-quantity metrics to their respective domains: Article A argues that attention value depends on focus and intent rather than hours consumed, while Article B demonstrates that business confidence depends on company-specific factors rather than macroeconomic conditions, revealing a shared structural insight that aggregate measures (time spent, national sentiment) systematically misrepresent actual value and decision-making drivers.",
-      "date_added": "2026-04-13"
-    },
-    {
-      "source": "attention-equation-consumer-attention-battles",
-      "target": "ai-pm-learning-roadmap",
-      "type": "adjacent",
-      "explanation": "Both articles argue that measuring aggregate consumption metrics (hours watched vs. tokens processed) masks the true value of engagement, which depends instead on quality of focus/intent (Article A) and precision of task-specific optimization (Article B)—applying the same critique of naive quantification to different domains.",
       "date_added": "2026-04-13"
     },
     {
