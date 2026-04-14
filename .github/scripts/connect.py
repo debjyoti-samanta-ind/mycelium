@@ -1,10 +1,13 @@
 """
 Mycelium connection-finding script — Phase 2
-Compares article pairs using Claude Haiku to find intellectual connections.
+Compares article pairs using Claude Sonnet to find intellectual connections.
 Writes new edges to data/graph.json.
 
-Idempotent: skips pairs already present in graph.json.
-Only compares new pairs — never re-evaluates existing ones.
+Uses Sonnet (not Haiku) — connection quality is the core value of the app
+and requires genuine critical judgment, not pattern matching.
+
+Idempotent: skips pairs already present in edges or evaluated_pairs.
+Only evaluates new pairs — never re-evaluates existing ones.
 """
 
 import json
@@ -18,15 +21,15 @@ from pathlib import Path
 import anthropic
 
 ARTICLES_DIR = Path("data/articles")
-GRAPH_PATH = Path("data/graph.json")
+GRAPH_PATH   = Path("data/graph.json")
 
 client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
-MODEL = "claude-haiku-4-5-20251001"
+MODEL  = "claude-sonnet-4-6"
 
 
 def article_summary(a: dict) -> str:
     """Build a compact representation of an article for the connection prompt."""
-    claims = "\n".join(f"  - {c}" for c in a.get("key_claims", []))
+    claims   = "\n".join(f"  - {c}" for c in a.get("key_claims", []))
     tensions = "\n".join(f"  - {t}" for t in a.get("key_tensions", []))
     entities = ", ".join(a.get("key_entities", [])) or "none cited"
     return f"""Title: {a.get("title", "Unknown")}
@@ -41,7 +44,7 @@ Key intellectual references: {entities}"""
 
 
 def parse_response(raw: str) -> dict:
-    """Strip markdown fences and parse JSON from a Haiku response."""
+    """Strip markdown fences and parse JSON from model response."""
     raw = raw.strip()
     raw = re.sub(r"^```(?:json)?\s*", "", raw)
     raw = re.sub(r"\s*```$", "", raw)
@@ -50,12 +53,13 @@ def parse_response(raw: str) -> dict:
 
 def find_connection(article_a: dict, article_b: dict) -> dict | None:
     """
-    Ask Claude Haiku whether two articles have a meaningful intellectual connection.
-    Returns {type, explanation} if connected, None otherwise.
+    Ask Claude Sonnet whether two articles have a genuine intellectual connection.
+    Returns {type, claim_a, claim_b, explanation} if connected, None otherwise.
     Retries once with a stricter prompt if the first response fails to parse.
     Logs token usage for cost monitoring.
     """
-    prompt = f"""You are building a personal knowledge graph. Evaluate whether these two articles have a meaningful intellectual connection.
+    prompt = f"""You are a rigorous intellectual analyst building a personal knowledge graph. \
+Evaluate whether these two articles have a genuine, specific, non-obvious intellectual connection.
 
 ARTICLE A:
 {article_summary(article_a)}
@@ -63,37 +67,73 @@ ARTICLE A:
 ARTICLE B:
 {article_summary(article_b)}
 
-Your default answer is: {{"connected": false}}
-Only override this if you can identify a direct argumentative relationship between a SPECIFIC claim in Article A and a SPECIFIC claim in Article B — not an abstract structural pattern that could apply to most articles in these domains.
+Before answering, work through these four tests in order:
 
-To test your finding: would someone who had read only ONE of these articles find this connection surprising? If the connection is derivable from reading articles in these general subject areas without needing both, it is topical overlap — not a connection.
+TEST 1 — SPECIFIC CLAIMS
+Identify the single most specific, falsifiable claim in Article A and in Article B. \
+Work at the level of citable claims — not themes, structural patterns, or general arguments.
 
-Connection types — in order of strictness required:
-- reinforce: cite the specific claim in A and the specific claim in B that make the same argument from different angles. Must be falsifiable. Generic principles ("incentives matter", "culture drives outcomes", "metrics can mislead") do not qualify.
-- contradict: cite the specific claim in A that directly contradicts a specific claim in B. Surface sentiment disagreement (one optimistic, one pessimistic) does not qualify.
-- evolve: cite the specific argument in A and show exactly how B extends, refines, or limits it with new evidence or a boundary condition A does not address.
-- adjacent: the domains must be genuinely different (not different scales or sub-fields of the same discipline). The shared structural logic must generate a specific prediction or insight that neither article makes alone. If this logic applies to 20%+ of articles in these domains, it does not qualify.
+TEST 2 — DIRECT ARGUMENTATIVE RELATIONSHIP
+Is there a direct relationship between a specific claim in A and a specific claim in B?
+- reinforce: the specific claim in A and a specific claim in B make the same non-obvious \
+argument independently. Must be falsifiable. Generic principles ("incentives matter", \
+"culture drives outcomes", "metrics can mislead", "proximity affects judgment") do not qualify.
+- contradict: a specific claim in A directly contradicts a specific claim in B. Surface \
+sentiment disagreement (one optimistic, one pessimistic) does not qualify.
+- evolve: a specific argument in A is extended, refined, or bounded by a specific argument \
+in B with new evidence or a limiting case that A does not address.
+- adjacent: a specific claim in A and a specific claim in B reveal the same structural logic \
+across GENUINELY DIFFERENT intellectual disciplines — not different sub-fields or scales of \
+the same discipline. Economics and media economics are the same discipline. The shared logic \
+must generate a specific prediction that neither article makes alone.
 
-Examples of connections that FAIL the quality bar:
-- reinforce: "Both articles argue that culture determines organisational success." → Generic, applies to most management writing.
-- contradict: "Article A is optimistic about AI; Article B is pessimistic." → Surface sentiment, not a specific claim clash.
-- evolve: "Article A introduces the attention economy; Article B also discusses it." → B references A's concept but does not extend it.
-- adjacent: "Both articles argue that surface metrics miss the underlying quality that drives outcomes." → Applies to virtually all management writing, generates no specific insight.
+TEST 3 — NON-DERIVABILITY
+Would someone who had only read Article A already predict the specific finding in Article B \
+that creates this connection — or vice versa? If yes, the connection is derivable from domain \
+knowledge alone and does not qualify. Return connected: false.
 
-Examples of connections that PASS the quality bar:
-- reinforce: "Article A shows attention value follows a power law (live sports earns 600x more per hour than podcasts). Article B shows startup returns follow a power law (top 10 companies outperform the rest combined). Same specific mechanism — power-law distribution ignored by industry averaging — appearing independently in two domains."
-- contradict: "Article A claims board diversity metrics predict governance quality. Article B shows Enron's board comprised credentialed, prominent individuals who still failed catastrophically — directly contradicts on a specific, falsifiable point about whether composition predicts outcomes."
-- evolve: "Article A prescribes 4-hour uninterrupted focus blocks for deep work. Article B finds 90-minute sessions with deliberate rest outperform sustained blocks — identifies the exact boundary condition (cognitive fatigue) where A's prescription breaks down, extending it with a limiting case A does not address."
-- adjacent: "Article A shows content abundance destroyed per-unit attention value (25,000x more YouTube than TV, yet TV monetises better per hour). Article B shows trade volume growth destroyed per-unit trade margins. Across genuinely different domains, the same structural logic holds: near-infinite supply collapses per-unit economics while the scarce complement becomes the true value driver — a prediction neither article makes alone."
+TEST 4 — GENERALITY
+Would this connection apply to 20%+ of articles in these domains? If yes, it is a genre \
+convention, not an intellectual connection. Return connected: false.
 
-Reply with ONLY valid JSON — no markdown fences, no commentary:
-{{"connected": true, "type": "reinforce|contradict|evolve|adjacent", "explanation": "One precise sentence citing the specific claim from each article and the exact relationship between them."}}
+Your default is: {{"connected": false}}
+Only override with specific, non-derivable evidence that passes all four tests.
+
+FAIL examples (do not return these):
+- reinforce: "Both show that leaders' proximity to their organisations creates overconfidence \
+that blinds them to systemic risks." → Derivable from either article's domain alone; \
+a well-known cognitive bias, not a non-obvious shared finding.
+- reinforce: "Both argue that surface metrics miss underlying quality drivers." → Genre \
+convention; applies to most management writing.
+- contradict: "Article A is optimistic about AI; Article B is pessimistic." → Surface \
+sentiment only.
+- adjacent: "Both reveal how structural proximity undermines objective judgment." → Too \
+generic; applies to virtually all governance and behavioural economics writing.
+
+PASS examples:
+- reinforce: claim_a = "Attention value follows a power law: live sports earns 600x more \
+per hour than podcasts across 20 media formats." claim_b = "Startup returns follow a power \
+law: top 10 companies in a fund return more than the rest combined." Explanation: "Both \
+independently identify power-law distribution as the structural reality their industry ignores \
+by using averages — the same non-obvious mechanism appearing across genuinely different domains."
+- adjacent: claim_a = "Content abundance has destroyed per-unit attention value: 25,000x more \
+YouTube hours than TV yet TV monetises better per hour." claim_b = "Trade volume growth \
+destroyed per-unit trade margins as Chinese exporters cut prices 8% to find buyers in \
+realigned markets." Explanation: "Across genuinely different disciplines, near-infinite supply \
+collapses per-unit economics while the scarce complement (focused attention; geopolitically \
+trusted partnerships) becomes the true value driver — a prediction neither article makes alone."
+
+Reply with ONLY valid JSON — no markdown, no commentary:
+{{"connected": true, "type": "reinforce|contradict|evolve|adjacent", \
+"claim_a": "the exact specific claim from Article A being connected", \
+"claim_b": "the exact specific claim from Article B being connected", \
+"explanation": "one precise sentence explaining the exact relationship between these two specific claims"}}
 or
 {{"connected": false}}"""
 
-    retry_prompt = """Reply with ONLY valid JSON. No markdown, no commentary, no special characters outside the JSON values.
+    retry_prompt = """Reply with ONLY valid JSON. No markdown, no commentary.
 Use one of these two forms exactly:
-{"connected": true, "type": "reinforce", "explanation": "One sentence."}
+{"connected": true, "type": "reinforce", "claim_a": "specific claim from Article A", "claim_b": "specific claim from Article B", "explanation": "One sentence."}
 {"connected": false}"""
 
     for attempt in range(2):
@@ -102,7 +142,7 @@ Use one of these two forms exactly:
 
         response = client.messages.create(
             model=MODEL,
-            max_tokens=256,
+            max_tokens=512,
             messages=(
                 [{"role": "user", "content": prompt}]
                 if attempt == 0
@@ -124,7 +164,9 @@ Use one of these two forms exactly:
             result = parse_response(response.content[0].text)
             if result.get("connected"):
                 return {
-                    "type": result["type"],
+                    "type":        result["type"],
+                    "claim_a":     result.get("claim_a", ""),
+                    "claim_b":     result.get("claim_b", ""),
                     "explanation": result["explanation"],
                 }
             return None
@@ -161,7 +203,8 @@ def main() -> None:
         graph = json.load(f)
 
     # Build set of already-evaluated pairs from both edges AND evaluated_pairs.
-    # This ensures pairs that returned "no connection" are never re-evaluated.
+    # Pairs that returned "no connection" are recorded in evaluated_pairs so
+    # they are never re-evaluated.
     already_evaluated: set[frozenset] = set()
     for edge in graph.get("edges", []):
         already_evaluated.add(frozenset([edge["source"], edge["target"]]))
@@ -182,32 +225,34 @@ def main() -> None:
 
     print(f"Evaluating {len(new_pairs)} new pair(s)...\n")
 
-    new_edges = []
-    new_evaluated: list[list[str]] = []  # all pairs evaluated this run (connected or not)
+    new_edges:     list[dict]       = []
+    new_evaluated: list[list[str]]  = []
     error_count = 0
 
     for slug_a, slug_b in new_pairs:
-        print(f"  {slug_a}  ↔  {slug_b}")
+        print(f"  {slug_a}  <->  {slug_b}")
         try:
             connection = find_connection(articles[slug_a], articles[slug_b])
             if connection:
                 edge = {
-                    "source": slug_a,
-                    "target": slug_b,
-                    "type": connection["type"],
+                    "source":      slug_a,
+                    "target":      slug_b,
+                    "type":        connection["type"],
+                    "claim_a":     connection["claim_a"],
+                    "claim_b":     connection["claim_b"],
                     "explanation": connection["explanation"],
-                    "date_added": date.today().isoformat(),
+                    "date_added":  date.today().isoformat(),
                 }
                 new_edges.append(edge)
-                print(f"  → {connection['type'].upper()}: {connection['explanation']}")
+                print(f"  -> {connection['type'].upper()}: {connection['explanation']}")
+                print(f"     A: {connection['claim_a']}")
+                print(f"     B: {connection['claim_b']}")
             else:
-                print("  → No meaningful connection.")
-            # Record as evaluated regardless of outcome
+                print("  -> No meaningful connection.")
             new_evaluated.append([slug_a, slug_b])
         except Exception as e:
             print(f"  ERROR: {e}", file=sys.stderr)
             error_count += 1
-            # Do NOT record as evaluated — will retry on next run
             continue
 
     # Persist graph

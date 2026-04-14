@@ -88,8 +88,8 @@ Before writing any file to disk, Claude Code must show Debjyoti:
 ### 4. Token efficiency is a first-class concern
 This is a personal project with a target cost of ~$1–2/month. Every Claude API call in the workflows must be scrutinised:
 - Pass enriched article fields to Claude — summary, central_argument, key_claims, key_tensions, domain, stance, key_entities — never full article text after initial ingestion
-- Use Haiku for: ingestion, connection-finding, book processing, dashboard computation
-- Use Sonnet for: opinion synthesis, surprise detection, weekly/monthly digests
+- Use Haiku for: ingestion, book processing, dashboard computation
+- Use Sonnet for: connection-finding, opinion synthesis, weekly/monthly digests
 - Never call Claude when the answer can be computed from existing JSON data
 
 ### 5. One phase at a time
@@ -168,7 +168,7 @@ Claude Code must not say a phase is complete until it has explicitly confirmed e
     digest.yml          — Monthly cron (1st of month); generates digest with Sonnet; supports target_month override
   /scripts
     ingest.py           — Article extraction (Haiku)
-    connect.py          — Connection finding (Haiku); records all evaluated pairs (connected or not) to prevent re-evaluation
+    connect.py          — Connection finding (Sonnet); four-test evaluation (specific claims, direct relationship, non-derivability, generality); records all evaluated pairs to prevent re-evaluation; edges include claim_a and claim_b fields
     alerts.py           — Consolidated weekly surprise alert email (no Claude); ranks by domain bucket distance
     opinions.py         — Incremental opinion synthesis (Sonnet); full recompute when FORCE_FULL=true or no prior opinions
     digest.py           — Monthly digest synthesis (Sonnet); idempotent (skips if file exists)
@@ -210,7 +210,9 @@ README.md               — Setup instructions for Debjyoti
       "source": "slug-a",
       "target": "slug-b",
       "type": "reinforce",
-      "explanation": "One sentence explaining the connection",
+      "claim_a": "the specific claim from Article A that creates this connection",
+      "claim_b": "the specific claim from Article B that creates this connection",
+      "explanation": "One sentence explaining the exact relationship between the two claims",
       "date_added": "YYYY-MM-DD"
     }
   ],
