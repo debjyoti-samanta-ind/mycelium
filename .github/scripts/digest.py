@@ -22,7 +22,6 @@ import anthropic
 
 ARTICLES_DIR = Path("data/articles")
 GRAPH_PATH = Path("data/graph.json")
-OPINIONS_PATH = Path("data/opinions.json")
 DIGESTS_DIR = Path("data/digests")
 
 client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
@@ -90,7 +89,6 @@ def synthesise_digest(
     month_str: str,
     articles_this_month: list[dict],
     month_edges: list[dict],
-    opinions: list[dict],
     month_slugs: set,
 ) -> dict:
     """
@@ -100,10 +98,6 @@ def synthesise_digest(
     """
     articles_section = "\n\n".join(article_digest_str(a) for a in articles_this_month)
     edges_section = "\n".join(edge_str(e, month_slugs) for e in month_edges) or "None yet."
-    opinions_section = "\n".join(
-        f"- {op.get('theme', '?')}: {op.get('position', '')}"
-        for op in opinions
-    ) or "No opinions synthesised yet."
 
     prompt = f"""You are writing a monthly intellectual digest for Debjyoti, a curious and analytically serious reader. This digest covers {month_str}.
 
@@ -113,9 +107,6 @@ ARTICLES READ THIS MONTH ({len(articles_this_month)}):
 CONNECTIONS INVOLVING THIS MONTH'S ARTICLES:
 {edges_section}
 
-CURRENT INTELLECTUAL POSITIONS (from opinion synthesis):
-{opinions_section}
-
 ---
 
 Write a rich analyst-voice digest. Be direct, specific, and intellectually honest. Avoid generic phrasing like "explores", "delves into", or "highlights". Commit to views.
@@ -123,7 +114,6 @@ Write a rich analyst-voice digest. Be direct, specific, and intellectually hones
 Reply with ONLY valid JSON — no markdown fences, no commentary:
 {{
   "narrative": "3–5 sentences. What was the intellectual character of this month's reading? What argument or tension runs through it? Speak directly about Debjyoti's reading, not abstractly about the articles.",
-  "opinion_shifts": "1–3 sentences. Have any of his positions strengthened, weakened, or complicated based on this month's reading? If no shift is detectable, say so plainly.",
   "tensions": ["one specific unresolved tension surfaced this month", "optionally a second — only if genuinely distinct from the first"],
   "surprise_connection": "The most non-obvious connection found this month, or 'None this month.' if there isn't one. Include the two article slugs and why the connection is surprising."
 }}"""
@@ -183,10 +173,6 @@ def send_digest_email(
 </div>
 
 <div style="background: #fff; border: 1px solid #e7e5e4; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
-  <p style="font-size: 11px; color: #a8a29e; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.05em;">Opinion shifts</p>
-  <p style="font-size: 14px; color: #44403c; line-height: 1.7; margin: 0;">{digest.get("opinion_shifts", "")}</p>
-</div>
-
 {f'''<div style="background: #fff; border: 1px solid #e7e5e4; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
   <p style="font-size: 11px; color: #a8a29e; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.05em;">Tensions surfaced</p>
   <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.7;">{tensions_html}</ul>
@@ -254,16 +240,9 @@ def main() -> None:
         print(f"No articles added in {month_str}. Nothing to digest.")
         return
 
-    # Load graph and opinions for context
+    # Load graph for context
     with open(GRAPH_PATH) as f:
         graph = json.load(f)
-
-    try:
-        with open(OPINIONS_PATH) as f:
-            opinions_data = json.load(f)
-        opinions = opinions_data.get("opinions", [])
-    except (OSError, json.JSONDecodeError):
-        opinions = []
 
     month_slugs = {a["slug"] for a in articles_this_month}
     month_edges = edges_for_month(graph, month_slugs)
@@ -276,7 +255,6 @@ def main() -> None:
             month_str,
             articles_this_month,
             month_edges,
-            opinions,
             month_slugs,
         )
     except Exception as e:
@@ -290,7 +268,6 @@ def main() -> None:
         "articles_this_month": len(articles_this_month),
         "new_edges_this_month": len(month_edges),
         "narrative": synthesis.get("narrative", ""),
-        "opinion_shifts": synthesis.get("opinion_shifts", ""),
         "tensions": synthesis.get("tensions", []),
         "surprise_connection": synthesis.get("surprise_connection", ""),
     }

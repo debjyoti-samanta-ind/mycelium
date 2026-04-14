@@ -10,12 +10,12 @@ The user is Debjyoti. He is building this for himself. Every decision should opt
 ## Two-repo strategy
 
 ### Private repo — `mycelium-private` (build everything here)
-- Contains all real article data, graph, opinions, alerts, digests
+- Contains all real article data, graph, alerts, digests
 - Contains all GitHub Actions agent workflows
 - Contains the full React frontend
 - **Never made public**
 - This is where all development happens across all phases
-- GitHub Actions runs all agent jobs here (ingestion, connections, opinions, alerts, digests)
+- GitHub Actions runs all agent jobs here (ingestion, connections, alerts, digests)
 - Frontend runs locally via `npm run dev` — not deployed to GitHub Pages
 - Debjyoti accesses the app at `localhost:5174` on his machine
 
@@ -31,7 +31,7 @@ The user is Debjyoti. He is building this for himself. Every decision should opt
 ### What this means for Claude Code
 - **Always build in the private repo context**
 - **Never reference, sync to, or assume the existence of the public repo** during any phase build
-- Phase 7 (future, not yet planned) will handle the one-time export to the public repo
+- Phase 8 (future, not yet planned) will handle the one-time export to the public repo
 - When building the frontend, do not add any GitHub Pages deployment workflow — the app runs locally only during active development phases
 
 ---
@@ -74,7 +74,7 @@ After writing any code, Claude Code must run a self-validation checklist before 
 - [ ] Loading and empty states handled
 
 **For Claude API calls:**
-- [ ] Is the correct model being used? (Haiku for ingestion/connections, Sonnet for synthesis/opinions/digests)
+- [ ] Is the correct model being used? (Haiku for ingestion/dashboard, Sonnet for connections/synthesis/digests)
 - [ ] Is only the minimum necessary context being passed? (summaries and claims only — never full article text after ingestion)
 - [ ] Is the prompt asking for structured output (JSON) with a clear schema?
 - [ ] Is there a fallback if the API call fails?
@@ -89,11 +89,11 @@ Before writing any file to disk, Claude Code must show Debjyoti:
 This is a personal project with a target cost of ~$1–2/month. Every Claude API call in the workflows must be scrutinised:
 - Pass enriched article fields to Claude — summary, central_argument, key_claims, key_tensions, domain, stance, key_entities — never full article text after initial ingestion
 - Use Haiku for: ingestion, book processing, dashboard computation
-- Use Sonnet for: connection-finding, opinion synthesis, weekly/monthly digests
+- Use Sonnet for: connection-finding, weekly/monthly digests
 - Never call Claude when the answer can be computed from existing JSON data
 
 ### 5. One phase at a time
-The project is built in 6 phases. Claude Code must not implement features from a later phase while working on an earlier one. If a future-phase feature is relevant to a current decision, note it as a comment or a TODO — do not build it.
+The project is built in 8 phases. Claude Code must not implement features from a later phase while working on an earlier one. If a future-phase feature is relevant to a current decision, note it as a comment or a TODO — do not build it.
 
 Current phase is always stated at the top of the session. If it isn't stated, ask.
 
@@ -134,7 +134,7 @@ Claude Code must not say a phase is complete until it has explicitly confirmed e
 ### Stack
 - **Frontend:** React + Vite + Tailwind CSS (light theme only, no dark mode)
 - **Local hosting:** `npm run dev` → `localhost:5174` — no deployment during active phases; run `npm run watch` in a second terminal to auto-pull remote changes every 5 min
-- **Public hosting:** GitHub Pages in public repo — created only at Phase 7, not now
+- **Public hosting:** GitHub Pages in public repo — created only at Phase 8, not now
 - **Data store:** JSON flat files in /data/ — no database, no backend
 - **Agent jobs:** GitHub Actions workflows in the private repo
 - **Article fetching:** r.jina.ai/{url} — always auto-prepended, user always pastes raw URLs
@@ -155,22 +155,19 @@ Claude Code must not say a phase is complete until it has explicitly confirmed e
   /digests              — One JSON file per month ({YYYY-MM}.json)
   queue.json            — URL drop zone (user adds URLs here)
   graph.json            — Nodes, edges, and evaluated_pairs
-  opinions.json         — Per-theme intellectual positions (Phase 3)
   alerts.json           — Sent alert log with last_alerted_at timestamp (Phase 3)
   dashboard.json        — Precomputed dashboard stats (recomputed after every ingestion)
   config.json           — Topic colour map and app settings
 /.github
   /workflows            — All agent logic lives here
     ingest.yml          — Triggered on queue.json push; runs ingest.py then compute_dashboard.py
-    connect.yml         — Triggered after ingest; finds connections with Haiku
+    connect.yml         — Triggered after ingest; finds connections with Sonnet
     alerts.yml          — Weekly cron (Sunday); sends consolidated surprise alert email (max 3, ranked by domain surprise)
-    opinions.yml        — Weekly cron (Sunday); incremental opinion synthesis with Sonnet; FORCE_FULL input for full recompute
     digest.yml          — Monthly cron (1st of month); generates digest with Sonnet; supports target_month override
   /scripts
     ingest.py           — Article extraction (Haiku)
     connect.py          — Connection finding (Sonnet); four-test evaluation (specific claims, direct relationship, non-derivability, generality); records all evaluated pairs to prevent re-evaluation; edges include claim_a and claim_b fields
     alerts.py           — Consolidated weekly surprise alert email (no Claude); ranks by domain bucket distance
-    opinions.py         — Incremental opinion synthesis (Sonnet); full recompute when FORCE_FULL=true or no prior opinions
     digest.py           — Monthly digest synthesis (Sonnet); idempotent (skips if file exists)
     compute_dashboard.py — Dashboard stat computation (no Claude, pure Python)
 CLAUDE.md               — This file
@@ -270,11 +267,11 @@ If Claude Code is about to implement something that would increase API costs mea
 |-------|------|--------|
 | 1 | Foundation — URL intake + article processing | Complete |
 | 2 | Graph — connection finding + visual map | Complete |
-| 3 | Analyst — opinion tracker + surprise email alerts | Complete |
+| 3 | Analyst — surprise email alerts | Complete |
 | 4 | Memory — monthly digests + time-filtered graph | Complete |
 | 5 | Books — anchor nodes | Parked |
 | 6 | Dashboard — momentum + reading intelligence | Complete |
-| 7 | Opinion evolution — track how intellectual positions change over time | Parked |
+| 7 | Agents — Prediction Tracker, Steelman, So What, Second-Order Effects | Planned |
 | 8 | Public repo — one-time MVP export with demo data | Parked |
 
 ---

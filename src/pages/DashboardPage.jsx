@@ -44,7 +44,6 @@ function SectionHeader({ title }) {
 export default function DashboardPage() {
   const r = d.reading   || {}
   const g = d.graph     || {}
-  const o = d.opinions  || {}
 
   const dist    = r.domain_distribution || []
   const maxCount = dist[0]?.count || 1
@@ -187,11 +186,8 @@ export default function DashboardPage() {
           />
         </div>
 
-        {/* Contradiction density + opinion confidence side by side */}
-        <div className="grid grid-cols-2 gap-4">
-
-          {/* Contradiction density */}
-          <div className="bg-white border border-stone-200 rounded-xl p-5">
+        {/* Connection types */}
+        <div className="bg-white border border-stone-200 rounded-xl p-5">
             <div className="flex items-center mb-4">
               <p className="text-xs font-medium text-stone-500 uppercase tracking-wide">Connection types</p>
               <Tooltip text="How your graph's connections break down by type. A reading diet heavy in 'reinforce' connections may mean you're reading inside an echo chamber. More 'contradict' and 'adjacent' connections mean your reading is genuinely challenging itself." />
@@ -230,47 +226,6 @@ export default function DashboardPage() {
                   : `${Math.round((g.contradiction_density ?? 0) * 100)}% of connections challenge your existing views.`}
               </p>
             )}
-          </div>
-
-          {/* Opinion confidence */}
-          <div className="bg-white border border-stone-200 rounded-xl p-5">
-            <div className="flex items-center mb-4">
-              <p className="text-xs font-medium text-stone-500 uppercase tracking-wide">Opinion confidence</p>
-              <Tooltip text="How well-supported your current intellectual positions are. Strong = 4+ articles behind the position. Forming = 2–3 articles. Thin = only 1 article — still early signal." />
-            </div>
-            {o.total === 0 ? (
-              <p className="text-xs text-stone-400">
-                Opinions appear after 3+ articles are ingested and the weekly synthesis runs.
-              </p>
-            ) : (
-              <div className="space-y-3">
-                {[
-                  { label: 'Strong',  key: 'strong',  sub: '4+ articles',  colour: '#4a7c59' },
-                  { label: 'Forming', key: 'forming', sub: '2–3 articles', colour: '#e17055' },
-                  { label: 'Thin',    key: 'thin',    sub: '1 article',    colour: '#c0392b' },
-                ].map(({ label, key, sub, colour }) => {
-                  const count = o[key] || 0
-                  const pct   = Math.round((count / (o.total || 1)) * 100)
-                  return (
-                    <div key={key} className="flex items-center gap-3">
-                      <div className="w-20">
-                        <p className="text-xs text-stone-600">{label}</p>
-                        <p className="text-xs text-stone-400">{sub}</p>
-                      </div>
-                      <div className="flex-1 bg-stone-100 rounded-full h-1.5">
-                        <div
-                          className="h-1.5 rounded-full"
-                          style={{ width: `${pct}%`, backgroundColor: colour }}
-                        />
-                      </div>
-                      <span className="text-xs text-stone-400 w-4 text-right">{count}</span>
-                    </div>
-                  )
-                })}
-              </div>
-            )}
-          </div>
-
         </div>
       </section>
 

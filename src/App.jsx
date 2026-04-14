@@ -3,7 +3,6 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import SubmitPage from './pages/SubmitPage.jsx'
 import ArticleListPage from './pages/ArticleListPage.jsx'
 import GraphPage from './pages/GraphPage.jsx'
-import OpinionsPage from './pages/OpinionsPage.jsx'
 import DigestsPage from './pages/DigestsPage.jsx'
 import DashboardPage from './pages/DashboardPage.jsx'
 import graphDataStatic from '../data/graph.json'
@@ -40,7 +39,6 @@ export default function App() {
             {navLink('/', 'Add Article')}
             {navLink('/articles', 'Articles')}
             {navLink('/graph', 'Graph')}
-            {navLink('/opinions', 'Opinions')}
             {navLink('/digests', 'Digests')}
           </div>
         </div>
@@ -56,7 +54,6 @@ export default function App() {
           <Routes>
             <Route path="/" element={<SubmitPage />} />
             <Route path="/articles" element={<ArticleListPage onArticleDeleted={removeFromGraph} />} />
-            <Route path="/opinions" element={<OpinionsPage />} />
             <Route path="/digests" element={<DigestsPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
           </Routes>

@@ -39,7 +39,7 @@
 
 Right now you only need the private repo. The public repo (`mycelium`) gets created manually at Phase 7, after Phases 1–4 are complete. At that point you copy `/src` across, seed it with fictional demo data, and deploy to GitHub Pages. Until then, ignore the public repo entirely.
 
-The GitHub Actions agent workflows (ingestion, connections, opinions, alerts, digests) all run in the **private repo**. Your data never touches the public repo.
+The GitHub Actions agent workflows (ingestion, connections, alerts, digests) all run in the **private repo**. Your data never touches the public repo.
 
 ---
 
@@ -107,7 +107,7 @@ Target: under $2/month total. Flag anything using Sonnet where Haiku should be u
 
 - [ ] Phase 1: URL intake + article list — **start here**
 - [ ] Phase 2: Connection finding + D3 graph
-- [ ] Phase 3: Opinion tracker + surprise email alerts
+- [ ] Phase 3: Surprise email alerts
 - [ ] Phase 4: Cadence digests + time-filtered graph
 - [ ] Phase 5: Books (parked — return later)
 - [ ] Phase 6: Dashboard + momentum tracking

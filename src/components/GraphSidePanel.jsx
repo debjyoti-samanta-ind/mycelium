@@ -137,6 +137,25 @@ export default function GraphSidePanel({ node, link, articleMap, edgeColours, on
             <p className="text-sm text-stone-700 leading-relaxed">{link.explanation}</p>
           )}
 
+          {/* Specific claims connected */}
+          {(link.claim_a || link.claim_b) && (
+            <div className="space-y-2 pt-2 border-t border-stone-100">
+              <p className="text-xs font-medium text-stone-500">Specific claims connected</p>
+              {link.claim_a && (
+                <div className="pl-3 border-l-2 border-stone-200">
+                  <p className="text-xs text-stone-400 mb-0.5">Article A</p>
+                  <p className="text-xs text-stone-600 leading-relaxed">{link.claim_a}</p>
+                </div>
+              )}
+              {link.claim_b && (
+                <div className="pl-3 border-l-2 border-stone-200">
+                  <p className="text-xs text-stone-400 mb-0.5">Article B</p>
+                  <p className="text-xs text-stone-600 leading-relaxed">{link.claim_b}</p>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* The two articles */}
           <div className="space-y-3 pt-2 border-t border-stone-100">
             {[srcArticle, tgtArticle].filter(Boolean).map((article, i) => (

@@ -133,11 +133,6 @@ export default function DigestsPage() {
             <p className="text-sm text-stone-700 leading-relaxed">{selected.narrative}</p>
           </section>
 
-          <section className="mb-6">
-            <p className="text-xs font-medium text-stone-400 uppercase tracking-wide mb-2">Opinion shifts</p>
-            <p className="text-sm text-stone-700 leading-relaxed">{selected.opinion_shifts}</p>
-          </section>
-
           {selected.tensions?.length > 0 && (
             <section className="mb-6">
               <p className="text-xs font-medium text-stone-400 uppercase tracking-wide mb-2">Tensions surfaced</p>

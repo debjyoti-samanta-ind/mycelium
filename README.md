@@ -91,7 +91,7 @@ Add these in your GitHub repo under **Settings → Secrets and variables → Act
 |-------|-------------|
 | 1 | URL intake, article processing, article list view |
 | 2 | Connection finding, interactive knowledge graph |
-| 3 | Opinion tracker, surprise email alerts |
+| 3 | Surprise email alerts |
 | 4 | Monthly digests (emailed + in-app), time-filtered graph |
 | 5 | Books (parked) |
 | 6 | Dashboard with momentum tracking |

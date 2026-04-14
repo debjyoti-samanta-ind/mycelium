@@ -1,6 +1,6 @@
 """
 Mycelium dashboard computation script — Phase 6
-Pure Python, no Claude API call. Reads articles, graph, and opinions
+Pure Python, no Claude API call. Reads articles and graph
 and writes precomputed stats to data/dashboard.json.
 
 Runs as the final step of the ingest workflow after new articles are saved.
@@ -13,7 +13,6 @@ from pathlib import Path
 
 ARTICLES_DIR = Path("data/articles")
 GRAPH_PATH   = Path("data/graph.json")
-OPINIONS_PATH = Path("data/opinions.json")
 DASHBOARD_PATH = Path("data/dashboard.json")
 
 
@@ -169,14 +168,6 @@ def compute_graph(graph: dict) -> dict:
     }
 
 
-def compute_opinions(opinions_data: dict) -> dict:
-    opinions = opinions_data.get("opinions", [])
-    strong  = sum(1 for op in opinions if len(op.get("article_slugs", [])) >= 4)
-    forming = sum(1 for op in opinions if 2 <= len(op.get("article_slugs", [])) <= 3)
-    thin    = sum(1 for op in opinions if len(op.get("article_slugs", [])) == 1)
-    return {"total": len(opinions), "strong": strong, "forming": forming, "thin": thin}
-
-
 def main() -> None:
     articles = load_articles()
     print(f"Loaded {len(articles)} article(s).")
@@ -184,27 +175,19 @@ def main() -> None:
     with open(GRAPH_PATH) as f:
         graph = json.load(f)
 
-    try:
-        with open(OPINIONS_PATH) as f:
-            opinions_data = json.load(f)
-    except (OSError, json.JSONDecodeError):
-        opinions_data = {"opinions": []}
-
     dashboard = {
         "computed_at": date.today().isoformat(),
         "reading":     compute_reading(articles),
         "graph":       compute_graph(graph),
-        "opinions":    compute_opinions(opinions_data),
     }
 
     with open(DASHBOARD_PATH, "w") as f:
         json.dump(dashboard, f, indent=2, ensure_ascii=False)
 
-    r, g, o = dashboard["reading"], dashboard["graph"], dashboard["opinions"]
+    r, g = dashboard["reading"], dashboard["graph"]
     print(f"Dashboard written to {DASHBOARD_PATH}.")
     print(f"  Articles: {r['total_articles']}  |  This month: {r['this_month']}")
     print(f"  Graph density: {g['density']}  |  Edges: {g['total_edges']}  |  Islands: {g['island_count']}")
-    print(f"  Opinions: {o['total']}  (strong: {o['strong']}, forming: {o['forming']}, thin: {o['thin']})")
 
 
 if __name__ == "__main__":
