@@ -17,54 +17,6 @@
       "type": "article"
     }
   ],
-  "edges": [
-    {
-      "source": "2026-business-leaders-outlook-expectations-trends",
-      "target": "geopolitics-geometry-global-trade-2026-update",
-      "type": "reinforce",
-      "explanation": "Both articles argue that despite significant macroeconomic disruption from tariffs and geopolitical realignment, businesses and trade patterns demonstrate resilience and adaptation rather than collapse, with AI-related sectors emerging as growth engines offsetting traditional trade losses."
-    },
-    {
-      "source": "attention-equation-consumer-attention-battles",
-      "target": "2026-business-leaders-outlook-expectations-trends",
-      "type": "adjacent",
-      "explanation": "Both articles apply the same underlying logic of quality-over-quantity metrics to their respective domains: Article A argues that attention value depends on focus and intent rather than hours consumed, while Article B demonstrates that business confidence depends on company-specific factors rather than macroeconomic conditions, revealing a shared structural insight that aggregate measures (time spent, national sentiment) systematically misrepresent actual value and decision-making drivers.",
-      "date_added": "2026-04-13"
-    },
-    {
-      "source": "attention-equation-consumer-attention-battles",
-      "target": "geopolitics-geometry-global-trade-2026-update",
-      "type": "adjacent",
-      "explanation": "Both articles apply the same underlying logic of structural mismatch—that raw quantitative metrics (consumption hours in media, trade volume in geopolitics) fail to predict economic value, which instead depends on quality factors (focus/intent in attention, geopolitical alignment in trade flows) that traditional measurement obscures.",
-      "date_added": "2026-04-13"
-    },
-    {
-      "source": "attention-equation-consumer-attention-battles",
-      "target": "twenty-years-lasting-lessons-enron",
-      "type": "adjacent",
-      "explanation": "Both articles argue that quantitative metrics (consumption hours, board credentials) fail to predict desired outcomes (revenue, effective governance) without qualitative factors (focus/intent, structural independence), revealing a shared structural logic that raw measurement data masks the quality of human judgment required for institutional success.",
-      "date_added": "2026-04-14"
-    },
-    {
-      "source": "2026-business-leaders-outlook-expectations-trends",
-      "target": "twenty-years-lasting-lessons-enron",
-      "type": "adjacent",
-      "explanation": "Both articles identify a structural gap between formal systems (macroeconomic indicators and governance frameworks) and actual decision-making behavior (company-level optimism and board independence), arguing that institutional structures alone fail to ensure sound judgment without examining the integrity and independence of the human actors operating within them.",
-      "date_added": "2026-04-14"
-    }
-  ],
-  "evaluated_pairs": [
-    [
-      "attention-equation-consumer-attention-battles",
-      "twenty-years-lasting-lessons-enron"
-    ],
-    [
-      "2026-business-leaders-outlook-expectations-trends",
-      "twenty-years-lasting-lessons-enron"
-    ],
-    [
-      "twenty-years-lasting-lessons-enron",
-      "geopolitics-geometry-global-trade-2026-update"
-    ]
-  ]
+  "edges": [],
+  "evaluated_pairs": []
 }
