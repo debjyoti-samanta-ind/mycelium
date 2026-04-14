@@ -17,6 +17,53 @@
       "type": "article"
     }
   ],
-  "edges": [],
-  "evaluated_pairs": []
+  "edges": [
+    {
+      "source": "attention-equation-consumer-attention-battles",
+      "target": "geopolitics-geometry-global-trade-2026-update",
+      "type": "adjacent",
+      "explanation": "Article A demonstrates that abundance of supply (25,000x more YouTube hours than traditional TV) collapses per-unit attention value, making quality of focus—not quantity—the scarce complement; Article B shows that trade volume growth coexists with margin compression across most sectors except AI-trade, where the scarce complement (advanced semiconductors) commands structural premiums—together revealing that in systems with near-infinite supply, per-unit economics collapse unless the scarce input (attention quality or technological bottleneck) becomes the value driver, a prediction neither article makes alone.",
+      "date_added": "2026-04-14"
+    },
+    {
+      "source": "2026-business-leaders-outlook-expectations-trends",
+      "target": "twenty-years-lasting-lessons-enron",
+      "type": "reinforce",
+      "explanation": "Article A's finding that business leaders maintain 71% optimism about their own company performance despite only 39% optimism about the national economy demonstrates the specific governance risk Article B warns against: leaders' proximity to their own operations and relationships can create overconfidence that blinds them to systemic risks, just as Enron's board members' relationships with leadership prevented them from recognizing red flags—both articles show how structural proximity undermines objective judgment regardless of the subjects' credentials or information access.",
+      "date_added": "2026-04-14"
+    },
+    {
+      "source": "2026-business-leaders-outlook-expectations-trends",
+      "target": "geopolitics-geometry-global-trade-2026-update",
+      "type": "reinforce",
+      "explanation": "Article A claims 61% of business leaders report negative tariff impacts on costs, while Article B's finding that the US replaced two-thirds of tariff-induced import gaps with goods from other sellers reinforces this cost pressure by showing tariffs forced companies to source from alternative, likely less efficient suppliers rather than their original partners—both articles document the same phenomenon (tariff-driven cost increases) from complementary angles of impact (internal business costs vs. supply chain reorientation).",
+      "date_added": "2026-04-14"
+    }
+  ],
+  "evaluated_pairs": [
+    [
+      "attention-equation-consumer-attention-battles",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "twenty-years-lasting-lessons-enron",
+      "geopolitics-geometry-global-trade-2026-update"
+    ]
+  ]
 }
