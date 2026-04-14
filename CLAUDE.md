@@ -133,7 +133,7 @@ Claude Code must not say a phase is complete until it has explicitly confirmed e
 
 ### Stack
 - **Frontend:** React + Vite + Tailwind CSS (light theme only, no dark mode)
-- **Local hosting:** `npm run dev` → `localhost:5174` — no deployment during active phases
+- **Local hosting:** `npm run dev` → `localhost:5174` — no deployment during active phases; run `npm run watch` in a second terminal to auto-pull remote changes every 5 min
 - **Public hosting:** GitHub Pages in public repo — created only at Phase 7, not now
 - **Data store:** JSON flat files in /data/ — no database, no backend
 - **Agent jobs:** GitHub Actions workflows in the private repo
@@ -147,28 +147,30 @@ Claude Code must not say a phase is complete until it has explicitly confirmed e
     Tooltip.jsx         — Hover tooltip with ? icon, used on dashboard metrics
   /pages                — Page-level views
   /utils                — Helper functions (data loading, graph computation)
+/scripts
+  watch-pull.js         — Polls `git pull` every 5 min; run with `npm run watch`
 /data
   /articles             — One JSON file per ingested article ({slug}.json)
   /books                — One JSON file per book (Phase 5)
   /digests              — One JSON file per month ({YYYY-MM}.json)
   queue.json            — URL drop zone (user adds URLs here)
-  graph.json            — Nodes and edges
+  graph.json            — Nodes, edges, and evaluated_pairs
   opinions.json         — Per-theme intellectual positions (Phase 3)
-  alerts.json           — Surprise connection alerts (Phase 3)
+  alerts.json           — Sent alert log with last_alerted_at timestamp (Phase 3)
   dashboard.json        — Precomputed dashboard stats (recomputed after every ingestion)
   config.json           — Topic colour map and app settings
 /.github
   /workflows            — All agent logic lives here
     ingest.yml          — Triggered on queue.json push; runs ingest.py then compute_dashboard.py
     connect.yml         — Triggered after ingest; finds connections with Haiku
-    alerts.yml          — Triggered after connect; sends surprise alert emails
-    opinions.yml        — Weekly cron; synthesises opinions with Sonnet
+    alerts.yml          — Weekly cron (Sunday); sends consolidated surprise alert email (max 3, ranked by domain surprise)
+    opinions.yml        — Weekly cron (Sunday); incremental opinion synthesis with Sonnet; FORCE_FULL input for full recompute
     digest.yml          — Monthly cron (1st of month); generates digest with Sonnet; supports target_month override
   /scripts
     ingest.py           — Article extraction (Haiku)
-    connect.py          — Connection finding (Haiku); adds date_added to new edges
-    alerts.py           — Surprise alert emails (no Claude)
-    opinions.py         — Opinion synthesis (Sonnet)
+    connect.py          — Connection finding (Haiku); records all evaluated pairs (connected or not) to prevent re-evaluation
+    alerts.py           — Consolidated weekly surprise alert email (no Claude); ranks by domain bucket distance
+    opinions.py         — Incremental opinion synthesis (Sonnet); full recompute when FORCE_FULL=true or no prior opinions
     digest.py           — Monthly digest synthesis (Sonnet); idempotent (skips if file exists)
     compute_dashboard.py — Dashboard stat computation (no Claude, pure Python)
 CLAUDE.md               — This file
@@ -208,11 +210,17 @@ README.md               — Setup instructions for Debjyoti
       "source": "slug-a",
       "target": "slug-b",
       "type": "reinforce",
-      "explanation": "One sentence explaining the connection"
+      "explanation": "One sentence explaining the connection",
+      "date_added": "YYYY-MM-DD"
     }
+  ],
+  "evaluated_pairs": [
+    ["slug-a", "slug-b"]
   ]
 }
 ```
+
+`evaluated_pairs` tracks every pair that has been evaluated (whether a connection was found or not), so the connection finder never re-evaluates the same pair. When an article is deleted, its pairs are removed from this list so they can be re-evaluated if the article is re-added.
 
 ### Edge types and their meaning
 - **reinforce** — both articles make the same argument from different angles
