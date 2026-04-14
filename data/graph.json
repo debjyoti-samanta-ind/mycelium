@@ -39,6 +39,15 @@
       "claim_b": "The United States replaced about two-thirds of the tariff-induced import gap with goods from other sellers, while trade grew faster than global output in 2025 despite dire predictions of retrenchment",
       "explanation": "Both claims independently demonstrate that tariff-induced disruption failed to produce the aggregate contraction it predicted: at the firm level, cost pain coexists with sustained performance optimism, and at the macro trade level, import displacement coexisted with accelerating trade volume — the same non-obvious finding that tariff shocks redistribute rather than contract economic activity, appearing independently at micro and macro scales.",
       "date_added": "2026-04-14"
+    },
+    {
+      "source": "twenty-years-lasting-lessons-enron",
+      "target": "building-ethically-strong-organization",
+      "type": "evolve",
+      "claim_a": "Organizations often have explicit ethical policies that differ from the implicit approach employees witness in daily decision-making",
+      "claim_b": "Enron's board, despite comprising seasoned and prominent individuals, lacked actual independence to recognize red flags due to their relationships with company leadership",
+      "explanation": "Article B's claim that the gap between explicit ethical policy and lived organizational behavior is the proximate cause of scandal provides a micro-level behavioral mechanism that directly bounds and refines Article A's claim about Enron's board failure — what Article A diagnoses structurally as insufficient independence, Article B reframes as the predictable outcome of an ethically weak situation where implicit norms overrode formal oversight mandates, adding a limiting condition Article A does not address: structural independence is insufficient if the implicit situational norms reward deference over scrutiny.",
+      "date_added": "2026-04-14"
     }
   ],
   "evaluated_pairs": [
@@ -65,6 +74,22 @@
     [
       "twenty-years-lasting-lessons-enron",
       "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "twenty-years-lasting-lessons-enron",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "geopolitics-geometry-global-trade-2026-update",
+      "building-ethically-strong-organization"
     ]
   ]
 }
