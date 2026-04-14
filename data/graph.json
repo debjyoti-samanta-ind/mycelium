@@ -17,6 +17,67 @@
       "type": "article"
     }
   ],
-  "edges": [],
-  "evaluated_pairs": []
+  "edges": [
+    {
+      "source": "attention-equation-consumer-attention-battles",
+      "target": "2026-business-leaders-outlook-expectations-trends",
+      "type": "adjacent",
+      "explanation": "Both articles identify the same structural logic: when a measurable input (consumption hours; macroeconomic conditions) becomes abundant or weakens, it decouples from the outcome that actually drives value (revenue per unit of attention; company-level performance), forcing decision-makers to optimize for the scarce complement (quality of focus/intent; internal operational resilience) rather than the surface metric.",
+      "date_added": "2026-04-14"
+    },
+    {
+      "source": "attention-equation-consumer-attention-battles",
+      "target": "twenty-years-lasting-lessons-enron",
+      "type": "adjacent",
+      "explanation": "Both articles expose how organizations systematically optimize for easily measurable metrics (consumption hours, board composition credentials) while remaining blind to the actual quality drivers that determine outcomes (focus + intent for monetization, structural independence + skeptical judgment for governance), revealing a common structural failure where quantifiable surface measures mask the qualitative conditions that genuinely produce value.",
+      "date_added": "2026-04-14"
+    },
+    {
+      "source": "attention-equation-consumer-attention-battles",
+      "target": "geopolitics-geometry-global-trade-2026-update",
+      "type": "adjacent",
+      "explanation": "Both articles identify the same structural logic: when supply becomes near-infinite (25,000x more YouTube hours than TV; one-third of global trade growth concentrated in AI semiconductors), per-unit economics of the abundant resource collapse while quality of the scarce complement (focused attention; geopolitically aligned partnerships) becomes the true value driver that surface metrics obscure.",
+      "date_added": "2026-04-14"
+    },
+    {
+      "source": "2026-business-leaders-outlook-expectations-trends",
+      "target": "twenty-years-lasting-lessons-enron",
+      "type": "adjacent",
+      "explanation": "Both articles identify a specific structural failure where surface-level confidence metrics (board composition credentials in Article B; company-level optimism in Article A) mask underlying governance and decision-making vulnerabilities—the same logic that confidence in *who* or *what* you're confident about diverges from capacity to *recognize* actual risks.",
+      "date_added": "2026-04-14"
+    },
+    {
+      "source": "2026-business-leaders-outlook-expectations-trends",
+      "target": "geopolitics-geometry-global-trade-2026-update",
+      "type": "adjacent",
+      "explanation": "Both articles reveal the same structural logic: actors insulated from macro shocks through strategic positioning (business leaders via company-level resilience, trade partners via geopolitical realignment and AI-sector growth) can thrive locally even as aggregate systems deteriorate, suggesting that fragmentation into aligned sub-networks creates pockets of immunity to systemic stress.",
+      "date_added": "2026-04-14"
+    }
+  ],
+  "evaluated_pairs": [
+    [
+      "attention-equation-consumer-attention-battles",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "twenty-years-lasting-lessons-enron",
+      "geopolitics-geometry-global-trade-2026-update"
+    ]
+  ]
 }
