@@ -1,10 +1,10 @@
 {
   "computed_at": "2026-04-14",
   "reading": {
-    "total_articles": 4,
-    "this_month": 4,
+    "total_articles": 5,
+    "this_month": 5,
     "last_month": 0,
-    "month_delta": 4,
+    "month_delta": 5,
     "active_since": "2026-04",
     "months_active": 1,
     "domain_distribution": [
@@ -19,39 +19,37 @@
       {
         "domain": "corporate governance",
         "count": 1
+      },
+      {
+        "domain": "organisational behaviour",
+        "count": 1
       }
     ],
     "depth_vs_breadth": {
       "mode": "broad",
       "top_domain": "economics",
       "top_domain_count": 2,
-      "domains_this_month": 3,
+      "domains_this_month": 4,
       "last_broad_month": "2026-04"
     },
     "neglected_topic": null
   },
   "graph": {
-    "total_nodes": 4,
-    "total_edges": 3,
-    "density": 0.5,
-    "island_count": 1,
-    "island_rate": 0.25,
+    "total_nodes": 5,
+    "total_edges": 2,
+    "density": 0.2,
+    "island_count": 2,
+    "island_rate": 0.4,
     "most_connected_node": {
-      "slug": "2026-business-leaders-outlook-expectations-trends",
+      "slug": "geopolitics-geometry-global-trade-2026-update",
       "edge_count": 2
     },
     "edge_type_distribution": {
       "reinforce": 1,
       "contradict": 0,
       "evolve": 0,
-      "adjacent": 2
+      "adjacent": 1
     },
     "contradiction_density": 0.0
-  },
-  "opinions": {
-    "total": 4,
-    "strong": 0,
-    "forming": 4,
-    "thin": 0
   }
 }
