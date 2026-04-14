@@ -63,28 +63,31 @@ ARTICLE A:
 ARTICLE B:
 {article_summary(article_b)}
 
-A connection is meaningful only if there is a specific argumentative relationship:
-- reinforce: both articles make the same core argument from different domains or angles
-- contradict: the articles directly disagree on a specific claim or conclusion
-- evolve: one article is a more developed or refined version of an idea in the other
-- adjacent: a non-obvious structural similarity across different fields — the same underlying logic applied differently
+Your default answer is: {{"connected": false}}
+Only override this if you can identify a direct argumentative relationship between a SPECIFIC claim in Article A and a SPECIFIC claim in Article B — not an abstract structural pattern that could apply to most articles in these domains.
 
-QUALITY BAR — before responding, ask: would a thoughtful reader who has read both articles find this connection genuinely surprising or illuminating? If the connection describes a principle so general it could apply to most articles in these domains, return {{"connected": false}}.
+To test your finding: would someone who had read only ONE of these articles find this connection surprising? If the connection is derivable from reading articles in these general subject areas without needing both, it is topical overlap — not a connection.
+
+Connection types — in order of strictness required:
+- reinforce: cite the specific claim in A and the specific claim in B that make the same argument from different angles. Must be falsifiable. Generic principles ("incentives matter", "culture drives outcomes", "metrics can mislead") do not qualify.
+- contradict: cite the specific claim in A that directly contradicts a specific claim in B. Surface sentiment disagreement (one optimistic, one pessimistic) does not qualify.
+- evolve: cite the specific argument in A and show exactly how B extends, refines, or limits it with new evidence or a boundary condition A does not address.
+- adjacent: the domains must be genuinely different (not different scales or sub-fields of the same discipline). The shared structural logic must generate a specific prediction or insight that neither article makes alone. If this logic applies to 20%+ of articles in these domains, it does not qualify.
 
 Examples of connections that FAIL the quality bar:
-- reinforce: "Both articles argue that culture determines organisational success." → Too generic, applies to most management writing.
+- reinforce: "Both articles argue that culture determines organisational success." → Generic, applies to most management writing.
 - contradict: "Article A is optimistic about AI; Article B is pessimistic." → Surface sentiment, not a specific claim clash.
 - evolve: "Article A introduces the attention economy; Article B also discusses it." → B references A's concept but does not extend it.
 - adjacent: "Both articles argue that surface metrics miss the underlying quality that drives outcomes." → Applies to virtually all management writing, generates no specific insight.
 
 Examples of connections that PASS the quality bar:
-- reinforce: "Article A shows attention value follows a power law (live sports earns 600x more per hour than podcasts). Article B shows startup returns follow a power law (top 10 companies outperform the rest combined). Both identify power-law distribution as the structural reality their industries ignore by averaging — same specific mechanism, different domains."
-- contradict: "Article A claims board diversity metrics predict governance quality. Article B shows Enron's board comprised credentialed, prominent individuals who still failed catastrophically — directly contradicting that composition metrics predict outcomes on a specific, falsifiable point."
-- evolve: "Article A prescribes 4-hour uninterrupted focus blocks for deep work. Article B finds alternating 90-minute sessions with deliberate rest outperforms sustained blocks — identifying the exact boundary condition (cognitive fatigue) where A's prescription breaks down and extending it with a limiting case."
-- adjacent: "Article A shows content abundance destroyed per-unit attention value (25,000x more YouTube than TV, yet TV monetises better per hour). Article B shows trade volume growth destroyed per-unit trade margins. Both reveal the same structural logic: when supply becomes near-infinite, per-unit economics collapse while the scarce complement becomes the true value driver — a prediction neither article makes alone."
+- reinforce: "Article A shows attention value follows a power law (live sports earns 600x more per hour than podcasts). Article B shows startup returns follow a power law (top 10 companies outperform the rest combined). Same specific mechanism — power-law distribution ignored by industry averaging — appearing independently in two domains."
+- contradict: "Article A claims board diversity metrics predict governance quality. Article B shows Enron's board comprised credentialed, prominent individuals who still failed catastrophically — directly contradicts on a specific, falsifiable point about whether composition predicts outcomes."
+- evolve: "Article A prescribes 4-hour uninterrupted focus blocks for deep work. Article B finds 90-minute sessions with deliberate rest outperform sustained blocks — identifies the exact boundary condition (cognitive fatigue) where A's prescription breaks down, extending it with a limiting case A does not address."
+- adjacent: "Article A shows content abundance destroyed per-unit attention value (25,000x more YouTube than TV, yet TV monetises better per hour). Article B shows trade volume growth destroyed per-unit trade margins. Across genuinely different domains, the same structural logic holds: near-infinite supply collapses per-unit economics while the scarce complement becomes the true value driver — a prediction neither article makes alone."
 
 Reply with ONLY valid JSON — no markdown fences, no commentary:
-{{"connected": true, "type": "reinforce|contradict|evolve|adjacent", "explanation": "One precise sentence naming the specific shared argument, disagreement, or structural similarity."}}
+{{"connected": true, "type": "reinforce|contradict|evolve|adjacent", "explanation": "One precise sentence citing the specific claim from each article and the exact relationship between them."}}
 or
 {{"connected": false}}"""
 
