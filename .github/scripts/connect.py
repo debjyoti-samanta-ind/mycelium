@@ -69,7 +69,19 @@ A connection is meaningful only if there is a specific argumentative relationshi
 - evolve: one article is a more developed or refined version of an idea in the other
 - adjacent: a non-obvious structural similarity across different fields — the same underlying logic applied differently
 
-Do NOT connect articles that merely share a topic, domain, or general theme without a specific argumentative relationship.
+QUALITY BAR — before responding, ask: would a thoughtful reader who has read both articles find this connection genuinely surprising or illuminating? If the connection describes a principle so general it could apply to most articles in these domains, return {{"connected": false}}.
+
+Examples of connections that FAIL the quality bar:
+- reinforce: "Both articles argue that culture determines organisational success." → Too generic, applies to most management writing.
+- contradict: "Article A is optimistic about AI; Article B is pessimistic." → Surface sentiment, not a specific claim clash.
+- evolve: "Article A introduces the attention economy; Article B also discusses it." → B references A's concept but does not extend it.
+- adjacent: "Both articles argue that surface metrics miss the underlying quality that drives outcomes." → Applies to virtually all management writing, generates no specific insight.
+
+Examples of connections that PASS the quality bar:
+- reinforce: "Article A shows attention value follows a power law (live sports earns 600x more per hour than podcasts). Article B shows startup returns follow a power law (top 10 companies outperform the rest combined). Both identify power-law distribution as the structural reality their industries ignore by averaging — same specific mechanism, different domains."
+- contradict: "Article A claims board diversity metrics predict governance quality. Article B shows Enron's board comprised credentialed, prominent individuals who still failed catastrophically — directly contradicting that composition metrics predict outcomes on a specific, falsifiable point."
+- evolve: "Article A prescribes 4-hour uninterrupted focus blocks for deep work. Article B finds alternating 90-minute sessions with deliberate rest outperforms sustained blocks — identifying the exact boundary condition (cognitive fatigue) where A's prescription breaks down and extending it with a limiting case."
+- adjacent: "Article A shows content abundance destroyed per-unit attention value (25,000x more YouTube than TV, yet TV monetises better per hour). Article B shows trade volume growth destroyed per-unit trade margins. Both reveal the same structural logic: when supply becomes near-infinite, per-unit economics collapse while the scarce complement becomes the true value driver — a prediction neither article makes alone."
 
 Reply with ONLY valid JSON — no markdown fences, no commentary:
 {{"connected": true, "type": "reinforce|contradict|evolve|adjacent", "explanation": "One precise sentence naming the specific shared argument, disagreement, or structural similarity."}}
