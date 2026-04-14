@@ -56,6 +56,42 @@
       "claim_b": "Enron's board, despite comprising seasoned and prominent individuals, lacked actual independence to recognize red flags due to their relationships with company leadership",
       "explanation": "Article B's claim that the gap between explicit ethical policy and lived organizational behavior is the proximate cause of scandal provides a micro-level behavioral mechanism that directly bounds and refines Article A's claim about Enron's board failure — what Article A diagnoses structurally as insufficient independence, Article B reframes as the predictable outcome of an ethically weak situation where implicit norms overrode formal oversight mandates, adding a limiting condition Article A does not address: structural independence is insufficient if the implicit situational norms reward deference over scrutiny.",
       "date_added": "2026-04-14"
+    },
+    {
+      "source": "attention-equation-consumer-attention-battles",
+      "target": "whats-your-edge-rethinking-expertise-ai",
+      "type": "adjacent",
+      "claim_a": "Attention value ranges from $33 per hour for live sports to $0.05 per hour for podcasts across 20 media formats — a 660x spread — yet the industry measures attention by hours consumed rather than quality of focus and intent.",
+      "claim_b": "For every percentage point increase in AI adoption, demand for management roles emphasizing judgment increases by 2.5% to 7.5%, because AI commoditizes information access while scarce human judgment becomes the value driver.",
+      "explanation": "Across genuinely different disciplines, near-infinite supply of the formerly scarce resource (content hours; retrievable knowledge) collapses its per-unit economic value while simultaneously concentrating value in the qualitatively distinct complement that cannot be replicated at scale (focused intentional attention; contextual judgment) — a structural prediction that neither article makes alone but both independently confirm through quantified empirical ratios.",
+      "date_added": "2026-04-14"
+    },
+    {
+      "source": "2026-business-leaders-outlook-expectations-trends",
+      "target": "whats-your-edge-rethinking-expertise-ai",
+      "type": "adjacent",
+      "claim_a": "27% of leaders anticipate AI-related headcount impact in 2026, yet 48% of midsize business owners plan to expand their workforce despite AI incorporation",
+      "claim_b": "For every percentage point increase in AI adoption, demand for management roles emphasizing judgment increases by 2.5% to 7.5%",
+      "explanation": "Across genuinely different disciplines — business sentiment economics and organizational behaviour research — both claims independently identify that AI adoption does not compress total headcount but shifts labour demand composition toward judgment-intensive roles, generating a shared non-obvious prediction that neither article makes alone: aggregate employment in AI-adopting firms may grow while the internal skill distribution tilts sharply toward meta-cognitive rather than information-processing work.",
+      "date_added": "2026-04-14"
+    },
+    {
+      "source": "whats-your-edge-rethinking-expertise-ai",
+      "target": "twenty-years-lasting-lessons-enron",
+      "type": "reinforce",
+      "claim_a": "AI cannot bear the weight of consequences or accountability for decisions with real stakes",
+      "claim_b": "Enron's board, despite comprising seasoned and prominent individuals, lacked actual independence to recognize red flags due to their relationships with company leadership",
+      "explanation": "Both claims independently identify that formal competence credentials—AI's knowledge retrieval capability in A, Enron directors' experience and prominence in B—are structurally insufficient substitutes for the specific human capacity to bear genuine accountability, with both arguing that accountability requires not just information access but an irreducible personal stake in consequences that cannot be delegated or assumed by proxy.",
+      "date_added": "2026-04-14"
+    },
+    {
+      "source": "whats-your-edge-rethinking-expertise-ai",
+      "target": "building-ethically-strong-organization",
+      "type": "evolve",
+      "claim_a": "Organizations often have explicit ethical policies that differ from the implicit approach employees witness in daily decision-making",
+      "claim_b": "AI cannot bear the weight of consequences or accountability for decisions with real stakes",
+      "explanation": "Article B's mechanism — that lived practice diverges from stated policy when accountability is diffuse — is sharpened by Article A's claim that AI cannot absorb real accountability, predicting that AI-mediated decision-making would systematically widen the policy-practice gap Article B identifies as the structural root of organizational ethical failure.",
+      "date_added": "2026-04-14"
     }
   ],
   "evaluated_pairs": [
@@ -97,6 +133,50 @@
     ],
     [
       "geopolitics-geometry-global-trade-2026-update",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "five-steps-leaders-age-of-uncertainty",
+      "attention-equation-consumer-attention-battles"
+    ],
+    [
+      "five-steps-leaders-age-of-uncertainty",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "five-steps-leaders-age-of-uncertainty",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "five-steps-leaders-age-of-uncertainty",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "five-steps-leaders-age-of-uncertainty",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "five-steps-leaders-age-of-uncertainty",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "whats-your-edge-rethinking-expertise-ai",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "whats-your-edge-rethinking-expertise-ai",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "whats-your-edge-rethinking-expertise-ai",
       "building-ethically-strong-organization"
     ]
   ]
