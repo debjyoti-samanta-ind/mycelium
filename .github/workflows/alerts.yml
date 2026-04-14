@@ -1,9 +1,8 @@
 name: Send Surprise Alerts
 
 on:
-  workflow_run:
-    workflows: ["Find Connections"]
-    types: [completed]
+  schedule:
+    - cron: '0 20 * * 0'  # Every Sunday at 8pm UTC
   workflow_dispatch:
 
 permissions:
@@ -15,7 +14,7 @@ concurrency:
 
 jobs:
   alert:
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    if: always()
     runs-on: ubuntu-latest
 
     steps:

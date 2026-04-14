@@ -125,10 +125,13 @@ export async function deleteArticle(slug, url) {
     throw new Error('GitHub credentials not configured.')
   }
 
-  // 1. Update graph.json — remove node and all connected edges
+  // 1. Update graph.json — remove node, connected edges, and evaluated pairs
   const { parsed: graph, sha: graphSha } = await getFile('data/graph.json')
   graph.nodes = graph.nodes.filter(n => n.id !== slug)
   graph.edges = graph.edges.filter(e => e.source !== slug && e.target !== slug)
+  if (graph.evaluated_pairs) {
+    graph.evaluated_pairs = graph.evaluated_pairs.filter(pair => !pair.includes(slug))
+  }
   await putFile('data/graph.json', graphSha, graph, `chore: remove article ${slug} [skip ci]`)
 
   // 2. Delete the article JSON file

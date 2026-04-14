@@ -145,17 +145,20 @@ def main() -> None:
     with open(GRAPH_PATH) as f:
         graph = json.load(f)
 
-    # Build set of already-evaluated pairs (bidirectional)
-    existing_pairs: set[frozenset] = set()
+    # Build set of already-evaluated pairs from both edges AND evaluated_pairs.
+    # This ensures pairs that returned "no connection" are never re-evaluated.
+    already_evaluated: set[frozenset] = set()
     for edge in graph.get("edges", []):
-        existing_pairs.add(frozenset([edge["source"], edge["target"]]))
+        already_evaluated.add(frozenset([edge["source"], edge["target"]]))
+    for pair in graph.get("evaluated_pairs", []):
+        already_evaluated.add(frozenset(pair))
 
     # Find pairs not yet evaluated
     all_slugs = list(articles.keys())
     new_pairs = [
         (a, b)
         for a, b in combinations(all_slugs, 2)
-        if frozenset([a, b]) not in existing_pairs
+        if frozenset([a, b]) not in already_evaluated
     ]
 
     if not new_pairs:
@@ -165,6 +168,7 @@ def main() -> None:
     print(f"Evaluating {len(new_pairs)} new pair(s)...\n")
 
     new_edges = []
+    new_evaluated: list[list[str]] = []  # all pairs evaluated this run (connected or not)
     error_count = 0
 
     for slug_a, slug_b in new_pairs:
@@ -183,19 +187,31 @@ def main() -> None:
                 print(f"  → {connection['type'].upper()}: {connection['explanation']}")
             else:
                 print("  → No meaningful connection.")
+            # Record as evaluated regardless of outcome
+            new_evaluated.append([slug_a, slug_b])
         except Exception as e:
             print(f"  ERROR: {e}", file=sys.stderr)
             error_count += 1
+            # Do NOT record as evaluated — will retry on next run
             continue
 
     # Persist graph
+    graph_updated = bool(new_edges or new_evaluated)
     if new_edges:
         graph["edges"] = graph.get("edges", []) + new_edges
+    if new_evaluated:
+        graph["evaluated_pairs"] = graph.get("evaluated_pairs", []) + new_evaluated
+
+    if graph_updated:
         with open(GRAPH_PATH, "w") as f:
             json.dump(graph, f, indent=2, ensure_ascii=False)
+
+    if new_edges:
         print(f"\nAdded {len(new_edges)} new edge(s) to graph.json.")
     else:
         print("\nNo new connections found.")
+    if new_evaluated:
+        print(f"Recorded {len(new_evaluated)} evaluated pair(s) to skip on future runs.")
 
     print(f"\n--- Done ---")
     print(f"Connections found: {len(new_edges)}  |  Errors: {error_count}")

@@ -1,8 +1,11 @@
 """
-Mycelium surprise alert script — Phase 3
-Runs after every connection-finding workflow.
-Finds adjacent connections between articles from different intellectual domains
-and sends a Gmail alert. Tracks sent alerts in data/alerts.json to avoid duplicates.
+Mycelium surprise alert script — Phase 3 (weekly consolidated)
+Runs every Sunday. Collects all new adjacent cross-domain connections
+since the last alert run, ranks by domain surprise (cross-bucket pairs
+ranked above same-bucket), takes the top 3, and sends ONE consolidated
+email. Skips entirely if nothing qualifies.
+
+No Claude API calls — pure logic.
 """
 
 import json
@@ -15,12 +18,35 @@ from email.mime.text import MIMEText
 from pathlib import Path
 
 ARTICLES_DIR = Path("data/articles")
-GRAPH_PATH = Path("data/graph.json")
-ALERTS_PATH = Path("data/alerts.json")
+GRAPH_PATH   = Path("data/graph.json")
+ALERTS_PATH  = Path("data/alerts.json")
+
+MAX_ALERTS = 3
+
+# Broad domain buckets for surprise scoring.
+# Cross-bucket connections are ranked higher (more surprising).
+DOMAIN_BUCKETS = {
+    'tech':       ['tech', 'software', 'computer', 'ai', 'data', 'digital', 'machine learning'],
+    'science':    ['science', 'biology', 'physics', 'neuro', 'cognitive', 'complexity', 'psychology'],
+    'business':   ['business', 'econom', 'financ', 'marketing', 'management', 'organisat', 'organizational'],
+    'humanities': ['philosoph', 'histor', 'sociol', 'political', 'media', 'culture', 'anthropol', 'geopolit'],
+}
+
+
+def get_bucket(domain: str) -> str:
+    domain = domain.lower()
+    for bucket, keywords in DOMAIN_BUCKETS.items():
+        if any(k in domain for k in keywords):
+            return bucket
+    return 'other'
+
+
+def surprise_score(domain_a: str, domain_b: str) -> int:
+    """1 if domains are in different broad buckets (more surprising), 0 otherwise."""
+    return 0 if get_bucket(domain_a) == get_bucket(domain_b) else 1
 
 
 def load_articles() -> dict:
-    """Load all articles into a slug-keyed dict."""
     articles = {}
     for path in ARTICLES_DIR.glob("*.json"):
         try:
@@ -32,43 +58,55 @@ def load_articles() -> dict:
     return articles
 
 
-def send_email(gmail_user: str, gmail_password: str, gmail_recipient: str, article_a: dict, article_b: dict, connection: dict) -> None:
-    """Send a surprise connection alert email."""
-    subject = f"Mycelium: Unexpected connection found"
+def send_consolidated_email(
+    gmail_user: str,
+    gmail_password: str,
+    gmail_recipient: str,
+    candidates: list[dict],
+    articles: dict,
+) -> None:
+    n = len(candidates)
+    subject = f"Mycelium: {n} unexpected connection{'s' if n != 1 else ''} this week"
+
+    connection_blocks = ""
+    for c in candidates:
+        article_a = articles.get(c["source"], {})
+        article_b = articles.get(c["target"], {})
+        domain_a  = article_a.get("domain", "")
+        domain_b  = article_b.get("domain", "")
+
+        connection_blocks += f"""
+<div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:20px;margin-bottom:16px;">
+  <div style="margin-bottom:12px;">
+    <span style="display:inline-block;background:#e17055;color:#fff;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;">adjacent</span>
+    {"<span style='display:inline-block;background:#f0fdf4;color:#166534;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;margin-left:6px;'>cross-domain</span>" if surprise_score(domain_a, domain_b) else ""}
+  </div>
+  <p style="font-size:14px;color:#292524;line-height:1.6;margin:0 0 16px;">{c.get("explanation","")}</p>
+  <div style="display:flex;gap:12px;flex-direction:column;">
+    <div style="border-left:3px solid #e7e5e4;padding-left:12px;">
+      <p style="font-size:10px;color:#a8a29e;margin:0 0 3px;">{domain_a.upper()}</p>
+      <a href="{article_a.get('url','#')}" style="font-size:13px;font-weight:600;color:#1c1917;text-decoration:none;">{article_a.get('title','')}</a>
+    </div>
+    <div style="border-left:3px solid #e7e5e4;padding-left:12px;">
+      <p style="font-size:10px;color:#a8a29e;margin:0 0 3px;">{domain_b.upper()}</p>
+      <a href="{article_b.get('url','#')}" style="font-size:13px;font-weight:600;color:#1c1917;text-decoration:none;">{article_b.get('title','')}</a>
+    </div>
+  </div>
+</div>"""
 
     html = f"""
-<html><body style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 24px; color: #1c1917; background: #fafaf8;">
-
-<p style="font-size: 13px; color: #78716c; margin-bottom: 24px;">Mycelium found a non-obvious cross-domain connection in your reading.</p>
-
-<div style="background: #fff; border: 1px solid #e7e5e4; border-radius: 12px; padding: 20px; margin-bottom: 16px;">
-  <p style="font-size: 11px; color: #a8a29e; margin: 0 0 6px;">CONNECTION TYPE</p>
-  <span style="display: inline-block; background: #e17055; color: #fff; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px;">adjacent</span>
-  <p style="margin: 16px 0 0; font-size: 15px; color: #292524; line-height: 1.6;">{connection.get("explanation", "")}</p>
-</div>
-
-<div style="background: #fff; border: 1px solid #e7e5e4; border-radius: 12px; padding: 20px; margin-bottom: 16px;">
-  <p style="font-size: 11px; color: #a8a29e; margin: 0 0 10px;">ARTICLE A &nbsp;·&nbsp; {article_a.get("domain", "")}</p>
-  <a href="{article_a.get("url", "#")}" style="font-size: 14px; font-weight: 600; color: #1c1917; text-decoration: none;">{article_a.get("title", "")}</a>
-  <p style="font-size: 12px; color: #78716c; margin: 4px 0 10px;">{article_a.get("source", "")}</p>
-  <p style="font-size: 13px; color: #44403c; line-height: 1.6; margin: 0;">{article_a.get("central_argument") or article_a.get("summary", "")}</p>
-</div>
-
-<div style="background: #fff; border: 1px solid #e7e5e4; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
-  <p style="font-size: 11px; color: #a8a29e; margin: 0 0 10px;">ARTICLE B &nbsp;·&nbsp; {article_b.get("domain", "")}</p>
-  <a href="{article_b.get("url", "#")}" style="font-size: 14px; font-weight: 600; color: #1c1917; text-decoration: none;">{article_b.get("title", "")}</a>
-  <p style="font-size: 12px; color: #78716c; margin: 4px 0 10px;">{article_b.get("source", "")}</p>
-  <p style="font-size: 13px; color: #44403c; line-height: 1.6; margin: 0;">{article_b.get("central_argument") or article_b.get("summary", "")}</p>
-</div>
-
-<p style="font-size: 11px; color: #a8a29e; text-align: center;">Mycelium · your personal knowledge graph</p>
-</body></html>
-"""
+<html><body style="font-family:Georgia,serif;max-width:600px;margin:0 auto;padding:24px;color:#1c1917;background:#fafaf8;">
+<p style="font-size:13px;color:#78716c;margin-bottom:24px;">
+  Mycelium found {n} non-obvious cross-domain connection{'s' if n != 1 else ''} in your reading this week.
+</p>
+{connection_blocks}
+<p style="font-size:11px;color:#a8a29e;text-align:center;margin-top:24px;">Mycelium · your personal knowledge graph</p>
+</body></html>"""
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
-    msg["From"] = gmail_user
-    msg["To"] = gmail_recipient
+    msg["From"]    = gmail_user
+    msg["To"]      = gmail_recipient
     msg.attach(MIMEText(html, "html"))
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
@@ -77,8 +115,8 @@ def send_email(gmail_user: str, gmail_password: str, gmail_recipient: str, artic
 
 
 def main() -> None:
-    gmail_user = os.environ.get("GMAIL_USER", "").strip()
-    gmail_password = os.environ.get("GMAIL_APP_PASSWORD", "").strip()
+    gmail_user      = os.environ.get("GMAIL_USER", "").strip()
+    gmail_password  = os.environ.get("GMAIL_APP_PASSWORD", "").strip()
     gmail_recipient = os.environ.get("GMAIL_RECIPIENT", gmail_user).strip()
 
     if not gmail_user or not gmail_password:
@@ -94,71 +132,82 @@ def main() -> None:
     with open(ALERTS_PATH) as f:
         alerts_data = json.load(f)
 
-    # Build set of already-alerted pairs
+    # Pairs already alerted — never re-send
     alerted_pairs = {
         frozenset([a["source"], a["target"]])
         for a in alerts_data.get("alerts", [])
     }
 
-    new_alerts = []
-    sent_count = 0
-    error_count = 0
-
+    # Collect all new adjacent cross-domain connections
+    candidates = []
     for edge in graph.get("edges", []):
         if edge.get("type") != "adjacent":
             continue
 
-        src_slug = edge["source"]
-        tgt_slug = edge["target"]
-        pair = frozenset([src_slug, tgt_slug])
+        src, tgt = edge["source"], edge["target"]
+        if frozenset([src, tgt]) in alerted_pairs:
+            continue
 
-        if pair in alerted_pairs:
-            continue  # already sent
-
-        article_a = articles.get(src_slug)
-        article_b = articles.get(tgt_slug)
-
+        article_a = articles.get(src)
+        article_b = articles.get(tgt)
         if not article_a or not article_b:
             continue
 
-        # Only alert if the two articles come from different intellectual domains
         domain_a = (article_a.get("domain") or "").strip().lower()
         domain_b = (article_b.get("domain") or "").strip().lower()
         if not domain_a or not domain_b or domain_a == domain_b:
-            print(f"  Skipping {src_slug} ↔ {tgt_slug}: same domain or domain unknown.")
             continue
 
-        print(f"  Sending alert: {src_slug} ↔ {tgt_slug} ({domain_a} ↔ {domain_b})")
-        try:
-            send_email(gmail_user, gmail_password, gmail_recipient, article_a, article_b, edge)
-            print(f"  ✓ Alert sent.")
-            new_alerts.append({
-                "source": src_slug,
-                "target": tgt_slug,
-                "type": "adjacent",
-                "domain_a": domain_a,
-                "domain_b": domain_b,
-                "explanation": edge.get("explanation", ""),
-                "sent_at": datetime.now(timezone.utc).isoformat(),
-            })
-            sent_count += 1
-        except Exception as e:
-            print(f"  ERROR sending alert: {e}", file=sys.stderr)
-            error_count += 1
+        candidates.append({
+            "source":    src,
+            "target":    tgt,
+            "domain_a":  domain_a,
+            "domain_b":  domain_b,
+            "explanation": edge.get("explanation", ""),
+            "date_added":  edge.get("date_added", ""),
+            "surprise":    surprise_score(domain_a, domain_b),
+        })
 
-    if new_alerts:
-        alerts_data["alerts"] = alerts_data.get("alerts", []) + new_alerts
-        with open(ALERTS_PATH, "w") as f:
-            json.dump(alerts_data, f, indent=2, ensure_ascii=False)
-        print(f"\nSent {sent_count} alert(s). Logged to data/alerts.json.")
-    else:
-        print("\nNo new surprise alerts to send.")
+    if not candidates:
+        print("No new surprise connections this week. Skipping email.")
+        return
 
-    print(f"\n--- Done ---")
-    print(f"Alerts sent: {sent_count}  |  Errors: {error_count}")
+    # Rank: cross-bucket first, then most recent
+    candidates.sort(key=lambda c: (c["surprise"], c["date_added"]), reverse=True)
+    top = candidates[:MAX_ALERTS]
 
-    if error_count > 0:
+    print(f"Found {len(candidates)} new candidate(s). Sending top {len(top)}.")
+
+    try:
+        send_consolidated_email(gmail_user, gmail_password, gmail_recipient, top, articles)
+        print(f"Email sent: '{len(top)} unexpected connection(s) this week'")
+    except Exception as e:
+        print(f"ERROR sending email: {e}", file=sys.stderr)
         sys.exit(1)
+
+    # Mark ALL candidates as alerted (not just top N) so they don't resurface
+    now = datetime.now(timezone.utc).isoformat()
+    new_alerts = [
+        {
+            "source":      c["source"],
+            "target":      c["target"],
+            "type":        "adjacent",
+            "domain_a":    c["domain_a"],
+            "domain_b":    c["domain_b"],
+            "explanation": c["explanation"],
+            "sent_at":     now if c in top else None,
+            "included_in_email": c in top,
+        }
+        for c in candidates
+    ]
+    alerts_data["alerts"] = alerts_data.get("alerts", []) + new_alerts
+    alerts_data["last_alerted_at"] = now
+
+    with open(ALERTS_PATH, "w") as f:
+        json.dump(alerts_data, f, indent=2, ensure_ascii=False)
+
+    print(f"Logged {len(candidates)} alert record(s) to data/alerts.json.")
+    print("--- Done ---")
 
 
 if __name__ == "__main__":
