@@ -276,6 +276,147 @@ If Claude Code is about to implement something that would increase API costs mea
 
 ---
 
+## Phase 7 — Agents detail
+
+Phase 7 adds four agentic learning tools. Unlike earlier phases which process inputs and find patterns, these agents observe the current state of the graph, make a judgment, and produce an output that feeds back into Debjyoti's thinking. The Opinions feature was deliberately removed because it told Debjyoti what to think. These agents instead create conditions for him to think better.
+
+**Why these four were chosen:**
+The goal is to move reading from passive absorption to active reasoning. Each agent targets a specific thinking skill: tracking whether ideas hold up over time (Prediction Tracker), stress-testing emerging beliefs (Steelman), forcing application of abstract ideas (So What?), and building systems thinking (Second-Order Effects).
+
+---
+
+### Agent 1 — Prediction Tracker
+
+**What it does:** At ingestion time, extracts falsifiable predictions from each new article — claims the article makes about how things will unfold. Stores them in `data/predictions.json` with a review date 6–12 months out. Weekly, resurfaces predictions whose review date has passed and prompts Debjyoti to score them (right / wrong / unclear). Builds a scorecard of which intellectual frameworks in his reading have actually been right.
+
+**Why it's valuable:** Most reading is passive. This creates skin in the game — it teaches Debjyoti whose thinking to trust, including his own.
+
+**Trigger:** Extraction runs as part of the ingest workflow (after article is saved). Review surfaces weekly.
+
+**Model:** Haiku for extraction (structured, high-frequency). No Claude needed for weekly review surfacing — pure logic.
+
+**Estimated cost:** ~$0.05/month
+
+**Storage:** `data/predictions.json`
+```json
+{
+  "predictions": [
+    {
+      "slug": "article-slug",
+      "prediction": "exact falsifiable claim from the article",
+      "review_date": "YYYY-MM-DD",
+      "scored": false,
+      "score": null
+    }
+  ]
+}
+```
+
+---
+
+### Agent 2 — Steelman
+
+**What it does:** Monitors the graph for stance imbalance — when articles on the same topic cluster around a single stance (e.g. 4 optimistic AI articles, 0 pessimistic). When imbalance is detected, calls Sonnet to write the strongest possible counter-argument against the apparent consensus. Not a strawman — a genuine steel-man built from first principles.
+
+**Why it's valuable:** Most people read in confirmation mode without noticing. This forces Debjyoti to confront the best version of the opposing view, not a weak one.
+
+**Trigger:** Runs after each ingestion — checks for stance imbalance across topic tags. Only fires a Sonnet call when imbalance threshold is met (e.g. 3+ articles on same topic, 80%+ same stance).
+
+**Model:** Sonnet (requires genuine argumentative judgment, not pattern matching).
+
+**Estimated cost:** ~$0.10/month (occasional, not every ingestion)
+
+**Storage:** `data/steelmans.json`
+```json
+{
+  "steelmans": [
+    {
+      "topic": "AI development",
+      "dominant_stance": "optimistic",
+      "article_slugs": ["slug-a", "slug-b", "slug-c"],
+      "steelman": "The strongest argument against this consensus...",
+      "date_generated": "YYYY-MM-DD"
+    }
+  ]
+}
+```
+
+---
+
+### Agent 3 — So What?
+
+**What it does:** When a cluster of reinforce edges forms (3+ articles reinforcing the same idea from different angles), calls Sonnet to ask: "What would a decision-maker do differently if they believed all of this?" Converts abstract intellectual connections into concrete implications and action signals.
+
+**Why it's valuable:** The gap between reading and doing is wide. Most insights stay abstract. This forces application — it asks what the ideas actually demand of the reader.
+
+**Trigger:** Runs after connect.yml completes — detects newly formed reinforce clusters (not previously flagged). Only fires when a cluster of 3+ reinforce edges shares overlapping articles.
+
+**Model:** Sonnet (synthesis and application judgment required).
+
+**Estimated cost:** ~$0.10/month
+
+**Storage:** `data/sowhat.json`
+```json
+{
+  "insights": [
+    {
+      "cluster_slugs": ["slug-a", "slug-b", "slug-c"],
+      "shared_idea": "one sentence describing the crystallised belief",
+      "so_what": "What a decision-maker would do differently if they believed this",
+      "date_generated": "YYYY-MM-DD"
+    }
+  ]
+}
+```
+
+---
+
+### Agent 4 — Second-Order Effects
+
+**What it does:** When a new article is ingested, takes its central argument and generates 2nd and 3rd order consequences — what follows if the claim is true, and what follows from that. Forces systems thinking rather than isolated fact absorption.
+
+**Why it's valuable:** Most articles present a finding without following it to its logical implications. This makes the implications explicit and shows Debjyoti where an idea leads.
+
+**Trigger:** Runs as part of the ingest workflow for every new article.
+
+**Model:** Sonnet (causal chain reasoning requires judgment).
+
+**Estimated cost:** ~$0.10/month
+
+**Storage:** Added as a field to each article's JSON file:
+```json
+"second_order_effects": [
+  "1st order: ...",
+  "2nd order: ...",
+  "3rd order: ..."
+]
+```
+
+---
+
+### Phase 7 UI
+
+All four agents surface in a new **Agents** tab in the nav. Layout:
+- Four sections, one per agent
+- Prediction Tracker: list of pending predictions with score buttons
+- Steelman: latest steelman per topic, expandable
+- So What?: list of crystallised beliefs with their implications
+- Second-Order Effects: per-article, accessible from the Articles tab (new expandable section on each article card)
+
+### Phase 7 cost summary
+
+| Agent | Trigger | Model | Est. cost/month |
+|---|---|---|---|
+| Prediction Tracker | Per ingestion | Haiku | ~$0.05 |
+| Steelman | Per ingestion (conditional) | Sonnet | ~$0.10 |
+| So What? | Post-connect (conditional) | Sonnet | ~$0.10 |
+| Second-Order Effects | Per ingestion | Sonnet | ~$0.10 |
+| **Total** | | | **~$0.35/month** |
+
+Combined with existing pipeline (~$1.50/month), total stays well under the $2/month budget.
+
+---
+
 ## What Debjyoti cares about most
 1. The "analyst" quality of connections — surprising, cross-domain, non-obvious links that help him form his own opinions
 2. Low cost — the system must stay under $2/month
