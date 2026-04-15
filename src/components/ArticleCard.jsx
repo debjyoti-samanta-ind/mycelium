@@ -4,7 +4,7 @@ export default function ArticleCard({ article, onDelete, isDeleting }) {
   const [expanded, setExpanded]   = useState(false)
   const [confirming, setConfirming] = useState(false)
 
-  const { title, source, url, date_added, domain, summary } = article
+  const { title, source, url, date_added, domain, summary, key_claims, topic_tags } = article
 
   return (
     <div className="bg-white border border-stone-200 rounded-xl hover:border-stone-300 transition-colors">
@@ -84,9 +84,33 @@ export default function ArticleCard({ article, onDelete, isDeleting }) {
       </div>
 
       {/* ── Expanded content ── */}
-      {expanded && summary && (
-        <div className="px-5 pb-4 border-t border-stone-100 pt-3">
-          <p className="text-sm text-stone-600 leading-relaxed">{summary}</p>
+      {expanded && (
+        <div className="px-5 pb-4 border-t border-stone-100 pt-3 space-y-3">
+          {summary && (
+            <p className="text-sm text-stone-600 leading-relaxed">{summary}</p>
+          )}
+          {key_claims && key_claims.length > 0 && (
+            <ul className="text-xs text-stone-500 space-y-1 pl-1">
+              {key_claims.map((claim, i) => (
+                <li key={i} className="flex gap-2">
+                  <span className="text-stone-300 select-none shrink-0">—</span>
+                  <span>{claim}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+          {topic_tags && topic_tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {topic_tags.map(tag => (
+                <span
+                  key={tag}
+                  className="text-xs px-2 py-0.5 rounded-full bg-stone-100 text-stone-500 font-medium"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>
