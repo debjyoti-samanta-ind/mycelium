@@ -9,5 +9,16 @@
     "output_tokens": 977,
     "tool_calls": 5,
     "skip_reason": "The graph is too small (6 articles total) and too young to yield a genuine reprise. All 4 articles with direct edges to the new article are already connected by automatically surfaced edges. The only remaining unconnected article \u2014 'Geopolitics and the geometry of global trade: 2026 update' \u2014 was added on 2026-04-13, just one day before the new article (2026-04-14), which fails the 30-day minimum age requirement. No eligible candidate clears the bar."
+  },
+  {
+    "run_id": "2026-04-15",
+    "triggered_by": "ingestion",
+    "trigger_article": "whats-your-edge-rethinking-expertise-ai",
+    "fired": false,
+    "model": "claude-sonnet-4-6",
+    "input_tokens": 3951,
+    "output_tokens": 629,
+    "tool_calls": 3,
+    "skip_reason": "No article in the graph meets the 30-day recency rule. The new article was added 2026-04-14, and all other articles were added either the same day (2026-04-14) or one day prior (2026-04-13). The minimum cutoff for a valid reprise candidate is 2026-03-15. There is no older article to surface."
   }
 ]
