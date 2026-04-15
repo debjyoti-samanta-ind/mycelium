@@ -19,10 +19,28 @@ const EDGE_COLOURS = {
 
 const ALL_EDGE_TYPES = ['reinforce', 'contradict', 'evolve', 'adjacent']
 
-const NODE_DEFAULT   = '#78716c'  // stone-500
-const NODE_ISLAND    = 'rgba(120,113,108,0.4)'
-const NODE_HIGHLIGHT = '#1c1917'  // stone-900
-const NODE_DIM       = 'rgba(120,113,108,0.1)'
+const DOMAIN_BUCKETS = [
+  { name: 'Tech & AI',       color: '#6366f1', keywords: ['tech', 'software', 'ai', 'digital', 'data', 'machine learning', 'computer'] },
+  { name: 'Science & Mind',  color: '#0d9488', keywords: ['science', 'biology', 'physics', 'neuro', 'cognitive', 'psychology', 'complexity', 'evolutionary'] },
+  { name: 'Business & Econ', color: '#d97706', keywords: ['business', 'econom', 'financ', 'marketing', 'management', 'organizational', 'organisational', 'geopolit', 'trade'] },
+  { name: 'Humanities',      color: '#dc6b3f', keywords: ['philosoph', 'histor', 'sociol', 'political', 'media', 'culture', 'anthropol', 'ethics'] },
+]
+const DOMAIN_DEFAULT_COLOR = '#78716c'
+
+function hexToRgba(hex, alpha) {
+  const r = parseInt(hex.slice(1, 3), 16)
+  const g = parseInt(hex.slice(3, 5), 16)
+  const b = parseInt(hex.slice(5, 7), 16)
+  return `rgba(${r},${g},${b},${alpha})`
+}
+
+function getDomainColor(node) {
+  const domain = (articleMap[node.id]?.domain || '').toLowerCase()
+  for (const bucket of DOMAIN_BUCKETS) {
+    if (bucket.keywords.some(k => domain.includes(k))) return bucket.color
+  }
+  return DOMAIN_DEFAULT_COLOR
+}
 
 function matchesSearch(node, query) {
   if (!query.trim()) return false
@@ -127,17 +145,19 @@ export default function GraphPage({ graphData }) {
 
   // Node colour based on interaction state
   const getNodeColor = useCallback((node) => {
+    const domainColor  = getDomainColor(node)
     const isSearchMode = searchQuery.trim().length > 0
     const isHoverMode  = !!hoveredNode
 
     if (isSearchMode) {
-      return matchesSearch(node, searchQuery) ? NODE_HIGHLIGHT : NODE_DIM
+      return matchesSearch(node, searchQuery) ? domainColor : 'rgba(120,113,108,0.08)'
     }
     if (isHoverMode) {
       const connected = adjacency.get(hoveredNode.id) || new Set()
-      return (node.id === hoveredNode.id || connected.has(node.id)) ? NODE_HIGHLIGHT : NODE_DIM
+      const isRelevant = node.id === hoveredNode.id || connected.has(node.id)
+      return isRelevant ? domainColor : 'rgba(120,113,108,0.08)'
     }
-    return islandNodes.has(node.id) ? NODE_ISLAND : NODE_DEFAULT
+    return islandNodes.has(node.id) ? hexToRgba(domainColor, 0.4) : domainColor
   }, [searchQuery, hoveredNode, adjacency, islandNodes])
 
   // Link colour based on interaction state
@@ -297,7 +317,7 @@ export default function GraphPage({ graphData }) {
             height={dimensions.height}
             backgroundColor="#fafaf8"
             nodeColor={getNodeColor}
-            nodeVal={8}
+            nodeVal={node => Math.max(4, 4 + ((adjacency.get(node.id) || new Set()).size) * 2)}
             nodeRelSize={4}
             nodeLabel={node => node.article?.title || node.id}
             linkColor={getLinkColor}
@@ -310,6 +330,18 @@ export default function GraphPage({ graphData }) {
             d3AlphaDecay={0.02}
             d3VelocityDecay={0.3}
           />
+        )}
+
+        {/* Domain color legend */}
+        {hasNodes && (
+          <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2.5 border border-stone-200 space-y-1.5">
+            {[...DOMAIN_BUCKETS, { name: 'Other', color: DOMAIN_DEFAULT_COLOR }].map(b => (
+              <div key={b.name} className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: b.color }} />
+                <span className="text-xs text-stone-600">{b.name}</span>
+              </div>
+            ))}
+          </div>
         )}
 
         {/* Side panel — overlays the graph on the right */}
