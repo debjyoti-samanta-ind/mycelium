@@ -82,5 +82,29 @@
     "input_tokens": 8235,
     "output_tokens": 1450,
     "tool_calls": 6
+  },
+  {
+    "agent": "steelman",
+    "run_id": "2026-04-15",
+    "timestamp": "2026-04-15T20:12:23.409574+00:00",
+    "triggered_by": "ingestion",
+    "trigger_article": null,
+    "fired": false,
+    "skip_reason": "Only 6 articles (min 8)",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "tool_calls": 0
+  },
+  {
+    "agent": "reprise",
+    "run_id": "2026-04-15",
+    "timestamp": "2026-04-15T20:12:38.880506+00:00",
+    "triggered_by": "ingestion",
+    "trigger_article": "whats-your-edge-rethinking-expertise-ai",
+    "fired": false,
+    "skip_reason": "No article in the graph meets the 30-day recency threshold. All five other articles were added on either 2026-04-13 or 2026-04-14 \u2014 at most one day before the new article. The rule requires the surfaced article to have been added at least 30 days prior. A weak or technically invalid reprise is worse than no reprise, so I'm staying silent.",
+    "input_tokens": 6690,
+    "output_tokens": 711,
+    "tool_calls": 4
   }
 ]
