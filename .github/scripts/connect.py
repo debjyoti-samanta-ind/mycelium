@@ -26,6 +26,59 @@ GRAPH_PATH   = Path("data/graph.json")
 client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 MODEL  = "claude-sonnet-4-6"
 
+# ── Pre-filter ─────────────────────────────────────────────────────────────────
+# Cheap Python scoring before any Sonnet call.  Pairs scoring 0 have no
+# detectable overlap signal and are skipped (recorded as evaluated so they
+# are not retried on future runs unless articles change).
+
+_DOMAIN_BUCKETS = [
+    ('tech',       ['tech', 'software', 'ai', 'digital', 'data', 'machine learning', 'computer']),
+    ('science',    ['science', 'biology', 'physics', 'neuro', 'cognitive', 'psychology', 'complexity', 'evolutionary']),
+    ('business',   ['business', 'econom', 'financ', 'marketing', 'management', 'organizational', 'geopolit', 'trade']),
+    ('humanities', ['philosoph', 'histor', 'sociol', 'political', 'media', 'culture', 'anthropol', 'ethics']),
+]
+_STOP = {'the','a','an','is','are','in','on','of','to','and','or','that','it','for',
+         'with','as','by','at','from','this','not','but','has','have','be','was','were','its'}
+
+
+def _domain_bucket(domain: str) -> str | None:
+    d = domain.lower()
+    for name, kws in _DOMAIN_BUCKETS:
+        if any(k in d for k in kws):
+            return name
+    return None
+
+
+def pre_filter_score(a: dict, b: dict) -> int:
+    """
+    Score a pair on cheap signals.  Score 0 → skip.  Score ≥ 1 → send to Sonnet.
+    Cross-domain pairs always score ≥ 1 (potential adjacent connections).
+    Same-domain pairs must share an entity, tag, or significant claim keyword.
+    """
+    score = 0
+    # Shared key entities (strong signal — same intellectual references)
+    ents_a = {e.lower() for e in a.get("key_entities", [])}
+    ents_b = {e.lower() for e in b.get("key_entities", [])}
+    score += len(ents_a & ents_b) * 3
+    # Shared topic tags
+    tags_a = {t.lower() for t in a.get("topic_tags", [])}
+    tags_b = {t.lower() for t in b.get("topic_tags", [])}
+    score += len(tags_a & tags_b) * 2
+    # Cross-domain: always passes (adjacent connections are cross-domain by definition)
+    bucket_a = _domain_bucket(a.get("domain", ""))
+    bucket_b = _domain_bucket(b.get("domain", ""))
+    if bucket_a and bucket_b and bucket_a != bucket_b:
+        score += 1
+    # Shared claim keywords (length > 4, not stop-words)
+    kw = lambda fields: {
+        w for text in fields for w in text.lower().split()
+        if len(w) > 4 and w not in _STOP
+    }
+    kw_a = kw(a.get("key_claims", []) + a.get("key_tensions", []))
+    kw_b = kw(b.get("key_claims", []) + b.get("key_tensions", []))
+    score += len(kw_a & kw_b)
+    return score
+
 
 def article_summary(a: dict) -> str:
     """Build a compact representation of an article for the connection prompt."""
@@ -161,18 +214,24 @@ Use one of these two forms exactly:
         if attempt == 1:
             print(f"    Retrying with stricter prompt (attempt 2)...")
 
+        if attempt == 0:
+            # Prefill the assistant turn with "{" — forces the model to complete
+            # a JSON object immediately without preamble or reasoning prose.
+            messages = [
+                {"role": "user",      "content": prompt},
+                {"role": "assistant", "content": "{"},
+            ]
+        else:
+            messages = [
+                {"role": "user",      "content": prompt},
+                {"role": "assistant", "content": response.content[0].text},
+                {"role": "user",      "content": retry_prompt},
+            ]
+
         response = client.messages.create(
             model=MODEL,
             max_tokens=1024,
-            messages=(
-                [{"role": "user", "content": prompt}]
-                if attempt == 0
-                else [
-                    {"role": "user", "content": prompt},
-                    {"role": "assistant", "content": response.content[0].text},
-                    {"role": "user", "content": retry_prompt},
-                ]
-            ),
+            messages=messages,
         )
 
         usage = response.usage
@@ -181,8 +240,11 @@ Use one of these two forms exactly:
             f"output: {usage.output_tokens} tokens"
         )
 
+        # On attempt 0 the prefilled "{" is not part of content[0].text — prepend it.
+        raw = ("{" + response.content[0].text) if attempt == 0 else response.content[0].text
+
         try:
-            result = parse_response(response.content[0].text)
+            result = parse_response(raw)
             if result.get("connected"):
                 return {
                     "type":        result["type"],
@@ -244,13 +306,20 @@ def main() -> None:
         print("All article pairs already evaluated. Nothing to do.")
         return
 
-    print(f"Evaluating {len(new_pairs)} new pair(s)...\n")
+    # Pre-filter: skip pairs with zero detectable overlap signals.
+    # Pairs skipped here are recorded as evaluated so they are never retried.
+    pre_pass    = [(a, b) for a, b in new_pairs if pre_filter_score(articles[a], articles[b]) >= 1]
+    pre_skipped = [(a, b) for a, b in new_pairs if pre_filter_score(articles[a], articles[b]) < 1]
+    if pre_skipped:
+        print(f"Pre-filter: skipping {len(pre_skipped)} pair(s) with no overlap signals (no Sonnet call).")
+
+    print(f"Evaluating {len(pre_pass)} new pair(s) with Sonnet...\n")
 
     new_edges:     list[dict]       = []
-    new_evaluated: list[list[str]]  = []
+    new_evaluated: list[list[str]]  = [[a, b] for a, b in pre_skipped]  # record filtered pairs too
     error_count = 0
 
-    for slug_a, slug_b in new_pairs:
+    for slug_a, slug_b in pre_pass:
         print(f"  {slug_a}  <->  {slug_b}")
         try:
             connection = find_connection(articles[slug_a], articles[slug_b])

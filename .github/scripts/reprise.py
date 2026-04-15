@@ -207,6 +207,23 @@ def main() -> None:
 
     result, in_tok, out_tok, calls = run_agent(trigger_slug, trigger_title)
 
+    # Python-enforce 30-day minimum age — don't trust the system prompt alone.
+    if result.get("fired") and isinstance(result.get("surfaced_article"), dict):
+        surfaced_date = result["surfaced_article"].get("date_added", "")
+        trigger_date  = trigger.get("date_added", "")
+        if surfaced_date and trigger_date:
+            days_diff = (date.fromisoformat(trigger_date) - date.fromisoformat(surfaced_date)).days
+            if days_diff < 30:
+                print(
+                    f"  Python guard: surfaced article is only {days_diff} day(s) old "
+                    f"(min 30). Overriding fired=True → False."
+                )
+                result["fired"] = False
+                result["skip_reason"] = (
+                    f"Python guard: surfaced article '{result['surfaced_article'].get('slug')}' "
+                    f"is only {days_diff} day(s) old (minimum 30 required)"
+                )
+
     fired       = result.get("fired", False)
     skip_reason = result.get("skip_reason")
 
