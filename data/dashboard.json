@@ -1,17 +1,13 @@
 {
   "computed_at": "2026-04-14",
   "reading": {
-    "total_articles": 7,
-    "this_month": 7,
+    "total_articles": 6,
+    "this_month": 6,
     "last_month": 0,
-    "month_delta": 7,
+    "month_delta": 6,
     "active_since": "2026-04",
     "months_active": 1,
     "domain_distribution": [
-      {
-        "domain": "organizational behaviour",
-        "count": 2
-      },
       {
         "domain": "economics",
         "count": 2
@@ -21,17 +17,21 @@
         "count": 1
       },
       {
+        "domain": "organisational behaviour",
+        "count": 1
+      },
+      {
         "domain": "corporate governance",
         "count": 1
       },
       {
-        "domain": "organisational behaviour",
+        "domain": "organizational behaviour",
         "count": 1
       }
     ],
     "depth_vs_breadth": {
       "mode": "broad",
-      "top_domain": "organizational behaviour",
+      "top_domain": "economics",
       "top_domain_count": 2,
       "domains_this_month": 5,
       "last_broad_month": "2026-04"
@@ -39,20 +39,20 @@
     "neglected_topic": null
   },
   "graph": {
-    "total_nodes": 7,
-    "total_edges": 3,
-    "density": 0.143,
-    "island_count": 2,
-    "island_rate": 0.286,
+    "total_nodes": 6,
+    "total_edges": 7,
+    "density": 0.467,
+    "island_count": 0,
+    "island_rate": 0.0,
     "most_connected_node": {
-      "slug": "geopolitics-geometry-global-trade-2026-update",
-      "edge_count": 2
+      "slug": "whats-your-edge-rethinking-expertise-ai",
+      "edge_count": 4
     },
     "edge_type_distribution": {
-      "reinforce": 1,
+      "reinforce": 2,
       "contradict": 0,
-      "evolve": 1,
-      "adjacent": 1
+      "evolve": 2,
+      "adjacent": 3
     },
     "contradiction_density": 0.0
   }
