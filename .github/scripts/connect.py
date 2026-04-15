@@ -122,88 +122,69 @@ ARTICLE A:
 ARTICLE B:
 {article_summary(article_b)}
 
-Work through these steps in order. Stop and return {{"connected": false}} the moment any step fails.
+OUTPUT FORMAT — apply this before reading anything else:
+Your entire response must be valid JSON and nothing else. No preamble. No reasoning. \
+No step labels. No commentary. The very first character must be {{.
+Either: {{"connected": true, "type": "reinforce|contradict|evolve|adjacent", \
+"claim_a": "exact verbatim claim from Article A", \
+"claim_b": "exact verbatim claim from Article B", \
+"explanation": "one precise sentence — the exact shared mechanism or formal relationship"}}
+Or: {{"connected": false}}
 
-STEP 1 — EXTRACT THE SHARPEST CLAIMS
+EVALUATION CRITERIA — apply silently, then output only the JSON verdict:
+
+CRITERION 1 — SHARPEST CLAIMS
 Identify the single most specific, falsifiable, empirically-grounded claim in each article. \
-Do not use the central argument — find the sharpest atomic claim that could be directly cited. \
+Not the central argument — the sharpest atomic claim that could be directly cited. \
 Themes, structural observations, and general arguments do not qualify.
 
-STEP 2 — TEST FOR A DIRECT RELATIONSHIP
-Connection types — read definitions precisely:
+CRITERION 2 — DIRECT RELATIONSHIP TYPE
+- reinforce: Claims A and B assert the SAME causal mechanism operating in DIFFERENT empirical \
+contexts. The mechanism must be explicitly stated in BOTH claims — not inferred or abstracted. \
+If you need to say "both suggest X→Y" and X→Y is not the literal content of each claim, reject.
 
-- reinforce: Claims A and B assert the SAME causal mechanism or causal relationship operating \
-in DIFFERENT empirical contexts. The mechanism must be explicitly stated in BOTH claims — not \
-inferred, reconstructed, or abstracted upward from them. If you need to say "both suggest that \
-X leads to Y" and X→Y is not the literal content of each claim, they do not reinforce.
+- contradict: Claim A, if true, directly falsifies Claim B. Logically inconsistent — not merely \
+in tension. Different conclusions from different premises do not qualify. Different stances do not \
+qualify.
 
-- contradict: Claim A, if true, directly falsifies Claim B — or vice versa. They must be \
-logically inconsistent, not merely in tension. Different conclusions drawn from different \
-premises do not qualify. Different stances (one optimistic, one pessimistic) do not qualify.
+- evolve: Claim B adds a specific limiting condition or scope boundary that modifies the \
+predictive reach of Claim A. Both must concern the SAME mechanism. Same topic, different \
+emphasis does not qualify.
 
-- evolve: Claim B adds a specific limiting condition, scope boundary, or new evidence that \
-directly modifies the predictive reach of Claim A. Both claims must concern the SAME \
-mechanism. Same topic with different emphasis does not qualify.
+- adjacent: Claims A and B exhibit the SAME FORMAL RELATIONSHIP between different variables \
+across GENUINELY DIFFERENT disciplines (not sub-fields). The shared structure must generate a \
+prediction NEITHER article makes alone. Thematic or analogical similarity does not qualify.
 
-- adjacent: Claims A and B exhibit the SAME FORMAL RELATIONSHIP between different variables, \
-across GENUINELY DIFFERENT intellectual disciplines — not sub-fields, applied variants, or \
-different scales of the same discipline. The shared formal structure must generate a specific \
-prediction that NEITHER article makes alone. Thematic or analogical similarity does not qualify.
+CRITERION 3 — ADVERSARIAL CHECK (reject if any apply)
+(a) Does the connection rest on analogical reasoning ("X is like Y") rather than the identical \
+mechanism in different empirical contexts?
+(b) Does either claim need to be reinterpreted or extended beyond what the article literally \
+states?
+(c) Do the claims describe different failure modes, different causal directions, or different \
+mechanisms that share only surface vocabulary?
 
-STEP 3 — ADVERSARIAL CHECK
-If you found a potential connection in Step 2, argue against it. Identify the strongest single \
-reason this is NOT a genuine connection. Then apply these three tests:
-(a) Does this connection rest on analogical reasoning — "X is like Y" or "both involve Z" — \
-rather than the identical mechanism operating in different empirical contexts?
-(b) Does either claim need to be reinterpreted, abstracted, or extended beyond what the article \
-literally states in order to create the connection?
-(c) Do the claims describe structurally different phenomena — different failure modes, different \
-causal directions, different mechanisms — that share only a surface theme or vocabulary?
-If the answer to any of (a), (b), or (c) is yes, return {{"connected": false}}.
+CRITERION 4 — DISQUALIFICATION (reject if any apply)
+- Requires a concept or framing neither article explicitly names
+- Claims are thematically related but describe different causal structures
+- Connection holds equally well for most article pairs in these domains (genre convention)
+- A careful reader would not notice this connection without external prompting
 
-STEP 4 — DISQUALIFICATION CHECKS
-Return {{"connected": false}} immediately if ANY of these apply:
-- The connection requires invoking a concept, mechanism, or framing that neither article \
-explicitly names or argues for
-- The claims are thematically related but describe different causal structures
-- The connection would hold equally well between this pair and most other articles in these \
-domains — it is a genre convention
-- A careful reader of both articles would not spontaneously notice this connection without \
-external prompting — it requires synthesis the articles themselves do not invite
+FAIL examples → {{"connected": false}}:
+- "Both show credentials are insufficient substitutes for accountability." \
+→ mechanism not in either claim literally; abstracted upward. Fails 3(b).
+- "Both argue surface metrics miss quality drivers." → genre convention. Fails 4.
+- adjacent: "Both reveal structural proximity undermines judgment." \
+→ thematic only; formal relationship differs. Fails 3(a).
 
-FAIL examples — these would all return {{"connected": false}}:
-- reinforce: "Both show that formal credentials are insufficient substitutes for genuine \
-accountability." → The mechanism (credentials ≠ accountability) is not the literal content of \
-either claim; it is reconstructed by abstracting upward. Fails Step 3(b).
-- reinforce: "Both argue that surface metrics miss underlying quality drivers." → Genre \
-convention in management writing. Fails Step 4.
-- reinforce: "Both show leaders' proximity creates overconfidence." → Well-known cognitive \
-bias derivable from domain knowledge alone; not a non-obvious shared finding. Fails Step 4.
-- adjacent: "Both reveal how structural proximity undermines objective judgment." → Thematic \
-similarity only; the formal relationship between variables differs in each case. Fails Step 3(a).
-- contradict: "Article A is optimistic about AI; Article B is pessimistic." → Surface \
-sentiment, not logical inconsistency. Fails Step 2.
+PASS examples → {{"connected": true}}:
+- reinforce: claim_a = "Live sports earns 600x more per hour than podcasts across 20 formats." \
+claim_b = "Top 10 startups in a fund return more than the rest combined." \
+→ power-law distribution explicitly stated in both, different domains.
+- adjacent: claim_a = "25,000x more YouTube hours than TV yet TV monetises better per hour." \
+claim_b = "Trade volume growth destroyed per-unit margins as exporters cut prices 8%." \
+→ supply abundance collapses unit value; scarcity migrates to complement — across disciplines.
 
-PASS examples — these would return connected: true:
-- reinforce: claim_a = "Attention value follows a power law: live sports earns 600x more per \
-hour than podcasts across 20 media formats." claim_b = "Startup returns follow a power law: \
-top 10 companies in a fund return more than the rest combined." → Same mechanism (power-law \
-distribution) explicitly stated in both claims across different domains. Passes all steps.
-- adjacent: claim_a = "Content abundance has destroyed per-unit attention value: 25,000x more \
-YouTube hours than TV yet TV monetises better per hour." claim_b = "Trade volume growth \
-destroyed per-unit trade margins as Chinese exporters cut prices 8% to find buyers." → Same \
-formal relationship (supply abundance collapses unit value of the commodity; scarcity migrates \
-to the complement) across genuinely different disciplines, generating a prediction neither \
-article makes alone. Passes all steps.
-
-Reply with ONLY valid JSON — no markdown, no commentary:
-{{"connected": true, "type": "reinforce|contradict|evolve|adjacent", \
-"claim_a": "the exact verbatim claim from Article A", \
-"claim_b": "the exact verbatim claim from Article B", \
-"explanation": "one precise sentence stating the exact shared mechanism or formal relationship \
-between these two specific claims — not a theme, not an analogy"}}
-or
-{{"connected": false}}"""
+Now output ONLY the JSON verdict. No text before or after."""
 
     retry_prompt = """Reply with ONLY valid JSON. No markdown, no commentary.
 Use one of these two forms exactly:
@@ -214,19 +195,15 @@ Use one of these two forms exactly:
         if attempt == 1:
             print(f"    Retrying with stricter prompt (attempt 2)...")
 
-        if attempt == 0:
-            # Prefill the assistant turn with "{" — forces the model to complete
-            # a JSON object immediately without preamble or reasoning prose.
-            messages = [
-                {"role": "user",      "content": prompt},
-                {"role": "assistant", "content": "{"},
-            ]
-        else:
-            messages = [
+        messages = (
+            [{"role": "user", "content": prompt}]
+            if attempt == 0
+            else [
                 {"role": "user",      "content": prompt},
                 {"role": "assistant", "content": response.content[0].text},
                 {"role": "user",      "content": retry_prompt},
             ]
+        )
 
         response = client.messages.create(
             model=MODEL,
@@ -240,8 +217,7 @@ Use one of these two forms exactly:
             f"output: {usage.output_tokens} tokens"
         )
 
-        # On attempt 0 the prefilled "{" is not part of content[0].text — prepend it.
-        raw = ("{" + response.content[0].text) if attempt == 0 else response.content[0].text
+        raw = response.content[0].text
 
         try:
             result = parse_response(raw)
