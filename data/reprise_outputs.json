@@ -51,5 +51,16 @@
     "output_tokens": 711,
     "tool_calls": 4,
     "skip_reason": "No article in the graph meets the 30-day recency threshold. All five other articles were added on either 2026-04-13 or 2026-04-14 \u2014 at most one day before the new article. The rule requires the surfaced article to have been added at least 30 days prior. A weak or technically invalid reprise is worse than no reprise, so I'm staying silent."
+  },
+  {
+    "run_id": "2026-04-15",
+    "triggered_by": "ingestion",
+    "trigger_article": "whats-your-edge-rethinking-expertise-ai",
+    "fired": false,
+    "model": "claude-sonnet-4-6",
+    "input_tokens": 7100,
+    "output_tokens": 723,
+    "tool_calls": 4,
+    "skip_reason": "The knowledge graph currently contains only 6 articles, all added on 2026-04-13 or 2026-04-14 \u2014 within 1 day of the new article. The 30-day minimum age gap required to surface a \"forgotten\" article cannot be satisfied by any candidate in the graph. No reprise is possible until older articles are present."
   }
 ]

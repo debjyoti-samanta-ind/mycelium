@@ -106,5 +106,29 @@
     "input_tokens": 6690,
     "output_tokens": 711,
     "tool_calls": 4
+  },
+  {
+    "agent": "steelman",
+    "run_id": "2026-04-15",
+    "timestamp": "2026-04-15T20:17:02.031796+00:00",
+    "triggered_by": "ingestion",
+    "trigger_article": null,
+    "fired": false,
+    "skip_reason": "Only 6 articles (min 8)",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "tool_calls": 0
+  },
+  {
+    "agent": "reprise",
+    "run_id": "2026-04-15",
+    "timestamp": "2026-04-15T20:17:20.889724+00:00",
+    "triggered_by": "ingestion",
+    "trigger_article": "whats-your-edge-rethinking-expertise-ai",
+    "fired": false,
+    "skip_reason": "The knowledge graph currently contains only 6 articles, all added on 2026-04-13 or 2026-04-14 \u2014 within 1 day of the new article. The 30-day minimum age gap required to surface a \"forgotten\" article cannot be satisfied by any candidate in the graph. No reprise is possible until older articles are present.",
+    "input_tokens": 7100,
+    "output_tokens": 723,
+    "tool_calls": 4
   }
 ]
