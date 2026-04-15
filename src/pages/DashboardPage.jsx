@@ -41,11 +41,11 @@ function StatCard({ label, value, sub, tooltip }) {
   return (
     <div className="card-3d p-4">
       <div className="flex items-center justify-between mb-2">
-        <p className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.14em]">{label}</p>
+        <p className="text-[11px] font-bold text-stone-600 uppercase tracking-[0.12em]">{label}</p>
         {tooltip && <Tooltip text={tooltip} />}
       </div>
       <p className="serif text-[1.85rem] font-semibold text-stone-900 tracking-tight leading-none">{value}</p>
-      {sub != null && <div className="text-xs text-stone-400 mt-1.5 leading-snug">{sub}</div>}
+      {sub != null && <div className="text-xs text-stone-400 mt-1.5 leading-snug line-clamp-2">{sub}</div>}
     </div>
   )
 }
@@ -198,7 +198,7 @@ export default function DashboardPage() {
             {dist.length > 0 && (
               <div className="card-3d p-4">
                 <div className="flex items-center mb-3">
-                  <p className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.14em]">Domain split</p>
+                  <p className="text-[11px] font-bold text-stone-600 uppercase tracking-[0.12em]">Domain split</p>
                   <Tooltip text="How your reading is spread across intellectual disciplines — all time." />
                 </div>
                 <div className="space-y-2.5">
@@ -212,7 +212,7 @@ export default function DashboardPage() {
             {stanceTotal > 0 && (
               <div className="card-3d p-4">
                 <div className="flex items-center mb-3">
-                  <p className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.14em]">Reading stance</p>
+                  <p className="text-[11px] font-bold text-stone-600 uppercase tracking-[0.12em]">Reading stance</p>
                   <Tooltip text="Whether your articles take an optimistic, pessimistic, or neutral view. Set by Claude during ingestion based on each article's overall framing." />
                 </div>
                 <div className="space-y-2.5">
@@ -235,7 +235,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-2 gap-3">
           <div className="card-3d p-4">
             <div className="flex items-center mb-2">
-              <p className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.14em]">Reading mode</p>
+              <p className="text-[11px] font-bold text-stone-600 uppercase tracking-[0.12em]">Reading mode</p>
               <Tooltip text="Deep: more than 60% of this month's articles are in one domain. Broad: no single domain dominates." />
             </div>
             {dvb.mode ? (
@@ -258,7 +258,7 @@ export default function DashboardPage() {
 
           <div className="card-3d p-4">
             <div className="flex items-center mb-2">
-              <p className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.14em]">Neglected topic</p>
+              <p className="text-[11px] font-bold text-stone-600 uppercase tracking-[0.12em]">Neglected topic</p>
               <Tooltip text="A domain you've read in before, but haven't touched in over 30 days. A nudge, not a judgement." />
             </div>
             {r.neglected_topic ? (
@@ -283,7 +283,7 @@ export default function DashboardPage() {
             tooltip="What percentage of all possible connections between your articles have been found." />
           <StatCard label="Most connected"
             value={g.most_connected_node ? `${g.most_connected_node.edge_count} links` : '—'}
-            sub={g.most_connected_node ? g.most_connected_node.slug.replace(/-/g, ' ').slice(0, 32) : 'No connections yet'}
+            sub={g.most_connected_node ? g.most_connected_node.slug.replace(/-/g, ' ') : 'No connections yet'}
             tooltip="The article with the most connections — the most central idea in your reading." />
           <StatCard label="Island rate" value={g.island_count ?? 0}
             sub={g.island_count === 0 ? 'All articles connected' : `article${g.island_count !== 1 ? 's' : ''} unlinked`}
@@ -292,7 +292,7 @@ export default function DashboardPage() {
 
         <div className="card-3d p-4">
           <div className="flex items-center mb-3">
-            <p className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.14em]">Connection types</p>
+            <p className="text-[11px] font-bold text-stone-600 uppercase tracking-[0.12em]">Connection types</p>
             <Tooltip text="How your graph's connections break down. Heavy 'reinforce' may indicate echo-chamber reading; more 'contradict' and 'adjacent' means genuinely challenging reading." />
           </div>
           {totalEdges === 0 ? (
