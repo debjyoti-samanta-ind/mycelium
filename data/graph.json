@@ -25,6 +25,95 @@
       "type": "article"
     }
   ],
-  "edges": [],
-  "evaluated_pairs": []
+  "edges": [
+    {
+      "source": "attention-equation-consumer-attention-battles",
+      "target": "geopolitics-geometry-global-trade-2026-update",
+      "type": "adjacent",
+      "claim_a": "There are 25,000 times more hours of content produced annually on YouTube than on traditional television networks and streaming services combined",
+      "claim_b": "Chinese exporters cut prices by an average of 8 percent to find buyers in new markets",
+      "explanation": "In both cases, a structural abundance of supply (content volume; export goods) forces unit value compression as producers compete for scarce high-quality demand (focused attention; willing buyers), demonstrating that supply-side expansion without corresponding demand scarcity collapses per-unit value across media economics and trade economics respectively.",
+      "date_added": "2026-04-15"
+    },
+    {
+      "source": "2026-business-leaders-outlook-expectations-trends",
+      "target": "whats-your-edge-rethinking-expertise-ai",
+      "type": "adjacent",
+      "claim_a": "27% of leaders anticipate AI-related headcount impact in 2026",
+      "claim_b": "For every percentage point increase in AI adoption, demand for management roles emphasizing judgment increases by 2.5% to 7.5%",
+      "explanation": "Both claims instantiate the same formal relationship across different empirical contexts: AI adoption displaces undifferentiated labor while simultaneously increasing proportional demand for roles requiring non-automatable judgment, generating the prediction that net headcount effects mask compositional shifts toward higher-order roles that neither article alone makes explicit.",
+      "date_added": "2026-04-15"
+    },
+    {
+      "source": "2026-business-leaders-outlook-expectations-trends",
+      "target": "geopolitics-geometry-global-trade-2026-update",
+      "type": "reinforce",
+      "claim_a": "61% of respondents report negative tariff impacts on their costs",
+      "claim_b": "Chinese exporters cut prices by an average of 8 percent to find buyers in new markets",
+      "explanation": "Both claims assert the same causal mechanism — tariffs impose cost pressure that forces economic actors to absorb or redistribute that pressure — operating in different empirical contexts: US business leaders absorbing higher input costs domestically, and Chinese exporters compressing margins to remain competitive in displaced export markets.",
+      "date_added": "2026-04-15"
+    }
+  ],
+  "evaluated_pairs": [
+    [
+      "attention-equation-consumer-attention-battles",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "whats-your-edge-rethinking-expertise-ai",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "whats-your-edge-rethinking-expertise-ai",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "whats-your-edge-rethinking-expertise-ai",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "twenty-years-lasting-lessons-enron",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "twenty-years-lasting-lessons-enron",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "geopolitics-geometry-global-trade-2026-update",
+      "building-ethically-strong-organization"
+    ]
+  ]
 }
