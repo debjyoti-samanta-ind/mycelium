@@ -22,5 +22,17 @@
     "input_tokens": 8402,
     "output_tokens": 977,
     "tool_calls": 5
+  },
+  {
+    "agent": "blind_spot",
+    "run_id": "2026-04",
+    "timestamp": "2026-04-15T06:43:54.918411+00:00",
+    "triggered_by": "monthly_cron",
+    "trigger_article": null,
+    "fired": false,
+    "skip_reason": "Only 6 articles (min 10)",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "tool_calls": 0
   }
 ]
