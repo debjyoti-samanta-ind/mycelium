@@ -77,8 +77,8 @@
     "timestamp": "2026-04-15T19:30:15.521956+00:00",
     "triggered_by": "ingestion",
     "trigger_article": "whats-your-edge-rethinking-expertise-ai",
-    "fired": true,
-    "skip_reason": null,
+    "fired": false,
+    "skip_reason": "Retroactive: Python guard would have blocked this. Surfaced article was 0 days old (min 30). Bug fixed in commit 4aa3990.",
     "input_tokens": 8235,
     "output_tokens": 1450,
     "tool_calls": 6
