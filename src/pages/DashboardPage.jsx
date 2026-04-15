@@ -49,10 +49,13 @@ function getLatestFired(outputs) {
   return fired.length > 0 ? fired[fired.length - 1] : null
 }
 
-function AgentStatusRow({ name, output, headline }) {
+function AgentStatusRow({ name, tooltip, output, headline }) {
   return (
     <div className="flex items-start justify-between py-3 border-b border-stone-100 last:border-0">
-      <span className="text-sm font-medium text-stone-700 w-28 shrink-0">{name}</span>
+      <div className="flex items-center w-28 shrink-0">
+        <span className="text-sm font-medium text-stone-700">{name}</span>
+        {tooltip && <Tooltip text={tooltip} />}
+      </div>
       {!output ? (
         <span className="text-sm text-stone-400">Active — no output yet</span>
       ) : (
@@ -81,9 +84,9 @@ function AgentStatusPanel() {
     <section>
       <SectionHeader title="Agents" />
       <div className="bg-white border border-stone-200 rounded-xl px-4 py-1">
-        <AgentStatusRow name="Steelman"   output={steelman}  headline={steelmanHeadline} />
-        <AgentStatusRow name="Reprise"    output={reprise}   headline={repriseHeadline} />
-        <AgentStatusRow name="Blind Spot" output={blindSpot} headline={blindSpotHeadline} />
+        <AgentStatusRow name="Steelman"   tooltip="Finds the dominant view in your reading and writes the strongest possible argument against it — using your own articles."  output={steelman}  headline={steelmanHeadline} />
+        <AgentStatusRow name="Reprise"    tooltip="Surfaces an old article that has become newly relevant because of what you just read."                                         output={reprise}   headline={repriseHeadline} />
+        <AgentStatusRow name="Blind Spot" tooltip="Identifies the most important intellectual domain you are systematically ignoring, based on questions your reading keeps raising." output={blindSpot} headline={blindSpotHeadline} />
       </div>
     </section>
   )
