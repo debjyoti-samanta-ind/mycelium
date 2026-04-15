@@ -205,92 +205,105 @@ export default function GraphPage({ graphData }) {
     <div className="flex flex-col h-full">
 
       {/* Controls bar */}
-      <div className="flex items-center gap-3 px-4 py-2.5 border-b border-stone-200 bg-white flex-shrink-0">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={e => setSearchQuery(e.target.value)}
-          placeholder="Search nodes…"
-          className="w-48 px-3 py-1.5 text-sm border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-400 bg-white"
-        />
-        {searchQuery && (
-          <button
-            onClick={() => setSearchQuery('')}
-            className="text-xs text-stone-400 hover:text-stone-600"
-          >
-            Clear
-          </button>
-        )}
-
-        {/* Time filter */}
-        <div className="flex items-center gap-1.5 ml-4">
-          <span className="text-xs text-stone-400">Date:</span>
-          {PRESETS.map(p => (
-            <button
-              key={p.label}
-              onClick={() => {
-                const from = isoOffset(p.days)
-                const to = isoToday()
-                setDateFrom(from)
-                setDateTo(to)
-                setAppliedFrom(from)
-                setAppliedTo(to)
-              }}
-              className="text-xs px-2 py-1 rounded border border-stone-200 text-stone-500 hover:border-stone-400 hover:text-stone-700 transition-colors"
-            >
-              {p.label}
-            </button>
-          ))}
-          <input
-            type="date"
-            value={dateFrom}
-            onChange={e => setDateFrom(e.target.value)}
-            className="text-xs px-2 py-1 border border-stone-200 rounded focus:outline-none focus:ring-1 focus:ring-stone-400"
-            title="From date"
-          />
-          <span className="text-xs text-stone-300">–</span>
-          <input
-            type="date"
-            value={dateTo}
-            onChange={e => setDateTo(e.target.value)}
-            className="text-xs px-2 py-1 border border-stone-200 rounded focus:outline-none focus:ring-1 focus:ring-stone-400"
-            title="To date"
-          />
-          <button
-            onClick={() => { setAppliedFrom(dateFrom); setAppliedTo(dateTo) }}
-            className="text-xs px-2.5 py-1 bg-stone-800 text-white rounded hover:bg-stone-700 transition-colors"
-          >
-            Apply
-          </button>
-          {(appliedFrom || appliedTo) && (
-            <button
-              onClick={() => {
-                setDateFrom(''); setDateTo('')
-                setAppliedFrom(''); setAppliedTo('')
-              }}
-              className="text-xs text-stone-400 hover:text-stone-600"
-            >
-              Clear
+      <div className="flex-shrink-0 border-b border-stone-200 bg-white">
+        {/* Row 1: search + edge type filters */}
+        <div className="flex items-center gap-3 px-4 py-2.5">
+          {/* Search */}
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-300 pointer-events-none">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+            </span>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              placeholder="Search nodes…"
+              className="pl-8 pr-3 py-1.5 text-xs w-44 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-400 bg-stone-50 placeholder-stone-400"
+            />
+          </div>
+          {searchQuery && (
+            <button onClick={() => setSearchQuery('')} className="text-xs text-stone-400 hover:text-stone-600 -ml-1">
+              ×
             </button>
           )}
-        </div>
 
-        <div className="flex items-center gap-2 ml-auto">
-          <span className="text-xs text-stone-400 mr-1">Filter:</span>
-          {ALL_EDGE_TYPES.map(type => (
+          <div className="w-px h-4 bg-stone-200 mx-1" />
+
+          {/* Edge type filter pills */}
+          <div className="flex items-center gap-1.5">
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-400 mr-0.5">Edges</span>
+            {ALL_EDGE_TYPES.map(type => (
+              <button
+                key={type}
+                onClick={() => toggleFilter(type)}
+                className={`text-[11px] px-2.5 py-1 rounded-full font-medium border transition-all ${
+                  activeFilters.has(type)
+                    ? 'text-white border-transparent'
+                    : 'bg-white text-stone-400 border-stone-200 hover:border-stone-300'
+                }`}
+                style={activeFilters.has(type) ? { backgroundColor: EDGE_COLOURS[type] } : {}}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
+
+          {/* Date filter — pushed to the right */}
+          <div className="flex items-center gap-1.5 ml-auto">
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-400 mr-0.5">Date</span>
+            {PRESETS.map(p => (
+              <button
+                key={p.label}
+                onClick={() => {
+                  const from = isoOffset(p.days)
+                  const to   = isoToday()
+                  setDateFrom(from); setDateTo(to)
+                  setAppliedFrom(from); setAppliedTo(to)
+                }}
+                className={`text-[11px] px-2.5 py-1 rounded-full font-medium border transition-all ${
+                  appliedFrom === isoOffset(p.days) && appliedTo === isoToday()
+                    ? 'bg-stone-800 text-white border-transparent'
+                    : 'bg-white text-stone-500 border-stone-200 hover:border-stone-400'
+                }`}
+              >
+                {p.label}
+              </button>
+            ))}
+
+            <div className="w-px h-4 bg-stone-200 mx-0.5" />
+
+            <input
+              type="date"
+              value={dateFrom}
+              onChange={e => setDateFrom(e.target.value)}
+              className="text-[11px] px-2 py-1 border border-stone-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-stone-400 bg-stone-50"
+              title="From date"
+            />
+            <span className="text-stone-300 text-xs">–</span>
+            <input
+              type="date"
+              value={dateTo}
+              onChange={e => setDateTo(e.target.value)}
+              className="text-[11px] px-2 py-1 border border-stone-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-stone-400 bg-stone-50"
+              title="To date"
+            />
             <button
-              key={type}
-              onClick={() => toggleFilter(type)}
-              className={`text-xs px-2.5 py-1 rounded-full font-medium border transition-all ${
-                activeFilters.has(type)
-                  ? 'text-white border-transparent'
-                  : 'bg-white text-stone-400 border-stone-200'
-              }`}
-              style={activeFilters.has(type) ? { backgroundColor: EDGE_COLOURS[type] } : {}}
+              onClick={() => { setAppliedFrom(dateFrom); setAppliedTo(dateTo) }}
+              className="text-[11px] px-2.5 py-1 bg-stone-800 text-white rounded-lg hover:bg-stone-700 transition-colors font-medium"
             >
-              {type}
+              Apply
             </button>
-          ))}
+            {(appliedFrom || appliedTo) && (
+              <button
+                onClick={() => { setDateFrom(''); setDateTo(''); setAppliedFrom(''); setAppliedTo('') }}
+                className="text-[11px] text-stone-400 hover:text-stone-600"
+              >
+                Clear
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -332,15 +345,21 @@ export default function GraphPage({ graphData }) {
           />
         )}
 
-        {/* Domain color legend */}
+        {/* Legend */}
         {hasNodes && (
-          <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2.5 border border-stone-200 space-y-1.5">
-            {[...DOMAIN_BUCKETS, { name: 'Other', color: DOMAIN_DEFAULT_COLOR }].map(b => (
-              <div key={b.name} className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: b.color }} />
-                <span className="text-xs text-stone-600">{b.name}</span>
-              </div>
-            ))}
+          <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl border border-stone-200 overflow-hidden"
+            style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.08)' }}>
+            <p className="text-[9px] font-semibold uppercase tracking-widest text-stone-400 px-3 pt-2.5 pb-1.5 border-b border-stone-100">
+              Domains
+            </p>
+            <div className="px-3 py-2 space-y-1.5">
+              {[...DOMAIN_BUCKETS, { name: 'Other', color: DOMAIN_DEFAULT_COLOR }].map(b => (
+                <div key={b.name} className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: b.color }} />
+                  <span className="text-[11px] text-stone-600">{b.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
