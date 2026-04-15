@@ -78,6 +78,17 @@ def compute_reading(articles: list[dict]) -> dict:
     )
     last_broad_month = broad_months[0] if broad_months else None
 
+    # Stance distribution — all time
+    stance_counts = Counter(
+        a.get("stance", "").strip().lower()
+        for a in articles if a.get("stance", "").strip()
+    )
+    stance_distribution = {
+        "optimistic":  stance_counts.get("optimistic", 0),
+        "pessimistic": stance_counts.get("pessimistic", 0),
+        "neutral":     stance_counts.get("neutral", 0),
+    }
+
     # Neglected topic: domain with 2+ articles but none in last 30 days
     cutoff = (today - timedelta(days=30)).isoformat()
     domain_last_read: dict[str, str] = {}
@@ -107,7 +118,8 @@ def compute_reading(articles: list[dict]) -> dict:
         "month_delta":         len(this_month) - len(last_month),
         "active_since":        active_since,
         "months_active":       months_active,
-        "domain_distribution": domain_distribution,
+        "domain_distribution":  domain_distribution,
+        "stance_distribution":  stance_distribution,
         "depth_vs_breadth": {
             "mode":              mode,
             "top_domain":        top_domain,

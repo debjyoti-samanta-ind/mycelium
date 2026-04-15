@@ -1,5 +1,5 @@
 {
-  "computed_at": "2026-04-14",
+  "computed_at": "2026-04-15",
   "reading": {
     "total_articles": 6,
     "this_month": 6,
@@ -29,6 +29,11 @@
         "count": 1
       }
     ],
+    "stance_distribution": {
+      "optimistic": 1,
+      "pessimistic": 1,
+      "neutral": 2
+    },
     "depth_vs_breadth": {
       "mode": "broad",
       "top_domain": "economics",

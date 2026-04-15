@@ -152,6 +152,39 @@ export default function DashboardPage() {
           </div>
         )}
 
+        {/* Stance distribution */}
+        {(() => {
+          const sd = r.stance_distribution || {}
+          const total = (sd.optimistic || 0) + (sd.pessimistic || 0) + (sd.neutral || 0)
+          if (total === 0) return null
+          return (
+            <div className="bg-white border border-stone-200 rounded-xl p-5 mb-4">
+              <div className="flex items-center mb-4">
+                <p className="text-xs font-medium text-stone-500 uppercase tracking-wide">Reading stance</p>
+                <Tooltip text="Whether your articles take an optimistic, pessimistic, or neutral view on their subject. Set by Claude during ingestion based on each article's overall framing — not the author's personal views." />
+              </div>
+              <div className="flex gap-6">
+                {[
+                  { label: 'Optimistic',  key: 'optimistic',  colour: '#4a7c59' },
+                  { label: 'Neutral',     key: 'neutral',     colour: '#B4B2A9' },
+                  { label: 'Pessimistic', key: 'pessimistic', colour: '#c0392b' },
+                ].map(({ label, key, colour }) => {
+                  const count = sd[key] || 0
+                  const pct   = total > 0 ? Math.round((count / total) * 100) : 0
+                  return (
+                    <div key={key} className="flex items-center gap-2">
+                      <span className="inline-block w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: colour }} />
+                      <span className="text-xs text-stone-500">{label}</span>
+                      <span className="text-sm font-semibold text-stone-800">{count}</span>
+                      <span className="text-xs text-stone-400">({pct}%)</span>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )
+        })()}
+
         {/* Depth vs breadth + neglected topic */}
         <div className="grid grid-cols-2 gap-4">
 

@@ -145,6 +145,22 @@ export async function deleteArticle(slug, url) {
     return entryUrl !== url
   })
   await putFile('data/queue.json', queueSha, queue, `chore: remove deleted article from queue [skip ci]`)
+
+  // 4. Trigger dashboard recompute so counts stay in sync
+  // Requires the GitHub token to have the 'workflow' scope.
+  // Non-fatal if it fails — dashboard will resync on next ingestion.
+  try {
+    await fetch(
+      `https://api.github.com/repos/${REPO}/actions/workflows/recompute_dashboard.yml/dispatches`,
+      {
+        method: 'POST',
+        headers: { ...GITHUB_HEADERS, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ref: 'master' }),
+      }
+    )
+  } catch {
+    // Silently ignore — delete succeeded, dashboard will fix itself on next ingestion
+  }
 }
 
 export async function deleteDigest(month) {
