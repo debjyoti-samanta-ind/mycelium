@@ -58,5 +58,29 @@
     "input_tokens": 3951,
     "output_tokens": 629,
     "tool_calls": 3
+  },
+  {
+    "agent": "steelman",
+    "run_id": "2026-04-15",
+    "timestamp": "2026-04-15T19:29:44.945936+00:00",
+    "triggered_by": "ingestion",
+    "trigger_article": null,
+    "fired": false,
+    "skip_reason": "Only 6 articles (min 8)",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "tool_calls": 0
+  },
+  {
+    "agent": "reprise",
+    "run_id": "2026-04-15",
+    "timestamp": "2026-04-15T19:30:15.521956+00:00",
+    "triggered_by": "ingestion",
+    "trigger_article": "whats-your-edge-rethinking-expertise-ai",
+    "fired": true,
+    "skip_reason": null,
+    "input_tokens": 8235,
+    "output_tokens": 1450,
+    "tool_calls": 6
   }
 ]
