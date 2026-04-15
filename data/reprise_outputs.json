@@ -1,1 +1,13 @@
-[]
+[
+  {
+    "run_id": "2026-04-15",
+    "triggered_by": "ingestion",
+    "trigger_article": "whats-your-edge-rethinking-expertise-ai",
+    "fired": false,
+    "model": "claude-sonnet-4-6",
+    "input_tokens": 8402,
+    "output_tokens": 977,
+    "tool_calls": 5,
+    "skip_reason": "The graph is too small (6 articles total) and too young to yield a genuine reprise. All 4 articles with direct edges to the new article are already connected by automatically surfaced edges. The only remaining unconnected article \u2014 'Geopolitics and the geometry of global trade: 2026 update' \u2014 was added on 2026-04-13, just one day before the new article (2026-04-14), which fails the 30-day minimum age requirement. No eligible candidate clears the bar."
+  }
+]

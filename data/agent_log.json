@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "agent": "steelman",
+    "run_id": "2026-04-15",
+    "timestamp": "2026-04-15T06:42:57.421966+00:00",
+    "triggered_by": "ingestion",
+    "trigger_article": null,
+    "fired": false,
+    "skip_reason": "Only 6 articles (min 8)",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "tool_calls": 0
+  },
+  {
+    "agent": "reprise",
+    "run_id": "2026-04-15",
+    "timestamp": "2026-04-15T06:43:17.116239+00:00",
+    "triggered_by": "ingestion",
+    "trigger_article": "whats-your-edge-rethinking-expertise-ai",
+    "fired": false,
+    "skip_reason": "The graph is too small (6 articles total) and too young to yield a genuine reprise. All 4 articles with direct edges to the new article are already connected by automatically surfaced edges. The only remaining unconnected article \u2014 'Geopolitics and the geometry of global trade: 2026 update' \u2014 was added on 2026-04-13, just one day before the new article (2026-04-14), which fails the 30-day minimum age requirement. No eligible candidate clears the bar.",
+    "input_tokens": 8402,
+    "output_tokens": 977,
+    "tool_calls": 5
+  }
+]
