@@ -5,6 +5,7 @@ import ArticleListPage from './pages/ArticleListPage.jsx'
 import GraphPage from './pages/GraphPage.jsx'
 import DigestsPage from './pages/DigestsPage.jsx'
 import DashboardPage from './pages/DashboardPage.jsx'
+import AgentsPage from './pages/AgentsPage.jsx'
 import graphDataStatic from '../data/graph.json'
 
 export default function App() {
@@ -40,6 +41,7 @@ export default function App() {
             {navLink('/articles', 'Articles')}
             {navLink('/graph', 'Graph')}
             {navLink('/digests', 'Digests')}
+            {navLink('/agents', 'Agents')}
           </div>
         </div>
       </nav>
@@ -56,6 +58,7 @@ export default function App() {
             <Route path="/articles" element={<ArticleListPage onArticleDeleted={removeFromGraph} />} />
             <Route path="/digests" element={<DigestsPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/agents" element={<AgentsPage />} />
           </Routes>
         </main>
       )}

@@ -1,5 +1,8 @@
 import dashboardData from '../../data/dashboard.json'
 import Tooltip from '../components/Tooltip.jsx'
+import steelmanOutputs from '../../data/steelman_outputs.json'
+import repriseOutputs from '../../data/reprise_outputs.json'
+import blindSpotOutputs from '../../data/blind_spot_outputs.json'
 
 const d = dashboardData
 
@@ -38,6 +41,51 @@ function StatCard({ label, value, sub, tooltip }) {
 function SectionHeader({ title }) {
   return (
     <p className="text-xs font-semibold text-stone-400 uppercase tracking-widest mb-4">{title}</p>
+  )
+}
+
+function getLatestFired(outputs) {
+  const fired = outputs.filter(o => o.fired)
+  return fired.length > 0 ? fired[fired.length - 1] : null
+}
+
+function AgentStatusRow({ name, output, headline }) {
+  return (
+    <div className="flex items-start justify-between py-3 border-b border-stone-100 last:border-0">
+      <span className="text-sm font-medium text-stone-700 w-28 shrink-0">{name}</span>
+      {!output ? (
+        <span className="text-sm text-stone-400">Active — no output yet</span>
+      ) : (
+        <span className="text-sm text-stone-600 text-right">{headline}</span>
+      )}
+    </div>
+  )
+}
+
+function AgentStatusPanel() {
+  const steelman  = getLatestFired(steelmanOutputs)
+  const reprise   = getLatestFired(repriseOutputs)
+  const blindSpot = getLatestFired(blindSpotOutputs)
+
+  const steelmanHeadline  = steelman
+    ? `Challenged: ${steelman.consensus?.claim?.slice(0, 60)}…`
+    : null
+  const repriseHeadline   = reprise
+    ? `Surfaced: "${reprise.surfaced_article?.title}" (${reprise.run_id})`
+    : null
+  const blindSpotHeadline = blindSpot
+    ? `${blindSpot.blind_spot?.domain} — ${blindSpot.run_id}`
+    : null
+
+  return (
+    <section>
+      <SectionHeader title="Agents" />
+      <div className="bg-white border border-stone-200 rounded-xl px-4 py-1">
+        <AgentStatusRow name="Steelman"   output={steelman}  headline={steelmanHeadline} />
+        <AgentStatusRow name="Reprise"    output={reprise}   headline={repriseHeadline} />
+        <AgentStatusRow name="Blind Spot" output={blindSpot} headline={blindSpotHeadline} />
+      </div>
+    </section>
   )
 }
 
@@ -228,6 +276,9 @@ export default function DashboardPage() {
             )}
         </div>
       </section>
+
+      {/* ── Agents ── */}
+      <AgentStatusPanel />
 
       <p className="text-xs text-stone-300 text-right">
         Last computed: {d.computed_at || '—'}
