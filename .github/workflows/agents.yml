@@ -1,0 +1,55 @@
+name: Run Learning Agents
+
+on:
+  workflow_run:
+    workflows: ["Find Connections"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mycelium-data
+  cancel-in-progress: false
+
+jobs:
+  agents:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: pip install anthropic
+
+      - name: Run Steelman agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          GMAIL_RECIPIENT: ${{ secrets.GMAIL_RECIPIENT }}
+        run: python .github/scripts/steelman.py
+
+      - name: Run Reprise agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          GMAIL_RECIPIENT: ${{ secrets.GMAIL_RECIPIENT }}
+        run: python .github/scripts/reprise.py
+
+      - name: Commit agent outputs
+        run: |
+          git config user.name "Mycelium Bot"
+          git config user.email "mycelium@users.noreply.github.com"
+          git add data/agent_log.json data/steelman_outputs.json data/reprise_outputs.json
+          git diff --staged --quiet && echo "No agent outputs to commit." || git commit -m "chore: update agent outputs [skip ci]"
+          git push
