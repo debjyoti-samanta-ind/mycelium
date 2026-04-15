@@ -58,8 +58,10 @@ def find_connection(article_a: dict, article_b: dict) -> dict | None:
     Retries once with a stricter prompt if the first response fails to parse.
     Logs token usage for cost monitoring.
     """
-    prompt = f"""You are a rigorous intellectual analyst building a personal knowledge graph. \
-Evaluate whether these two articles have a genuine, specific, non-obvious intellectual connection.
+    prompt = f"""You are a ruthlessly rigorous intellectual analyst building a personal knowledge \
+graph. Your default is NO CONNECTION. You only record connections that would survive peer review \
+— connections that a skeptical domain expert would agree are genuine, non-obvious, and \
+irreducible to a shared theme.
 
 ARTICLE A:
 {article_summary(article_a)}
@@ -67,67 +69,86 @@ ARTICLE A:
 ARTICLE B:
 {article_summary(article_b)}
 
-Before answering, work through these four tests in order:
+Work through these steps in order. Stop and return {{"connected": false}} the moment any step fails.
 
-TEST 1 — SPECIFIC CLAIMS
-Identify the single most specific, falsifiable claim in Article A and in Article B. \
-Work at the level of citable claims — not themes, structural patterns, or general arguments.
+STEP 1 — EXTRACT THE SHARPEST CLAIMS
+Identify the single most specific, falsifiable, empirically-grounded claim in each article. \
+Do not use the central argument — find the sharpest atomic claim that could be directly cited. \
+Themes, structural observations, and general arguments do not qualify.
 
-TEST 2 — DIRECT ARGUMENTATIVE RELATIONSHIP
-Is there a direct relationship between a specific claim in A and a specific claim in B?
-- reinforce: the specific claim in A and a specific claim in B make the same non-obvious \
-argument independently. Must be falsifiable. Generic principles ("incentives matter", \
-"culture drives outcomes", "metrics can mislead", "proximity affects judgment") do not qualify.
-- contradict: a specific claim in A directly contradicts a specific claim in B. Surface \
-sentiment disagreement (one optimistic, one pessimistic) does not qualify.
-- evolve: a specific argument in A is extended, refined, or bounded by a specific argument \
-in B with new evidence or a limiting case that A does not address.
-- adjacent: a specific claim in A and a specific claim in B reveal the same structural logic \
-across GENUINELY DIFFERENT intellectual disciplines — not different sub-fields or scales of \
-the same discipline. Economics and media economics are the same discipline. The shared logic \
-must generate a specific prediction that neither article makes alone.
+STEP 2 — TEST FOR A DIRECT RELATIONSHIP
+Connection types — read definitions precisely:
 
-TEST 3 — NON-DERIVABILITY
-Would someone who had only read Article A already predict the specific finding in Article B \
-that creates this connection — or vice versa? If yes, the connection is derivable from domain \
-knowledge alone and does not qualify. Return connected: false.
+- reinforce: Claims A and B assert the SAME causal mechanism or causal relationship operating \
+in DIFFERENT empirical contexts. The mechanism must be explicitly stated in BOTH claims — not \
+inferred, reconstructed, or abstracted upward from them. If you need to say "both suggest that \
+X leads to Y" and X→Y is not the literal content of each claim, they do not reinforce.
 
-TEST 4 — GENERALITY
-Would this connection apply to 20%+ of articles in these domains? If yes, it is a genre \
-convention, not an intellectual connection. Return connected: false.
+- contradict: Claim A, if true, directly falsifies Claim B — or vice versa. They must be \
+logically inconsistent, not merely in tension. Different conclusions drawn from different \
+premises do not qualify. Different stances (one optimistic, one pessimistic) do not qualify.
 
-Your default is: {{"connected": false}}
-Only override with specific, non-derivable evidence that passes all four tests.
+- evolve: Claim B adds a specific limiting condition, scope boundary, or new evidence that \
+directly modifies the predictive reach of Claim A. Both claims must concern the SAME \
+mechanism. Same topic with different emphasis does not qualify.
 
-FAIL examples (do not return these):
-- reinforce: "Both show that leaders' proximity to their organisations creates overconfidence \
-that blinds them to systemic risks." → Derivable from either article's domain alone; \
-a well-known cognitive bias, not a non-obvious shared finding.
+- adjacent: Claims A and B exhibit the SAME FORMAL RELATIONSHIP between different variables, \
+across GENUINELY DIFFERENT intellectual disciplines — not sub-fields, applied variants, or \
+different scales of the same discipline. The shared formal structure must generate a specific \
+prediction that NEITHER article makes alone. Thematic or analogical similarity does not qualify.
+
+STEP 3 — ADVERSARIAL CHECK
+If you found a potential connection in Step 2, argue against it. Identify the strongest single \
+reason this is NOT a genuine connection. Then apply these three tests:
+(a) Does this connection rest on analogical reasoning — "X is like Y" or "both involve Z" — \
+rather than the identical mechanism operating in different empirical contexts?
+(b) Does either claim need to be reinterpreted, abstracted, or extended beyond what the article \
+literally states in order to create the connection?
+(c) Do the claims describe structurally different phenomena — different failure modes, different \
+causal directions, different mechanisms — that share only a surface theme or vocabulary?
+If the answer to any of (a), (b), or (c) is yes, return {{"connected": false}}.
+
+STEP 4 — DISQUALIFICATION CHECKS
+Return {{"connected": false}} immediately if ANY of these apply:
+- The connection requires invoking a concept, mechanism, or framing that neither article \
+explicitly names or argues for
+- The claims are thematically related but describe different causal structures
+- The connection would hold equally well between this pair and most other articles in these \
+domains — it is a genre convention
+- A careful reader of both articles would not spontaneously notice this connection without \
+external prompting — it requires synthesis the articles themselves do not invite
+
+FAIL examples — these would all return {{"connected": false}}:
+- reinforce: "Both show that formal credentials are insufficient substitutes for genuine \
+accountability." → The mechanism (credentials ≠ accountability) is not the literal content of \
+either claim; it is reconstructed by abstracting upward. Fails Step 3(b).
 - reinforce: "Both argue that surface metrics miss underlying quality drivers." → Genre \
-convention; applies to most management writing.
+convention in management writing. Fails Step 4.
+- reinforce: "Both show leaders' proximity creates overconfidence." → Well-known cognitive \
+bias derivable from domain knowledge alone; not a non-obvious shared finding. Fails Step 4.
+- adjacent: "Both reveal how structural proximity undermines objective judgment." → Thematic \
+similarity only; the formal relationship between variables differs in each case. Fails Step 3(a).
 - contradict: "Article A is optimistic about AI; Article B is pessimistic." → Surface \
-sentiment only.
-- adjacent: "Both reveal how structural proximity undermines objective judgment." → Too \
-generic; applies to virtually all governance and behavioural economics writing.
+sentiment, not logical inconsistency. Fails Step 2.
 
-PASS examples:
-- reinforce: claim_a = "Attention value follows a power law: live sports earns 600x more \
-per hour than podcasts across 20 media formats." claim_b = "Startup returns follow a power \
-law: top 10 companies in a fund return more than the rest combined." Explanation: "Both \
-independently identify power-law distribution as the structural reality their industry ignores \
-by using averages — the same non-obvious mechanism appearing across genuinely different domains."
+PASS examples — these would return connected: true:
+- reinforce: claim_a = "Attention value follows a power law: live sports earns 600x more per \
+hour than podcasts across 20 media formats." claim_b = "Startup returns follow a power law: \
+top 10 companies in a fund return more than the rest combined." → Same mechanism (power-law \
+distribution) explicitly stated in both claims across different domains. Passes all steps.
 - adjacent: claim_a = "Content abundance has destroyed per-unit attention value: 25,000x more \
 YouTube hours than TV yet TV monetises better per hour." claim_b = "Trade volume growth \
-destroyed per-unit trade margins as Chinese exporters cut prices 8% to find buyers in \
-realigned markets." Explanation: "Across genuinely different disciplines, near-infinite supply \
-collapses per-unit economics while the scarce complement (focused attention; geopolitically \
-trusted partnerships) becomes the true value driver — a prediction neither article makes alone."
+destroyed per-unit trade margins as Chinese exporters cut prices 8% to find buyers." → Same \
+formal relationship (supply abundance collapses unit value of the commodity; scarcity migrates \
+to the complement) across genuinely different disciplines, generating a prediction neither \
+article makes alone. Passes all steps.
 
 Reply with ONLY valid JSON — no markdown, no commentary:
 {{"connected": true, "type": "reinforce|contradict|evolve|adjacent", \
-"claim_a": "the exact specific claim from Article A being connected", \
-"claim_b": "the exact specific claim from Article B being connected", \
-"explanation": "one precise sentence explaining the exact relationship between these two specific claims"}}
+"claim_a": "the exact verbatim claim from Article A", \
+"claim_b": "the exact verbatim claim from Article B", \
+"explanation": "one precise sentence stating the exact shared mechanism or formal relationship \
+between these two specific claims — not a theme, not an analogy"}}
 or
 {{"connected": false}}"""
 
@@ -142,7 +163,7 @@ Use one of these two forms exactly:
 
         response = client.messages.create(
             model=MODEL,
-            max_tokens=512,
+            max_tokens=1024,
             messages=(
                 [{"role": "user", "content": prompt}]
                 if attempt == 0
