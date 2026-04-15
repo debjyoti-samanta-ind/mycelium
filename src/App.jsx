@@ -29,7 +29,7 @@ export default function App() {
         className={`text-sm px-3 py-1.5 rounded-lg transition-colors ${
           active
             ? 'bg-stone-900 text-white font-medium'
-            : 'text-stone-500 hover:text-stone-800 hover:bg-stone-100'
+            : 'text-stone-600 hover:text-stone-900 hover:bg-black/[0.06]'
         }`}
       >
         {label}
@@ -39,7 +39,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#f0e9dc' }}>
-      <nav className="border-b px-6 py-3" style={{ borderColor: '#ddd4c0' }}>
+      <nav className="border-b px-6 py-3" style={{ backgroundColor: '#e2d8ca', borderColor: '#cec4b2' }}>
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <span className="text-2xl font-bold text-stone-900 tracking-tight serif">Mycelium</span>
           <div className="flex gap-1 text-sm">
