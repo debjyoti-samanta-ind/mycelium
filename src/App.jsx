@@ -21,21 +21,28 @@ export default function App() {
     }))
   }
 
-  const navLink = (to, label) => (
-    <Link
-      to={to}
-      className={location.pathname === to ? 'text-stone-900 font-medium' : 'text-stone-500 hover:text-stone-800'}
-    >
-      {label}
-    </Link>
-  )
+  const navLink = (to, label) => {
+    const active = location.pathname === to
+    return (
+      <Link
+        to={to}
+        className={`text-sm px-3 py-1.5 rounded-lg transition-colors ${
+          active
+            ? 'bg-stone-900 text-white font-medium'
+            : 'text-stone-500 hover:text-stone-800 hover:bg-stone-100'
+        }`}
+      >
+        {label}
+      </Link>
+    )
+  }
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#fafaf8' }}>
-      <nav className="border-b border-stone-200 px-6 py-4">
+      <nav className="border-b border-stone-200 px-6 py-3">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <span className="text-lg font-semibold text-stone-800">Mycelium</span>
-          <div className="flex gap-6 text-sm">
+          <span className="text-base font-bold text-stone-900 tracking-tight">Mycelium</span>
+          <div className="flex gap-1 text-sm">
             {navLink('/dashboard', 'Dashboard')}
             {navLink('/', 'Add Article')}
             {navLink('/articles', 'Articles')}

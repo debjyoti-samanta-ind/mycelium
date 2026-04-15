@@ -6,6 +6,22 @@ import blindSpotOutputs from '../../data/blind_spot_outputs.json'
 
 const d = dashboardData
 
+// Domain colors matching the graph's DOMAIN_BUCKETS
+const DOMAIN_COLOR_BUCKETS = [
+  { color: '#6366f1', keywords: ['tech', 'software', 'ai', 'digital', 'data', 'machine learning', 'computer'] },
+  { color: '#0d9488', keywords: ['science', 'biology', 'physics', 'neuro', 'cognitive', 'psychology', 'complexity', 'evolutionary'] },
+  { color: '#d97706', keywords: ['business', 'econom', 'financ', 'marketing', 'management', 'organizational', 'organisational', 'geopolit', 'trade', 'corporate', 'governance', 'media econom'] },
+  { color: '#dc6b3f', keywords: ['philosoph', 'histor', 'sociol', 'political', 'media', 'culture', 'anthropol', 'ethics'] },
+]
+
+function getDomainColor(domain) {
+  const d = (domain || '').toLowerCase()
+  for (const bucket of DOMAIN_COLOR_BUCKETS) {
+    if (bucket.keywords.some(k => d.includes(k))) return bucket.color
+  }
+  return '#78716c'
+}
+
 function monthLabel(monthStr) {
   if (!monthStr) return '—'
   try {
@@ -19,47 +35,71 @@ function DeltaBadge({ delta }) {
   if (delta === 0 || delta == null) return null
   const positive = delta > 0
   return (
-    <span className={`text-xs font-medium ml-1.5 ${positive ? 'text-green-600' : 'text-red-500'}`}>
-      {positive ? `+${delta}` : delta} vs last month
+    <span className={`text-xs font-semibold ${positive ? 'text-emerald-600' : 'text-red-500'}`}>
+      {positive ? `+${delta}` : delta} vs last mo
     </span>
   )
 }
 
 function StatCard({ label, value, sub, tooltip }) {
   return (
-    <div className="bg-white border border-stone-200 rounded-xl p-4">
-      <div className="flex items-center mb-1">
-        <p className="text-xs text-stone-400 uppercase tracking-wide">{label}</p>
+    <div className="bg-white rounded-2xl p-5 shadow-sm ring-1 ring-black/[0.05]">
+      <div className="flex items-center justify-between mb-3">
+        <p className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.14em]">{label}</p>
         {tooltip && <Tooltip text={tooltip} />}
       </div>
-      <p className="text-2xl font-semibold text-stone-900">{value}</p>
-      {sub && <p className="text-xs text-stone-400 mt-0.5">{sub}</p>}
+      <p className="text-[2rem] font-semibold text-stone-900 tracking-tight leading-none">{value}</p>
+      {sub != null && (
+        <div className="text-xs text-stone-400 mt-2 leading-snug">{sub}</div>
+      )}
     </div>
   )
 }
 
 function SectionHeader({ title }) {
   return (
-    <p className="text-xs font-semibold text-stone-400 uppercase tracking-widest mb-4">{title}</p>
+    <div className="flex items-center gap-3 mb-5">
+      <span className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.14em] shrink-0">{title}</span>
+      <div className="flex-1 h-px bg-stone-150" style={{ backgroundColor: '#e8e5e1' }} />
+    </div>
+  )
+}
+
+function BarRow({ label, pct, color, right }) {
+  return (
+    <div className="flex items-center gap-3">
+      <span className="text-xs text-stone-500 w-28 truncate capitalize shrink-0">{label}</span>
+      <div className="flex-1 bg-stone-100 rounded-full h-[5px]">
+        <div
+          className="h-[5px] rounded-full transition-all duration-500"
+          style={{ width: `${pct}%`, backgroundColor: color }}
+        />
+      </div>
+      <span className="text-xs text-stone-400 w-8 text-right shrink-0 tabular-nums">{right}</span>
+    </div>
   )
 }
 
 function getLatestFired(outputs) {
-  const fired = outputs.filter(o => o.fired)
+  const fired = (outputs || []).filter(o => o.fired)
   return fired.length > 0 ? fired[fired.length - 1] : null
 }
 
 function AgentStatusRow({ name, tooltip, output, headline }) {
   return (
-    <div className="flex items-start justify-between py-3 border-b border-stone-100 last:border-0">
-      <div className="flex items-center w-28 shrink-0">
+    <div className="flex items-start gap-3 py-3.5 border-b border-stone-50 last:border-0">
+      <span
+        className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0"
+        style={{ backgroundColor: output ? '#4a7c59' : '#d6d3d1' }}
+      />
+      <div className="flex items-center gap-0.5 w-24 shrink-0">
         <span className="text-sm font-medium text-stone-700">{name}</span>
         {tooltip && <Tooltip text={tooltip} />}
       </div>
       {!output ? (
-        <span className="text-sm text-stone-400">Active — no output yet</span>
+        <span className="text-sm text-stone-400 italic">Active — no output yet</span>
       ) : (
-        <span className="text-sm text-stone-600 text-right">{headline}</span>
+        <span className="text-sm text-stone-600 leading-snug">{headline}</span>
       )}
     </div>
   )
@@ -70,37 +110,49 @@ function AgentStatusPanel() {
   const reprise   = getLatestFired(repriseOutputs)
   const blindSpot = getLatestFired(blindSpotOutputs)
 
-  const steelmanHeadline  = steelman
-    ? `Challenged: ${steelman.consensus?.claim?.slice(0, 60)}…`
-    : null
-  const repriseHeadline   = reprise
-    ? `Surfaced: "${reprise.surfaced_article?.title}" (${reprise.run_id})`
-    : null
-  const blindSpotHeadline = blindSpot
-    ? `${blindSpot.blind_spot?.domain} — ${blindSpot.run_id}`
-    : null
-
   return (
     <section>
       <SectionHeader title="Agents" />
-      <div className="bg-white border border-stone-200 rounded-xl px-4 py-1">
-        <AgentStatusRow name="Steelman"   tooltip="Finds the dominant view in your reading and writes the strongest possible argument against it — using your own articles."  output={steelman}  headline={steelmanHeadline} />
-        <AgentStatusRow name="Reprise"    tooltip="Surfaces an old article that has become newly relevant because of what you just read."                                         output={reprise}   headline={repriseHeadline} />
-        <AgentStatusRow name="Blind Spot" tooltip="Identifies the most important intellectual domain you are systematically ignoring, based on questions your reading keeps raising." output={blindSpot} headline={blindSpotHeadline} />
+      <div className="bg-white rounded-2xl shadow-sm ring-1 ring-black/[0.05] px-5 py-1">
+        <AgentStatusRow
+          name="Steelman"
+          tooltip="Finds the dominant view in your reading and writes the strongest possible argument against it — using your own articles."
+          output={steelman}
+          headline={steelman ? `Challenged: ${steelman.consensus?.claim?.slice(0, 60)}…` : null}
+        />
+        <AgentStatusRow
+          name="Reprise"
+          tooltip="Surfaces an old article that has become newly relevant because of what you just read."
+          output={reprise}
+          headline={reprise ? `Surfaced: "${reprise.surfaced_article?.title}" (${reprise.run_id})` : null}
+        />
+        <AgentStatusRow
+          name="Blind Spot"
+          tooltip="Identifies the most important intellectual domain you are systematically ignoring, based on questions your reading keeps raising."
+          output={blindSpot}
+          headline={blindSpot ? `${blindSpot.blind_spot?.domain} — ${blindSpot.run_id}` : null}
+        />
       </div>
     </section>
   )
 }
 
 export default function DashboardPage() {
-  const r = d.reading   || {}
-  const g = d.graph     || {}
+  const r = d.reading || {}
+  const g = d.graph   || {}
 
-  const dist    = r.domain_distribution || []
+  const dist     = r.domain_distribution || []
   const maxCount = dist[0]?.count || 1
-  const dvb     = r.depth_vs_breadth || {}
-  const etd     = g.edge_type_distribution || {}
+  const dvb      = r.depth_vs_breadth || {}
+  const etd      = g.edge_type_distribution || {}
   const totalEdges = g.total_edges || 0
+
+  const sd = r.stance_distribution || {}
+  const stanceTotal = (sd.optimistic || 0) + (sd.pessimistic || 0) + (sd.neutral || 0)
+  const showStance = stanceTotal > 0
+
+  const showDomain = dist.length > 0
+  const showBothCharts = showDomain && showStance
 
   return (
     <div className="space-y-10">
@@ -109,8 +161,7 @@ export default function DashboardPage() {
       <section>
         <SectionHeader title="Reading Intelligence" />
 
-        {/* Stat row */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-3 gap-4 mb-5">
           <StatCard
             label="Articles"
             value={r.total_articles ?? 0}
@@ -124,119 +175,107 @@ export default function DashboardPage() {
           <StatCard
             label="Reading since"
             value={monthLabel(r.active_since)}
-            sub={`${r.months_active ?? 0} month${r.months_active !== 1 ? 's' : ''} with articles`}
+            sub={`${r.months_active ?? 0} month${r.months_active !== 1 ? 's' : ''} tracked`}
           />
         </div>
 
-        {/* Domain distribution */}
-        {dist.length > 0 && (
-          <div className="bg-white border border-stone-200 rounded-xl p-5 mb-4">
-            <div className="flex items-center mb-4">
-              <p className="text-xs font-medium text-stone-500 uppercase tracking-wide">Domain distribution</p>
-              <Tooltip text="How your reading is spread across intellectual disciplines — all time." />
-            </div>
-            <div className="space-y-2">
-              {dist.map(({ domain, count }) => (
-                <div key={domain} className="flex items-center gap-3">
-                  <span className="text-xs text-stone-500 w-36 truncate capitalize">{domain}</span>
-                  <div className="flex-1 bg-stone-100 rounded-full h-1.5">
-                    <div
-                      className="bg-stone-600 h-1.5 rounded-full"
-                      style={{ width: `${(count / maxCount) * 100}%` }}
-                    />
-                  </div>
-                  <span className="text-xs text-stone-400 w-4 text-right">{count}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Stance distribution */}
-        {(() => {
-          const sd = r.stance_distribution || {}
-          const total = (sd.optimistic || 0) + (sd.pessimistic || 0) + (sd.neutral || 0)
-          if (total === 0) return null
-          return (
-            <div className="bg-white border border-stone-200 rounded-xl p-5 mb-4">
+        {/* Domain + Stance charts */}
+        <div className={`grid gap-4 mb-5 ${showBothCharts ? 'grid-cols-2' : 'grid-cols-1'}`}>
+          {showDomain && (
+            <div className="bg-white rounded-2xl shadow-sm ring-1 ring-black/[0.05] p-5">
               <div className="flex items-center mb-4">
-                <p className="text-xs font-medium text-stone-500 uppercase tracking-wide">Reading stance</p>
-                <Tooltip text="Whether your articles take an optimistic, pessimistic, or neutral view on their subject. Set by Claude during ingestion based on each article's overall framing — not the author's personal views." />
+                <p className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.14em]">Domain split</p>
+                <Tooltip text="How your reading is spread across intellectual disciplines — all time." />
               </div>
-              <div className="flex gap-6">
+              <div className="space-y-3">
+                {dist.map(({ domain, count }) => (
+                  <BarRow
+                    key={domain}
+                    label={domain}
+                    pct={(count / maxCount) * 100}
+                    color={getDomainColor(domain)}
+                    right={count}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {showStance && (
+            <div className="bg-white rounded-2xl shadow-sm ring-1 ring-black/[0.05] p-5">
+              <div className="flex items-center mb-4">
+                <p className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.14em]">Reading stance</p>
+                <Tooltip text="Whether your articles take an optimistic, pessimistic, or neutral view. Set by Claude during ingestion based on each article's overall framing — not the author's personal views." />
+              </div>
+              <div className="space-y-3">
                 {[
-                  { label: 'Optimistic',  key: 'optimistic',  colour: '#4a7c59' },
-                  { label: 'Neutral',     key: 'neutral',     colour: '#B4B2A9' },
-                  { label: 'Pessimistic', key: 'pessimistic', colour: '#c0392b' },
-                ].map(({ label, key, colour }) => {
+                  { label: 'Optimistic',  key: 'optimistic',  color: '#4a7c59' },
+                  { label: 'Neutral',     key: 'neutral',     color: '#B4B2A9' },
+                  { label: 'Pessimistic', key: 'pessimistic', color: '#c0392b' },
+                ].map(({ label, key, color }) => {
                   const count = sd[key] || 0
-                  const pct   = total > 0 ? Math.round((count / total) * 100) : 0
+                  const pct   = stanceTotal > 0 ? Math.round((count / stanceTotal) * 100) : 0
                   return (
-                    <div key={key} className="flex items-center gap-2">
-                      <span className="inline-block w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: colour }} />
-                      <span className="text-xs text-stone-500">{label}</span>
-                      <span className="text-sm font-semibold text-stone-800">{count}</span>
-                      <span className="text-xs text-stone-400">({pct}%)</span>
-                    </div>
+                    <BarRow
+                      key={key}
+                      label={label}
+                      pct={pct}
+                      color={color}
+                      right={count}
+                    />
                   )
                 })}
               </div>
             </div>
-          )
-        })()}
+          )}
+        </div>
 
-        {/* Depth vs breadth + neglected topic */}
+        {/* Reading mode + Neglected topic */}
         <div className="grid grid-cols-2 gap-4">
-
-          <div className="bg-white border border-stone-200 rounded-xl p-4">
-            <div className="flex items-center mb-2">
-              <p className="text-xs text-stone-400 uppercase tracking-wide">Reading mode</p>
-              <Tooltip text="Deep: more than 60% of this month's articles are in one domain. Broad: no single domain dominates — your reading is more varied." />
+          <div className="bg-white rounded-2xl shadow-sm ring-1 ring-black/[0.05] p-5">
+            <div className="flex items-center mb-3">
+              <p className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.14em]">Reading mode</p>
+              <Tooltip text="Deep: more than 60% of this month's articles are in one domain. Broad: no single domain dominates." />
             </div>
             {dvb.mode ? (
               <>
-                <p className="text-lg font-semibold text-stone-900 capitalize">{dvb.mode}</p>
+                <p className="text-xl font-semibold text-stone-900 capitalize tracking-tight">{dvb.mode}</p>
                 {dvb.mode === 'deep' && dvb.top_domain && (
-                  <p className="text-xs text-stone-400 mt-0.5">
+                  <p className="text-xs text-stone-400 mt-1.5">
                     {dvb.top_domain_count} of {r.this_month} articles in{' '}
                     <span className="text-stone-600 capitalize">{dvb.top_domain}</span>
                   </p>
                 )}
                 {dvb.mode === 'broad' && (
-                  <p className="text-xs text-stone-400 mt-0.5">
-                    {dvb.domains_this_month} domains this month
-                  </p>
+                  <p className="text-xs text-stone-400 mt-1.5">{dvb.domains_this_month} domains this month</p>
                 )}
                 {dvb.last_broad_month && dvb.mode === 'deep' && (
-                  <p className="text-xs text-stone-300 mt-1">
-                    Last broad month: {monthLabel(dvb.last_broad_month)}
-                  </p>
+                  <p className="text-xs text-stone-300 mt-2">Last broad: {monthLabel(dvb.last_broad_month)}</p>
                 )}
               </>
             ) : (
-              <p className="text-xs text-stone-400 mt-1">No articles this month yet.</p>
+              <p className="text-sm text-stone-400 mt-1">No articles this month yet.</p>
             )}
           </div>
 
-          <div className="bg-white border border-stone-200 rounded-xl p-4">
-            <div className="flex items-center mb-2">
-              <p className="text-xs text-stone-400 uppercase tracking-wide">Neglected topic</p>
+          <div className="bg-white rounded-2xl shadow-sm ring-1 ring-black/[0.05] p-5">
+            <div className="flex items-center mb-3">
+              <p className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.14em]">Neglected topic</p>
               <Tooltip text="A domain you've read in before, but haven't touched in over 30 days. A nudge, not a judgement." />
             </div>
             {r.neglected_topic ? (
               <>
-                <p className="text-lg font-semibold text-stone-900 capitalize">
+                <p className="text-xl font-semibold text-stone-900 capitalize tracking-tight">
                   {r.neglected_topic.domain}
                 </p>
-                <p className="text-xs text-stone-400 mt-0.5">
+                <p className="text-xs text-stone-400 mt-1.5">
                   Last read {r.neglected_topic.weeks_ago} week{r.neglected_topic.weeks_ago !== 1 ? 's' : ''} ago
                 </p>
               </>
             ) : (
-              <p className="text-xs text-stone-400 mt-1">No neglected topics — you're reading broadly.</p>
+              <p className="text-sm text-stone-400 mt-1">Reading broadly — no gaps.</p>
             )}
           </div>
-
         </div>
       </section>
 
@@ -244,13 +283,12 @@ export default function DashboardPage() {
       <section>
         <SectionHeader title="Graph Intelligence" />
 
-        {/* Stat row */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-3 gap-4 mb-5">
           <StatCard
             label="Graph density"
             value={`${Math.round((g.density ?? 0) * 100)}%`}
-            sub={`${g.total_edges ?? 0} edges across ${g.total_nodes ?? 0} nodes`}
-            tooltip="What percentage of all possible connections between your articles have been found. 100% would mean every article connects to every other."
+            sub={`${g.total_edges ?? 0} edges · ${g.total_nodes ?? 0} nodes`}
+            tooltip="What percentage of all possible connections have been found. 100% means every article connects to every other."
           />
           <StatCard
             label="Most connected"
@@ -258,65 +296,61 @@ export default function DashboardPage() {
             sub={g.most_connected_node
               ? g.most_connected_node.slug.replace(/-/g, ' ').slice(0, 32)
               : 'No connections yet'}
-            tooltip="The article with the most connections in your graph — the most central idea in your reading."
+            tooltip="The article with the most connections — the most central idea in your reading."
           />
           <StatCard
             label="Island rate"
             value={g.island_count ?? 0}
             sub={g.island_count === 0
               ? 'All articles connected'
-              : `article${g.island_count !== 1 ? 's' : ''} with no links yet`}
-            tooltip="Articles with zero connections. A high number means the connect workflow hasn't run yet, or these articles are genuinely isolated from the rest of your reading."
+              : `article${g.island_count !== 1 ? 's' : ''} unlinked`}
+            tooltip="Articles with zero connections. High count means the connect workflow hasn't run yet, or these articles are genuinely isolated."
           />
         </div>
 
-        {/* Connection types */}
-        <div className="bg-white border border-stone-200 rounded-xl p-5">
-            <div className="flex items-center mb-4">
-              <p className="text-xs font-medium text-stone-500 uppercase tracking-wide">Connection types</p>
-              <Tooltip text="How your graph's connections break down by type. A reading diet heavy in 'reinforce' connections may mean you're reading inside an echo chamber. More 'contradict' and 'adjacent' connections mean your reading is genuinely challenging itself." />
+        <div className="bg-white rounded-2xl shadow-sm ring-1 ring-black/[0.05] p-5">
+          <div className="flex items-center mb-4">
+            <p className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.14em]">Connection types</p>
+            <Tooltip text="How your graph's connections break down. Heavy 'reinforce' may indicate echo chamber reading; more 'contradict' and 'adjacent' means your reading genuinely challenges itself." />
+          </div>
+          {totalEdges === 0 ? (
+            <p className="text-sm text-stone-400">No connections found yet.</p>
+          ) : (
+            <div className="space-y-3">
+              {[
+                { type: 'reinforce',  color: '#4a7c59' },
+                { type: 'contradict', color: '#c0392b' },
+                { type: 'evolve',     color: '#6c5ce7' },
+                { type: 'adjacent',   color: '#e17055' },
+              ].map(({ type, color }) => {
+                const count = etd[type] || 0
+                const pct   = Math.round((count / totalEdges) * 100)
+                return (
+                  <BarRow
+                    key={type}
+                    label={type}
+                    pct={pct}
+                    color={color}
+                    right={count}
+                  />
+                )
+              })}
             </div>
-            {totalEdges === 0 ? (
-              <p className="text-xs text-stone-400">No connections found yet.</p>
-            ) : (
-              <div className="space-y-2.5">
-                {[
-                  { type: 'reinforce', colour: '#4a7c59' },
-                  { type: 'contradict', colour: '#c0392b' },
-                  { type: 'evolve',    colour: '#6c5ce7' },
-                  { type: 'adjacent',  colour: '#e17055' },
-                ].map(({ type, colour }) => {
-                  const count = etd[type] || 0
-                  const pct = Math.round((count / totalEdges) * 100)
-                  return (
-                    <div key={type} className="flex items-center gap-3">
-                      <span className="text-xs text-stone-500 w-20 capitalize">{type}</span>
-                      <div className="flex-1 bg-stone-100 rounded-full h-1.5">
-                        <div
-                          className="h-1.5 rounded-full"
-                          style={{ width: `${pct}%`, backgroundColor: colour }}
-                        />
-                      </div>
-                      <span className="text-xs text-stone-400 w-12 text-right">{count} ({pct}%)</span>
-                    </div>
-                  )
-                })}
-              </div>
-            )}
-            {totalEdges > 0 && (
-              <p className="text-xs text-stone-400 mt-3 pt-3 border-t border-stone-100">
-                {g.contradiction_density === 0
-                  ? 'No contradictions yet — consider seeking out dissenting views.'
-                  : `${Math.round((g.contradiction_density ?? 0) * 100)}% of connections challenge your existing views.`}
-              </p>
-            )}
+          )}
+          {totalEdges > 0 && (
+            <p className="text-xs text-stone-400 mt-4 pt-3.5 border-t border-stone-100">
+              {g.contradiction_density === 0
+                ? 'No contradictions yet — consider seeking out dissenting views.'
+                : `${Math.round((g.contradiction_density ?? 0) * 100)}% of connections challenge your existing views.`}
+            </p>
+          )}
         </div>
       </section>
 
       {/* ── Agents ── */}
       <AgentStatusPanel />
 
-      <p className="text-xs text-stone-300 text-right">
+      <p className="text-[11px] text-stone-300 text-right tabular-nums">
         Last computed: {d.computed_at || '—'}
       </p>
     </div>
