@@ -145,23 +145,25 @@ export default function App() {
       </aside>
 
       {/* ── Main content ───────────────────────────────────────────────── */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {isGraph ? (
+      {isGraph ? (
+        <div className="flex-1 min-w-0 overflow-hidden flex flex-col">
           <Routes>
             <Route path="/graph" element={<GraphPage graphData={graphData} />} />
           </Routes>
-        ) : (
-          <main className="flex-1 overflow-y-auto px-8 py-8 max-w-4xl">
+        </div>
+      ) : (
+        <div className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden">
+          <main className="px-8 py-8">
             <Routes>
-              <Route path="/"         element={<SubmitPage />} />
-              <Route path="/articles" element={<ArticleListPage onArticleDeleted={removeFromGraph} />} />
-              <Route path="/digests"  element={<DigestsPage />} />
+              <Route path="/"          element={<SubmitPage />} />
+              <Route path="/articles"  element={<ArticleListPage onArticleDeleted={removeFromGraph} />} />
+              <Route path="/digests"   element={<DigestsPage />} />
               <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/agents"   element={<AgentsPage />} />
+              <Route path="/agents"    element={<AgentsPage />} />
             </Routes>
           </main>
-        )}
-      </div>
+        </div>
+      )}
 
     </div>
   )
