@@ -40,5 +40,16 @@
       "date_added": "2026-04-14"
     },
     "relevance_explanation": "Reading the Enron article now would feel different because the new article has established that access to information was never the true source of expertise \u2014 judgment, question-framing, and the ability to interrogate what you already know are \u2014 which changes what the Enron article means.\n\nThe Powers Report's damning finding about Enron's board was not that they lacked information: they were briefed, they received reports, they approved transactions. The failure was that they had \"inability to appreciate the significance of information provided\" and conducted only \"cursory\" reviews \u2014 they couldn't ask the right probing questions of the data in front of them. The article frames this as a governance breakdown, but through the lens of the new piece, it reads as a catastrophic failure of exactly the three meta-expertise capabilities the new article identifies: creative synthesis across domains (connecting the dots between SPE structures), contextual wisdom to recognize red flags as significant, and ethical navigation of competing interests when insiders had conflicts.\n\nThe non-obvious reprise: the new article argues that AI is now stripping away the illusion that information-holders are the valuable people in an organization. Enron's board collapse is a pre-AI case study proving that illusion was always dangerous \u2014 experienced, prominent directors were exposed as holding credentials without meta-expertise, with catastrophic results. The new article's warning about \"cognitive atrophy\" from outsourcing thinking maps directly onto what the Powers Report describes as a board that had outsourced its judgment to management. Enron becomes not just a governance story but a founding exhibit for why judgment and question-framing \u2014 not information access \u2014 must be the real bar for senior expertise."
+  },
+  {
+    "run_id": "2026-04-15",
+    "triggered_by": "ingestion",
+    "trigger_article": "whats-your-edge-rethinking-expertise-ai",
+    "fired": false,
+    "model": "claude-sonnet-4-6",
+    "input_tokens": 6690,
+    "output_tokens": 711,
+    "tool_calls": 4,
+    "skip_reason": "No article in the graph meets the 30-day recency threshold. All five other articles were added on either 2026-04-13 or 2026-04-14 \u2014 at most one day before the new article. The rule requires the surfaced article to have been added at least 30 days prior. A weak or technically invalid reprise is worse than no reprise, so I'm staying silent."
   }
 ]
