@@ -38,10 +38,10 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#fafaf8' }}>
-      <nav className="border-b border-stone-200 px-6 py-3">
+    <div className="min-h-screen" style={{ backgroundColor: '#f0e9dc' }}>
+      <nav className="border-b px-6 py-3" style={{ borderColor: '#ddd4c0' }}>
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <span className="text-base font-bold text-stone-900 tracking-tight">Mycelium</span>
+          <span className="text-2xl font-bold text-stone-900 tracking-tight serif">Mycelium</span>
           <div className="flex gap-1 text-sm">
             {navLink('/dashboard', 'Dashboard')}
             {navLink('/', 'Add Article')}
