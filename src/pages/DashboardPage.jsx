@@ -39,7 +39,7 @@ function DeltaBadge({ delta }) {
 
 function StatCard({ label, value, sub, tooltip }) {
   return (
-    <div className="bg-white rounded-2xl p-4 shadow-sm ring-1 ring-black/[0.06]">
+    <div className="card-3d p-4">
       <div className="flex items-center justify-between mb-2">
         <p className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.14em]">{label}</p>
         {tooltip && <Tooltip text={tooltip} />}
@@ -139,7 +139,7 @@ function AgentStatusPanel() {
   return (
     <section>
       <SectionHeader title="Agents" />
-      <div className="bg-white rounded-2xl shadow-sm ring-1 ring-black/[0.06] px-5 py-1">
+      <div className="card-3d px-5 py-1">
         <AgentStatusRow
           name="Steelman"
           tooltip="Finds the dominant view in your reading and writes the strongest possible argument against it — using your own articles."
@@ -196,7 +196,7 @@ export default function DashboardPage() {
         {(dist.length > 0 || stanceTotal > 0) && (
           <div className={`grid gap-3 mb-4 ${dist.length > 0 && stanceTotal > 0 ? 'grid-cols-2' : 'grid-cols-1'}`}>
             {dist.length > 0 && (
-              <div className="bg-white rounded-2xl shadow-sm ring-1 ring-black/[0.06] p-4">
+              <div className="card-3d p-4">
                 <div className="flex items-center mb-3">
                   <p className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.14em]">Domain split</p>
                   <Tooltip text="How your reading is spread across intellectual disciplines — all time." />
@@ -210,7 +210,7 @@ export default function DashboardPage() {
               </div>
             )}
             {stanceTotal > 0 && (
-              <div className="bg-white rounded-2xl shadow-sm ring-1 ring-black/[0.06] p-4">
+              <div className="card-3d p-4">
                 <div className="flex items-center mb-3">
                   <p className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.14em]">Reading stance</p>
                   <Tooltip text="Whether your articles take an optimistic, pessimistic, or neutral view. Set by Claude during ingestion based on each article's overall framing." />
@@ -233,7 +233,7 @@ export default function DashboardPage() {
 
         {/* Reading mode + Neglected topic */}
         <div className="grid grid-cols-2 gap-3">
-          <div className="bg-white rounded-2xl shadow-sm ring-1 ring-black/[0.06] p-4">
+          <div className="card-3d p-4">
             <div className="flex items-center mb-2">
               <p className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.14em]">Reading mode</p>
               <Tooltip text="Deep: more than 60% of this month's articles are in one domain. Broad: no single domain dominates." />
@@ -256,7 +256,7 @@ export default function DashboardPage() {
             )}
           </div>
 
-          <div className="bg-white rounded-2xl shadow-sm ring-1 ring-black/[0.06] p-4">
+          <div className="card-3d p-4">
             <div className="flex items-center mb-2">
               <p className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.14em]">Neglected topic</p>
               <Tooltip text="A domain you've read in before, but haven't touched in over 30 days. A nudge, not a judgement." />
@@ -290,7 +290,7 @@ export default function DashboardPage() {
             tooltip="Articles with zero connections." />
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm ring-1 ring-black/[0.06] p-4">
+        <div className="card-3d p-4">
           <div className="flex items-center mb-3">
             <p className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.14em]">Connection types</p>
             <Tooltip text="How your graph's connections break down. Heavy 'reinforce' may indicate echo-chamber reading; more 'contradict' and 'adjacent' means genuinely challenging reading." />

@@ -17,3 +17,21 @@ body {
 }
 
 .serif { font-family: var(--font-serif); }
+
+/* 3-D raised card — warm bottom edge + ambient shadow */
+.card-3d {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow:
+    0 1px 0 rgba(0,0,0,0.03),
+    0 4px 0 #d0c4b0,
+    0 8px 24px rgba(0,0,0,0.05);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.card-3d:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 0 rgba(0,0,0,0.03),
+    0 6px 0 #d0c4b0,
+    0 14px 28px rgba(0,0,0,0.08);
+}
