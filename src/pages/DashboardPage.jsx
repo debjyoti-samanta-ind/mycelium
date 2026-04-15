@@ -27,25 +27,28 @@ function monthLabel(monthStr) {
   catch { return monthStr }
 }
 
-// ── Card watermark icons ──────────────────────────────────────────────────────
-function CI({ children }) {
+// ── Card icons — each with its own color + tinted pill background ─────────────
+function CardIcon({ icon: { paths, color } }) {
   return (
-    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
-      {children}
-    </svg>
+    <div className="absolute bottom-3 right-3 pointer-events-none select-none p-2.5 rounded-2xl"
+      style={{ backgroundColor: color + '1a' }}>
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={color}
+        strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
+        {paths}
+      </svg>
+    </div>
   )
 }
 
 const ICONS = {
-  articles:      <CI><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></CI>,
-  thisMonth:     <CI><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></CI>,
-  since:         <CI><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></CI>,
-  readingMode:   <CI><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></CI>,
-  neglected:     <CI><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></CI>,
-  density:       <CI><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></CI>,
-  mostConnected: <CI><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></CI>,
-  islandRate:    <CI><circle cx="12" cy="5" r="3"/><line x1="12" y1="22" x2="12" y2="8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></CI>,
+  articles:      { color: '#6366f1', paths: <><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></> },
+  thisMonth:     { color: '#d97706', paths: <><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></> },
+  since:         { color: '#0d9488', paths: <><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></> },
+  readingMode:   { color: '#7c3aed', paths: <><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></> },
+  neglected:     { color: '#e17055', paths: <><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></> },
+  density:       { color: '#059669', paths: <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/> },
+  mostConnected: { color: '#2563eb', paths: <><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></> },
+  islandRate:    { color: '#dc6b3f', paths: <><circle cx="12" cy="5" r="3"/><line x1="12" y1="22" x2="12" y2="8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></> },
 }
 
 function DeltaBadge({ delta }) {
@@ -67,11 +70,7 @@ function StatCard({ label, value, sub, tooltip, icon }) {
       </div>
       <p className="serif text-[1.85rem] font-semibold text-stone-900 tracking-tight leading-none">{value}</p>
       {sub != null && <div className="text-xs text-stone-400 mt-1.5 leading-snug line-clamp-2">{sub}</div>}
-      {icon && (
-        <div className="absolute bottom-3 right-3 text-stone-200 pointer-events-none select-none">
-          {icon}
-        </div>
-      )}
+      {icon && <CardIcon icon={icon} />}
     </div>
   )
 }
@@ -267,7 +266,7 @@ export default function DashboardPage() {
               <p className="text-[11px] font-bold text-stone-600 uppercase tracking-[0.12em]">Reading mode</p>
               <Tooltip text="Deep: more than 60% of this month's articles are in one domain. Broad: no single domain dominates." />
             </div>
-            <div className="absolute bottom-3 right-3 text-stone-200 pointer-events-none select-none">{ICONS.readingMode}</div>
+            <CardIcon icon={ICONS.readingMode} />
             {dvb.mode ? (
               <>
                 <p className="serif text-xl font-semibold text-stone-900 capitalize">{dvb.mode}</p>
@@ -291,7 +290,7 @@ export default function DashboardPage() {
               <p className="text-[11px] font-bold text-stone-600 uppercase tracking-[0.12em]">Neglected topic</p>
               <Tooltip text="A domain you've read in before, but haven't touched in over 30 days. A nudge, not a judgement." />
             </div>
-            <div className="absolute bottom-3 right-3 text-stone-200 pointer-events-none select-none">{ICONS.neglected}</div>
+            <CardIcon icon={ICONS.neglected} />
             {r.neglected_topic ? (
               <>
                 <p className="serif text-xl font-semibold text-stone-900 capitalize">{r.neglected_topic.domain}</p>
