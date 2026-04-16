@@ -128,7 +128,7 @@ export default function SubmitPage() {
 
   if (!isConfigured) {
     return (
-      <div className="max-w-xl py-12">
+      <div className="max-w-xl mx-auto py-12">
         <div className="card-3d p-6">
           <h2 className="text-base font-semibold text-stone-900 mb-2">One-time setup needed</h2>
           <p className="text-sm text-stone-600 leading-relaxed">
@@ -149,7 +149,7 @@ export default function SubmitPage() {
     : 'Submit'
 
   return (
-    <div className="max-w-2xl">
+    <div className="max-w-2xl mx-auto">
 
       {/* Page header */}
       <div className="mb-8">
