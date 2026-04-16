@@ -1,10 +1,10 @@
 {
   "computed_at": "2026-04-16",
   "reading": {
-    "total_articles": 11,
-    "this_month": 11,
+    "total_articles": 12,
+    "this_month": 12,
     "last_month": 0,
-    "month_delta": 11,
+    "month_delta": 12,
     "active_since": "2026-04",
     "months_active": 1,
     "domain_distribution": [
@@ -27,10 +27,14 @@
       {
         "domain": "corporate governance",
         "count": 1
+      },
+      {
+        "domain": "cognitive science",
+        "count": 1
       }
     ],
     "stance_distribution": {
-      "optimistic": 6,
+      "optimistic": 7,
       "pessimistic": 1,
       "neutral": 2
     },
@@ -38,25 +42,25 @@
       "mode": "broad",
       "top_domain": "organizational behavior",
       "top_domain_count": 5,
-      "domains_this_month": 5,
+      "domains_this_month": 6,
       "last_broad_month": "2026-04"
     },
     "neglected_topic": null
   },
   "graph": {
-    "total_nodes": 11,
-    "total_edges": 6,
-    "density": 0.109,
+    "total_nodes": 12,
+    "total_edges": 8,
+    "density": 0.121,
     "island_count": 4,
-    "island_rate": 0.364,
+    "island_rate": 0.333,
     "most_connected_node": {
       "slug": "2026-business-leaders-outlook-expectations-trends",
       "edge_count": 3
     },
     "edge_type_distribution": {
-      "reinforce": 1,
+      "reinforce": 2,
       "contradict": 0,
-      "evolve": 1,
+      "evolve": 2,
       "adjacent": 4
     },
     "contradiction_density": 0.0
