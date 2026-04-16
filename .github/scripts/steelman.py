@@ -135,7 +135,16 @@ def execute_tool(name: str, inputs: dict) -> dict:
 
 def run_agent() -> tuple[dict, int, int, int]:
     """Run the agent loop. Returns (finish_payload, input_tokens, output_tokens, tool_calls)."""
-    messages: list[dict] = []
+    messages: list[dict] = [
+        {
+            "role": "user",
+            "content": (
+                "Begin your analysis. Call get_graph_summary() first to survey the full "
+                "reading graph, then explore specific articles to identify the dominant "
+                "intellectual consensus before writing your counter-argument."
+            ),
+        }
+    ]
     total_input = total_output = tool_calls = 0
 
     while True:
