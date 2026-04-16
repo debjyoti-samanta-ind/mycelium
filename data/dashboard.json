@@ -10,14 +10,10 @@
     "domain_distribution": [
       {
         "domain": "organizational behavior",
-        "count": 5
+        "count": 7
       },
       {
         "domain": "economics",
-        "count": 2
-      },
-      {
-        "domain": "organizational behaviour",
         "count": 2
       },
       {
@@ -25,7 +21,7 @@
         "count": 1
       },
       {
-        "domain": "philosophy of technology",
+        "domain": "cognitive science",
         "count": 1
       },
       {
@@ -33,39 +29,40 @@
         "count": 1
       },
       {
-        "domain": "cognitive science",
+        "domain": "philosophy of technology",
         "count": 1
       }
     ],
     "stance_distribution": {
       "optimistic": 7,
-      "pessimistic": 1,
-      "neutral": 2
+      "ambivalent": 3,
+      "neutral": 2,
+      "pessimistic": 1
     },
     "depth_vs_breadth": {
       "mode": "broad",
       "top_domain": "organizational behavior",
-      "top_domain_count": 5,
-      "domains_this_month": 7,
+      "top_domain_count": 7,
+      "domains_this_month": 6,
       "last_broad_month": "2026-04"
     },
     "neglected_topic": null
   },
   "graph": {
     "total_nodes": 13,
-    "total_edges": 8,
-    "density": 0.103,
-    "island_count": 5,
-    "island_rate": 0.385,
+    "total_edges": 10,
+    "density": 0.128,
+    "island_count": 4,
+    "island_rate": 0.308,
     "most_connected_node": {
-      "slug": "2026-business-leaders-outlook-expectations-trends",
-      "edge_count": 3
+      "slug": "whats-your-edge-rethinking-expertise-ai",
+      "edge_count": 4
     },
     "edge_type_distribution": {
-      "reinforce": 2,
+      "reinforce": 3,
       "contradict": 0,
       "evolve": 2,
-      "adjacent": 4
+      "adjacent": 5
     },
     "contradiction_density": 0.0
   }

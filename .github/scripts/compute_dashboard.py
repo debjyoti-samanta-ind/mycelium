@@ -15,6 +15,38 @@ ARTICLES_DIR = Path("data/articles")
 GRAPH_PATH   = Path("data/graph.json")
 DASHBOARD_PATH = Path("data/dashboard.json")
 
+# Normalise UK → US spellings so variants don't split into separate buckets
+_UK_US_WORDS = {
+    "behaviour":    "behavior",
+    "behaviours":   "behaviors",
+    "organisation": "organization",
+    "organisations":"organizations",
+    "organisational":"organizational",
+    "labour":       "labor",
+    "colour":       "color",
+    "honour":       "honor",
+    "neighbour":    "neighbor",
+    "centre":       "center",
+    "metre":        "meter",
+    "theatre":      "theater",
+    "programme":    "program",
+    "programmes":   "programs",
+    "analyse":      "analyze",
+    "analysed":     "analyzed",
+    "analysing":    "analyzing",
+    "recognise":    "recognize",
+    "recognised":   "recognized",
+    "recognising":  "recognizing",
+    "realise":      "realize",
+    "realised":     "realized",
+    "realising":    "realizing",
+}
+
+def normalize_domain(domain: str) -> str:
+    """Lowercase, strip, and normalise UK → US spellings."""
+    words = domain.strip().lower().split()
+    return " ".join(_UK_US_WORDS.get(w, w) for w in words)
+
 
 def load_articles() -> list[dict]:
     articles = []
@@ -42,7 +74,7 @@ def compute_reading(articles: list[dict]) -> dict:
 
     # Domain distribution — all time, top 8
     domain_counts = Counter(
-        a.get("domain", "").strip().lower()
+        normalize_domain(a.get("domain", ""))
         for a in articles if a.get("domain", "").strip()
     )
     domain_distribution = [
@@ -52,7 +84,7 @@ def compute_reading(articles: list[dict]) -> dict:
 
     # Depth vs breadth — this month
     this_month_domains = [
-        a.get("domain", "").strip().lower()
+        normalize_domain(a.get("domain", ""))
         for a in this_month if a.get("domain", "").strip()
     ]
     domain_counts_this_month = Counter(this_month_domains)
@@ -68,7 +100,7 @@ def compute_reading(articles: list[dict]) -> dict:
     month_domains: dict[str, set] = defaultdict(set)
     for a in articles:
         d = a.get("date_added", "")
-        domain = a.get("domain", "").strip().lower()
+        domain = normalize_domain(a.get("domain", ""))
         if d and domain:
             month_domains[d[:7]].add(domain)
 
@@ -80,20 +112,17 @@ def compute_reading(articles: list[dict]) -> dict:
 
     # Stance distribution — all time
     stance_counts = Counter(
-        a.get("stance", "").strip().lower()
-        for a in articles if a.get("stance", "").strip()
+        a.get("stance", "").strip().lower() or "unclassified"
+        for a in articles
     )
-    stance_distribution = {
-        "optimistic":  stance_counts.get("optimistic", 0),
-        "pessimistic": stance_counts.get("pessimistic", 0),
-        "neutral":     stance_counts.get("neutral", 0),
-    }
+    # Dynamic — includes any stance value present in the data
+    stance_distribution = dict(stance_counts.most_common())
 
     # Neglected topic: domain with 2+ articles but none in last 30 days
     cutoff = (today - timedelta(days=30)).isoformat()
     domain_last_read: dict[str, str] = {}
     for a in articles:
-        domain = a.get("domain", "").strip().lower()
+        domain = normalize_domain(a.get("domain", ""))
         added  = a.get("date_added", "")
         if domain and added:
             if domain not in domain_last_read or added > domain_last_read[domain]:

@@ -199,7 +199,13 @@ export default function DashboardPage() {
   const totalEdges = g.total_edges || 0
 
   const sd = r.stance_distribution || {}
-  const stanceTotal = (sd.optimistic || 0) + (sd.pessimistic || 0) + (sd.neutral || 0)
+  const stanceTotal = Object.values(sd).reduce((s, n) => s + n, 0)
+  const STANCE_COLORS = {
+    optimistic:   '#4a7c59',
+    neutral:      '#B4B2A9',
+    pessimistic:  '#c0392b',
+    ambivalent:   '#d97706',
+  }
 
   return (
     <div className="space-y-8">
@@ -244,13 +250,10 @@ export default function DashboardPage() {
                   <Tooltip text="Whether your articles take an optimistic, pessimistic, or neutral view. Set by Claude during ingestion based on each article's overall framing." />
                 </div>
                 <div className="space-y-2.5">
-                  {[
-                    { label: 'Optimistic',  key: 'optimistic',  color: '#4a7c59' },
-                    { label: 'Neutral',     key: 'neutral',     color: '#B4B2A9' },
-                    { label: 'Pessimistic', key: 'pessimistic', color: '#c0392b' },
-                  ].map(({ label, key, color }) => {
-                    const count = sd[key] || 0
+                  {Object.entries(sd).sort((a, b) => b[1] - a[1]).map(([key, count]) => {
+                    const color = STANCE_COLORS[key] || '#78716c'
                     const pct   = stanceTotal > 0 ? Math.round((count / stanceTotal) * 100) : 0
+                    const label = key.charAt(0).toUpperCase() + key.slice(1)
                     return <BarRow key={key} label={label} pct={pct} color={color} right={count} />
                   })}
                 </div>
