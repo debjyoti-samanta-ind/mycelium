@@ -86,5 +86,16 @@
     "output_tokens": 755,
     "tool_calls": 4,
     "skip_reason": "No article in the graph was added at least 30 days before the new article (date_added: 2026-04-16). Every other article in the knowledge graph was added between April 13\u201316, 2026, making the maximum gap only 3 days. The 30-day eligibility rule cannot be satisfied by any candidate, so no reprise can be surfaced."
+  },
+  {
+    "run_id": "2026-04-16",
+    "triggered_by": "ingestion",
+    "trigger_article": "what-you-dont-know-about-making-decisions",
+    "fired": false,
+    "model": "claude-sonnet-4-6",
+    "input_tokens": 9723,
+    "output_tokens": 1179,
+    "tool_calls": 6,
+    "skip_reason": "No article in the graph clears the 30-day recency threshold. Every article was added between April 13\u201316, 2026, meaning the oldest articles are only 3 days prior to the new article (added April 16, 2026). The rule requires the surfaced article to have been added at least 30 days before the new one. Despite strong thematic candidates \u2014 particularly 'Twenty Years Later: The Lasting Lessons of Enron,' whose board-level failure to question, challenge, or surface dissent maps precisely onto the advocacy-vs-inquiry dynamic the new article diagnoses \u2014 none qualify under the timing constraint. No reprise fired."
   }
 ]

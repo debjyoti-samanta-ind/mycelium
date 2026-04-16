@@ -202,5 +202,17 @@
     "input_tokens": 7715,
     "output_tokens": 755,
     "tool_calls": 4
+  },
+  {
+    "agent": "reprise",
+    "run_id": "2026-04-16",
+    "timestamp": "2026-04-16T08:28:15.244160+00:00",
+    "triggered_by": "ingestion",
+    "trigger_article": "what-you-dont-know-about-making-decisions",
+    "fired": false,
+    "skip_reason": "No article in the graph clears the 30-day recency threshold. Every article was added between April 13\u201316, 2026, meaning the oldest articles are only 3 days prior to the new article (added April 16, 2026). The rule requires the surfaced article to have been added at least 30 days before the new one. Despite strong thematic candidates \u2014 particularly 'Twenty Years Later: The Lasting Lessons of Enron,' whose board-level failure to question, challenge, or surface dissent maps precisely onto the advocacy-vs-inquiry dynamic the new article diagnoses \u2014 none qualify under the timing constraint. No reprise fired.",
+    "input_tokens": 9723,
+    "output_tokens": 1179,
+    "tool_calls": 6
   }
 ]
