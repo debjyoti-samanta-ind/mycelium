@@ -73,6 +73,15 @@
       "claim_b": "For every percentage point increase in AI adoption, demand for management roles emphasizing judgment increases by 2.5% to 7.5%",
       "explanation": "Both claims instantiate the same formal structure: accumulated experiential practice in a domain generates compounding positional advantage that credentialed knowledge alone cannot substitute, such that the gap between practitioners with lived exposure and those without widens as the value of judgment-based roles increases — a prediction neither article makes alone about how experience-as-practice diverges from knowledge-as-content under conditions of role specialization.",
       "date_added": "2026-04-16"
+    },
+    {
+      "source": "investing-living-better-quality-life-business",
+      "target": "attention-equation-consumer-attention-battles",
+      "type": "adjacent",
+      "claim_a": "Approximately 60% of buyers are willing to pay a premium for products promoting healthy living",
+      "claim_b": "Attention value ranges from $33 per hour for live sports to $0.05 per hour for podcasts across 20 media formats",
+      "explanation": "In both cases, consumer willingness to pay a premium concentrates in high-intent, high-focus engagement contexts rather than distributing proportionally across volume of consumption or product availability — scarcity of genuine intent, not abundance of supply, determines unit value — a formal relationship that generates the prediction, absent from either article, that QoL premium pricing will concentrate in high-intent purchase occasions rather than scale linearly with the breadth of QoL product offerings.",
+      "date_added": "2026-04-16"
     }
   ],
   "evaluated_pairs": [
@@ -186,6 +195,38 @@
     ],
     [
       "fashion-reduce-tier-2-emissions-decarbonization",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "physician-ceo-leadership-pipeline"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "attention-equation-consumer-attention-battles"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "fashion-reduce-tier-2-emissions-decarbonization"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "investing-living-better-quality-life-business",
       "building-ethically-strong-organization"
     ]
   ]
