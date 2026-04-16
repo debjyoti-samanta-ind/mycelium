@@ -1,10 +1,10 @@
 {
-  "computed_at": "2026-04-15",
+  "computed_at": "2026-04-16",
   "reading": {
-    "total_articles": 6,
-    "this_month": 6,
+    "total_articles": 7,
+    "this_month": 7,
     "last_month": 0,
-    "month_delta": 6,
+    "month_delta": 7,
     "active_since": "2026-04",
     "months_active": 1,
     "domain_distribution": [
@@ -17,6 +17,10 @@
         "count": 2
       },
       {
+        "domain": "organizational behavior",
+        "count": 1
+      },
+      {
         "domain": "media economics",
         "count": 1
       },
@@ -26,7 +30,7 @@
       }
     ],
     "stance_distribution": {
-      "optimistic": 1,
+      "optimistic": 2,
       "pessimistic": 1,
       "neutral": 2
     },
@@ -34,26 +38,26 @@
       "mode": "broad",
       "top_domain": "economics",
       "top_domain_count": 2,
-      "domains_this_month": 4,
+      "domains_this_month": 5,
       "last_broad_month": "2026-04"
     },
     "neglected_topic": null
   },
   "graph": {
-    "total_nodes": 6,
-    "total_edges": 7,
-    "density": 0.467,
-    "island_count": 0,
-    "island_rate": 0.0,
+    "total_nodes": 7,
+    "total_edges": 3,
+    "density": 0.143,
+    "island_count": 3,
+    "island_rate": 0.429,
     "most_connected_node": {
-      "slug": "whats-your-edge-rethinking-expertise-ai",
-      "edge_count": 4
+      "slug": "geopolitics-geometry-global-trade-2026-update",
+      "edge_count": 2
     },
     "edge_type_distribution": {
-      "reinforce": 2,
+      "reinforce": 1,
       "contradict": 0,
-      "evolve": 2,
-      "adjacent": 3
+      "evolve": 0,
+      "adjacent": 2
     },
     "contradiction_density": 0.0
   }
