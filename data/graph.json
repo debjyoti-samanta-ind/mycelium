@@ -86,6 +86,15 @@
       "claim_b": "Attention value ranges from $33 per hour for live sports to $0.05 per hour for podcasts across 20 media formats",
       "explanation": "In both cases, consumer willingness to pay a premium concentrates in high-intent, high-focus engagement contexts rather than distributing proportionally across volume of consumption or product availability — scarcity of genuine intent, not abundance of supply, determines unit value — a formal relationship that generates the prediction, absent from either article, that QoL premium pricing will concentrate in high-intent purchase occasions rather than scale linearly with the breadth of QoL product offerings.",
       "date_added": "2026-04-16"
+    },
+    {
+      "source": "2026-business-leaders-outlook-expectations-trends",
+      "target": "4-things-resilient-teams-do",
+      "type": "evolve",
+      "claim_a": "Too much confidence causes complacency and blindness to approaching adversity; too little prevents necessary risk-taking",
+      "claim_b": "Innovation Economy respondents report 82% company optimism but 33% expect recession or believe we are already in one",
+      "explanation": "Article B establishes that confidence operates on an inverted-U curve where excess produces adversity-blindness, and Article B's limiting condition — that calibrated confidence requires accurate threat perception — is empirically instantiated by Article A's Innovation Economy data, where peak company-level optimism (82%) coexists with the highest recession expectation rate (33%), demonstrating that the overconfidence-blindness mechanism breaks down when actors simultaneously hold high performance confidence and accurate macro-threat models, adding a scope boundary: overconfidence causes blindness only when threat perception is also suppressed.",
+      "date_added": "2026-04-16"
     }
   ],
   "evaluated_pairs": [
@@ -231,6 +240,42 @@
     ],
     [
       "investing-living-better-quality-life-business",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "fashion-reduce-tier-2-emissions-decarbonization",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "whats-your-edge-rethinking-expertise-ai",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "4-things-resilient-teams-do",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "4-things-resilient-teams-do",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "4-things-resilient-teams-do",
       "building-ethically-strong-organization"
     ]
   ]
