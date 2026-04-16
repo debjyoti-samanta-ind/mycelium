@@ -130,5 +130,29 @@
     "input_tokens": 7100,
     "output_tokens": 723,
     "tool_calls": 4
+  },
+  {
+    "agent": "steelman",
+    "run_id": "2026-04-16",
+    "timestamp": "2026-04-16T01:11:06.897662+00:00",
+    "triggered_by": "ingestion",
+    "trigger_article": null,
+    "fired": true,
+    "skip_reason": null,
+    "input_tokens": 24158,
+    "output_tokens": 2219,
+    "tool_calls": 14
+  },
+  {
+    "agent": "reprise",
+    "run_id": "2026-04-16",
+    "timestamp": "2026-04-16T01:11:28.709843+00:00",
+    "triggered_by": "ingestion",
+    "trigger_article": "physician-ceo-leadership-pipeline",
+    "fired": false,
+    "skip_reason": "No article in the graph meets the 30-day recency threshold. Every other article was added on 2026-04-13 or 2026-04-14 \u2014 only 2\u20133 days before the new article (2026-04-16). The \"forgotten article\" criterion requires at least 30 days of elapsed time, which none of the candidates satisfies. Surfacing a 3-day-old article as a dormant memory would be artificial. Additionally, the one article with a plausible thematic resonance (whats-your-edge-rethinking-expertise-ai) is already directly connected by an edge. No genuine reprise is available in the current graph.",
+    "input_tokens": 7549,
+    "output_tokens": 978,
+    "tool_calls": 4
   }
 ]
