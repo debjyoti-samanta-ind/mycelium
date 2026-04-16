@@ -99,6 +99,24 @@
       "claim_b": "Innovation Economy respondents report 82% company optimism but 33% expect recession or believe we are already in one",
       "explanation": "Article B establishes that confidence operates on an inverted-U curve where excess produces adversity-blindness, and Article B's limiting condition — that calibrated confidence requires accurate threat perception — is empirically instantiated by Article A's Innovation Economy data, where peak company-level optimism (82%) coexists with the highest recession expectation rate (33%), demonstrating that the overconfidence-blindness mechanism breaks down when actors simultaneously hold high performance confidence and accurate macro-threat models, adding a scope boundary: overconfidence causes blindness only when threat perception is also suppressed.",
       "date_added": "2026-04-16"
+    },
+    {
+      "source": "what-you-dont-know-about-making-decisions",
+      "target": "whats-your-edge-rethinking-expertise-ai",
+      "type": "reinforce",
+      "claim_a": "Advocacy approaches to group decision-making cause participants to present information selectively and withhold conflicting data to win debates",
+      "claim_b": "Using generative AI reduces human creative thinking and produces more homogeneous ideas",
+      "explanation": "Both claims assert the same causal mechanism: when a process optimizes for convergence toward a winning position (advocacy consensus; AI-generated answers), it suppresses the generation and surfacing of divergent information, degrading the epistemic quality of group output.",
+      "date_added": "2026-04-16"
+    },
+    {
+      "source": "what-you-dont-know-about-making-decisions",
+      "target": "4-things-resilient-teams-do",
+      "type": "evolve",
+      "claim_a": "Inquiry requires leaders to balance divergence during early discussions with unity during implementation",
+      "claim_b": "Too much confidence causes complacency and blindness to approaching adversity; too little prevents necessary risk-taking",
+      "explanation": "Claim B adds a specific limiting condition to the divergence-unity balance mechanism in Claim A: collective confidence level functions as a variable that must itself be calibrated within an optimal range, meaning the divergence-to-unity transition Claim A prescribes is bounded by a confidence threshold that determines whether that transition produces adaptive action or complacency.",
+      "date_added": "2026-04-16"
     }
   ],
   "evaluated_pairs": [
@@ -280,6 +298,46 @@
     ],
     [
       "4-things-resilient-teams-do",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "what-you-dont-know-about-making-decisions"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "what-you-dont-know-about-making-decisions"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "what-you-dont-know-about-making-decisions"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
+      "fashion-reduce-tier-2-emissions-decarbonization"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
       "building-ethically-strong-organization"
     ]
   ]
