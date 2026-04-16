@@ -56,6 +56,15 @@
       "claim_b": "Chinese exporters cut prices by an average of 8 percent to find buyers in new markets",
       "explanation": "Both claims assert the same causal mechanism — tariffs impose cost pressure that forces economic actors to absorb or redistribute that pressure — operating in different empirical contexts: US business leaders absorbing higher input costs domestically, and Chinese exporters compressing margins to remain competitive in displaced export markets.",
       "date_added": "2026-04-15"
+    },
+    {
+      "source": "physician-ceo-leadership-pipeline",
+      "target": "whats-your-edge-rethinking-expertise-ai",
+      "type": "adjacent",
+      "claim_a": "Physicians typically enter the workforce in their thirties after intensive training but with limited exposure to business practices, whereas their nonclinical peers have spent years working with budgets and building strategic experience",
+      "claim_b": "For every percentage point increase in AI adoption, demand for management roles emphasizing judgment increases by 2.5% to 7.5%",
+      "explanation": "Both claims instantiate the same formal structure: accumulated experiential practice in a domain generates compounding positional advantage that credentialed knowledge alone cannot substitute, such that the gap between practitioners with lived exposure and those without widens as the value of judgment-based roles increases — a prediction neither article makes alone about how experience-as-practice diverges from knowledge-as-content under conditions of role specialization.",
+      "date_added": "2026-04-16"
     }
   ],
   "evaluated_pairs": [
@@ -117,6 +126,30 @@
     ],
     [
       "geopolitics-geometry-global-trade-2026-update",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "attention-equation-consumer-attention-battles"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
       "building-ethically-strong-organization"
     ]
   ]
