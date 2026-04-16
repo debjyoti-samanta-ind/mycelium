@@ -125,6 +125,24 @@
       "claim_b": "Too much confidence causes complacency and blindness to approaching adversity; too little prevents necessary risk-taking",
       "explanation": "Claim B adds a specific limiting condition to the divergence-unity balance mechanism in Claim A: collective confidence level functions as a variable that must itself be calibrated within an optimal range, meaning the divergence-to-unity transition Claim A prescribes is bounded by a confidence threshold that determines whether that transition produces adaptive action or complacency.",
       "date_added": "2026-04-16"
+    },
+    {
+      "source": "what-you-dont-know-about-making-decisions",
+      "target": "what-will-ai-mean-for-humanity",
+      "type": "adjacent",
+      "claim_a": "Advocacy approaches to group decision-making cause participants to present information selectively and withhold conflicting data to win debates",
+      "claim_b": "83% of ChatGPT users could not quote their own essays one minute after submission, compared to 11% in control groups",
+      "explanation": "In both cases, optimizing for a performance output (winning the debate; producing the essay) decouples the agent from genuine ownership of the cognitive content generated, via a mechanism where the goal of persuasion or production displaces the internal encoding that would otherwise occur — a formal identity between strategic self-presentation and AI-mediated offloading as rival routes to the same epistemic dispossession, generating a prediction neither article makes: that any process structurally rewarding output over process will produce agents who cannot access or defend the knowledge nominally attributed to them.",
+      "date_added": "2026-04-16"
+    },
+    {
+      "source": "what-will-ai-mean-for-humanity",
+      "target": "whats-your-edge-rethinking-expertise-ai",
+      "type": "reinforce",
+      "claim_a": "ChatGPT users showed significantly less brain activity during essay writing than those using internet search or their own intelligence alone",
+      "claim_b": "Using generative AI reduces human creative thinking and produces more homogeneous ideas",
+      "explanation": "Both claims assert the identical causal mechanism — generative AI offloading cognitive work suppresses the neural/creative processes humans would otherwise exercise — observed in different empirical contexts (brain activity measurement vs. creative output assessment).",
+      "date_added": "2026-04-16"
     }
   ],
   "evaluated_pairs": [
@@ -346,6 +364,98 @@
     ],
     [
       "what-you-dont-know-about-making-decisions",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "what-will-ai-mean-for-humanity"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "science-of-consciousness"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "what-will-ai-mean-for-humanity"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "science-of-consciousness"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "what-will-ai-mean-for-humanity"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "science-of-consciousness"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
+      "what-will-ai-mean-for-humanity"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
+      "science-of-consciousness"
+    ],
+    [
+      "fashion-reduce-tier-2-emissions-decarbonization",
+      "what-will-ai-mean-for-humanity"
+    ],
+    [
+      "fashion-reduce-tier-2-emissions-decarbonization",
+      "science-of-consciousness"
+    ],
+    [
+      "what-will-ai-mean-for-humanity",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "what-will-ai-mean-for-humanity",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "what-will-ai-mean-for-humanity",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "what-will-ai-mean-for-humanity",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "what-will-ai-mean-for-humanity",
+      "science-of-consciousness"
+    ],
+    [
+      "what-will-ai-mean-for-humanity",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "what-will-ai-mean-for-humanity",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "science-of-consciousness"
+    ],
+    [
+      "whats-your-edge-rethinking-expertise-ai",
+      "science-of-consciousness"
+    ],
+    [
+      "4-things-resilient-teams-do",
+      "science-of-consciousness"
+    ],
+    [
+      "twenty-years-lasting-lessons-enron",
+      "science-of-consciousness"
+    ],
+    [
+      "science-of-consciousness",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "science-of-consciousness",
       "building-ethically-strong-organization"
     ]
   ]
