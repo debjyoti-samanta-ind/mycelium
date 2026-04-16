@@ -151,7 +151,7 @@ function AgentStatusRow({ name, tooltip, output, headline }) {
       {!output ? (
         <span className="text-sm text-stone-400 italic mt-1">Active — no output yet</span>
       ) : (
-        <span className="text-sm text-stone-600 leading-snug mt-1">{headline}</span>
+        <span className="text-sm text-stone-600 leading-snug mt-1 line-clamp-2 overflow-hidden">{headline}</span>
       )}
     </div>
   )
@@ -169,7 +169,7 @@ function AgentStatusPanel() {
           name="Steelman"
           tooltip="Finds the dominant view in your reading and writes the strongest possible argument against it — using your own articles."
           output={steelman}
-          headline={steelman ? `Challenged: ${steelman.consensus?.claim?.slice(0, 60)}…` : null}
+          headline={steelman ? `Challenged: ${steelman.consensus?.claim}` : null}
         />
         <AgentStatusRow
           name="Reprise"

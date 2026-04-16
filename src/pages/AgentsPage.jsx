@@ -1,6 +1,7 @@
 import steelmanOutputs from '../../data/steelman_outputs.json'
 import repriseOutputs   from '../../data/reprise_outputs.json'
 import blindSpotOutputs from '../../data/blind_spot_outputs.json'
+import Tooltip from '../components/Tooltip.jsx'
 
 // Each agent has a distinct identity color
 const AGENT_COLORS = {
@@ -21,8 +22,15 @@ function hexToRgba(hex, alpha) {
   return `rgba(${r},${g},${b},${alpha})`
 }
 
+const AGENT_TOOLTIPS = {
+  Steelman: "Scans your entire reading graph to find the single most widely-held intellectual position across your articles, then builds the strongest possible argument against it — using only evidence already in your own graph. Runs after each ingestion once you have 8+ articles.",
+  Reprise:  "After you add a new article, looks back through everything you've read to find the one older article that would feel different to read now — because the new article has changed its context. Requires 5+ articles and at least 30 days of reading history.",
+  'Blind Spot': "Once a month, analyses your reading graph to identify the most important adjacent intellectual domain you're systematically ignoring — and explains exactly which open questions in your current reading that domain would help answer. Requires 10+ articles.",
+}
+
 function AgentCard({ name, children, neverFired, runId }) {
-  const color = AGENT_COLORS[name] || '#78716c'
+  const color   = AGENT_COLORS[name] || '#78716c'
+  const tooltip = AGENT_TOOLTIPS[name]
   return (
     <section
       className="bg-white rounded-2xl overflow-hidden"
@@ -34,13 +42,19 @@ function AgentCard({ name, children, neverFired, runId }) {
       {/* Card header */}
       <div className="flex items-center justify-between px-6 py-4 border-b border-stone-100">
         <div className="flex items-center gap-2.5">
-          <span
-            className="w-2 h-2 rounded-full"
-            style={{ backgroundColor: color }}
-          />
-          <h2 className="serif text-xl font-bold" style={{ color }}>
-            {name}
-          </h2>
+          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: color }} />
+          <h2 className="serif text-xl font-bold" style={{ color }}>{name}</h2>
+          {tooltip && (
+            <span className="relative inline-flex items-center group ml-0.5 cursor-default">
+              <span className="w-4 h-4 rounded-full text-[9px] font-bold flex items-center justify-center leading-none select-none"
+                style={{ backgroundColor: hexToRgba(color, 0.12), color }}>?</span>
+              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-20 w-80 text-white text-xs rounded-xl px-4 py-3 leading-relaxed opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-normal"
+                style={{ backgroundColor: '#1c1917' }}>
+                {tooltip}
+                <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent" style={{ borderTopColor: '#1c1917' }} />
+              </span>
+            </span>
+          )}
         </div>
         {neverFired ? (
           <span className="text-[11px] text-stone-400 font-medium">Waiting for first run</span>
@@ -94,8 +108,10 @@ function TokenMeta({ output, color }) {
 
 // ── Steelman ─────────────────────────────────────────────────────────────────
 function SteelmanSection() {
-  const output = getMostRecentFired(steelmanOutputs)
-  const color  = AGENT_COLORS['Steelman']
+  const allFired = steelmanOutputs.filter(o => o.fired)
+  const output   = allFired[allFired.length - 1] ?? null
+  const history  = allFired.slice(0, -1).reverse() // older runs, newest first
+  const color    = AGENT_COLORS['Steelman']
 
   return (
     <AgentCard name="Steelman" neverFired={!output} runId={output?.run_id}>
@@ -139,6 +155,21 @@ function SteelmanSection() {
           </div>
 
           <TokenMeta output={output} color={color} />
+
+          {/* Past challenges — already stored, just show them */}
+          {history.length > 0 && (
+            <div className="mt-2 pt-4 border-t border-stone-100">
+              <SectionLabel color={color}>Past challenges</SectionLabel>
+              <ul className="space-y-2.5">
+                {history.map((o, i) => (
+                  <li key={i} className="flex gap-3 items-baseline">
+                    <span className="text-[11px] text-stone-400 shrink-0 w-20">{o.run_id}</span>
+                    <span className="text-xs text-stone-500 leading-relaxed">{o.consensus?.claim}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       )}
     </AgentCard>

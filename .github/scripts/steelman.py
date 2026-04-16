@@ -49,6 +49,8 @@ Rules:
   * Name at least two specific articles by title and reference their actual claims
   * Identify the precise point of failure in the consensus — not a general observation
   * Be uncomfortable because it is specific, not because it is dramatic
+  * Be concise: 3–4 sentences, strictly under 100 words. Every sentence must add new \
+    information. A sharp 3-sentence argument is better than a rambling paragraph.
 - A counter-argument that could apply to any reading list is not acceptable. If you cannot \
 find a specific, grounded counter-argument, call finish() with fired=false.
 - You may call tools as many times as you need before deciding.
@@ -109,7 +111,7 @@ TOOLS = [
                 "steelman": {
                     "type": "object",
                     "properties": {
-                        "argument":         {"type": "string"},
+                        "argument":         {"type": "string", "description": "The counter-argument. 3–4 sentences, strictly under 100 words."},
                         "grounded_in":      {"type": "array", "items": {"type": "string"}},
                         "key_tension_used": {"type": "string"},
                     },
