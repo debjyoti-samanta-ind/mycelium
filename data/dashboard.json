@@ -1,10 +1,10 @@
 {
   "computed_at": "2026-04-16",
   "reading": {
-    "total_articles": 12,
-    "this_month": 12,
+    "total_articles": 13,
+    "this_month": 13,
     "last_month": 0,
-    "month_delta": 12,
+    "month_delta": 13,
     "active_since": "2026-04",
     "months_active": 1,
     "domain_distribution": [
@@ -25,6 +25,10 @@
         "count": 1
       },
       {
+        "domain": "philosophy of technology",
+        "count": 1
+      },
+      {
         "domain": "corporate governance",
         "count": 1
       },
@@ -42,17 +46,17 @@
       "mode": "broad",
       "top_domain": "organizational behavior",
       "top_domain_count": 5,
-      "domains_this_month": 6,
+      "domains_this_month": 7,
       "last_broad_month": "2026-04"
     },
     "neglected_topic": null
   },
   "graph": {
-    "total_nodes": 12,
+    "total_nodes": 13,
     "total_edges": 8,
-    "density": 0.121,
-    "island_count": 4,
-    "island_rate": 0.333,
+    "density": 0.103,
+    "island_count": 5,
+    "island_rate": 0.385,
     "most_connected_node": {
       "slug": "2026-business-leaders-outlook-expectations-trends",
       "edge_count": 3
