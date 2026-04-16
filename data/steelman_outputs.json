@@ -28,5 +28,34 @@
       ],
       "key_tension_used": "What's Your Edge? simultaneously claims AI increases demand for judgment roles AND that AI use reduces the human creative thinking and cognitive diversity that judgment requires \u2014 a self-undermining loop the consensus never resolves, and which the 2026 Business Leaders Outlook and Physician CEO articles inadvertently confirm rather than rebut."
     }
+  },
+  {
+    "run_id": "2026-04-16",
+    "triggered_by": "ingestion",
+    "trigger_article": null,
+    "fired": true,
+    "model": "claude-sonnet-4-6",
+    "input_tokens": 25840,
+    "output_tokens": 1829,
+    "tool_calls": 15,
+    "consensus": {
+      "claim": "AI-driven disruption demands \u2014 and rewards \u2014 a shift toward higher-order human judgment, meta-expertise, and adaptive organizational restructuring, making this transition a net-positive strategic imperative for business leaders.",
+      "supporting_articles": [
+        "whats-your-edge-rethinking-expertise-ai",
+        "2026-business-leaders-outlook-expectations-trends",
+        "physician-ceo-leadership-pipeline",
+        "investing-living-better-quality-life-business"
+      ],
+      "supporting_evidence": "MIT Sloan's 'What's Your Edge' argues AI elevates demand for judgment roles by 2.5\u20137.5% per percentage point of adoption. J.P. Morgan's 'Business Leaders Outlook' frames leaders as resilient adapters. The 'Physician CEO' article treats the gap between credential and capability as closeable through structured development. McKinsey's QoL piece projects $6.7\u201311.2 trillion in new markets as consumer values evolve alongside technology."
+    },
+    "steelman": {
+      "argument": "The consensus that AI rewards judgment-driven adaptation contains a self-undermining mechanism that the graph itself surfaces but never resolves. 'What's Your Edge' makes two incompatible claims in the same article: that AI adoption increases demand for high-judgment roles by 2.5\u20137.5% per percentage point, and that 'using generative AI reduces human creative thinking and produces more homogeneous ideas' \u2014 intellectual convergence that 'flattens diverse thinking that drives innovation.' These cannot both be true at scale. If AI systematically homogenizes the cognitive output of everyone trained to be a 'meta-expert,' the judgment those roles are supposed to supply degrades precisely as demand for it rises. The Attention Equation sharpens this: it documents that 25,000 times more content is produced on YouTube than on traditional networks, yet per-unit value collapses to $0.05/hour for podcasts versus $33/hour for live sports. The mechanism is identical \u2014 when millions of people receive the same AI scaffolding to develop 'synthesis and contextual wisdom,' the supply of that judgment expands without a corresponding scarcity, and the premium it commands erodes by the same logic McKinsey uses to explain Chinese export price cuts of 8%. The graph's consensus treats judgment as a refuge from commoditization, but its own evidence shows that AI-mediated judgment is subject to the same supply-side devaluation that commoditized information in the first place.",
+      "grounded_in": [
+        "whats-your-edge-rethinking-expertise-ai",
+        "attention-equation-consumer-attention-battles",
+        "geopolitics-geometry-global-trade-2026-update"
+      ],
+      "key_tension_used": "'What's Your Edge' simultaneously claims AI increases demand for judgment roles AND that AI produces intellectual homogenization \u2014 a direct contradiction that, when combined with the Attention Equation's supply-abundance/value-collapse mechanism, predicts that 'meta-expertise' will be commoditized by the same dynamic it was meant to escape."
+    }
   }
 ]

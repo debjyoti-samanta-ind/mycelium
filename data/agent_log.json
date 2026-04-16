@@ -154,5 +154,29 @@
     "input_tokens": 7549,
     "output_tokens": 978,
     "tool_calls": 4
+  },
+  {
+    "agent": "steelman",
+    "run_id": "2026-04-16",
+    "timestamp": "2026-04-16T01:49:03.062409+00:00",
+    "triggered_by": "ingestion",
+    "trigger_article": null,
+    "fired": true,
+    "skip_reason": null,
+    "input_tokens": 25840,
+    "output_tokens": 1829,
+    "tool_calls": 15
+  },
+  {
+    "agent": "reprise",
+    "run_id": "2026-04-16",
+    "timestamp": "2026-04-16T01:49:28.052916+00:00",
+    "triggered_by": "ingestion",
+    "trigger_article": "physician-ceo-leadership-pipeline",
+    "fired": false,
+    "skip_reason": "No article in the graph meets the 30-day recency threshold. The new article was added on 2026-04-16, and every other article in the graph was added between 2026-04-13 and 2026-04-16 \u2014 a gap of at most 3 days. The rule requires the surfaced article to have been added at least 30 days prior. While there are genuinely interesting thematic resonances (e.g., 'Twenty Years Later: The Lasting Lessons of Enron' mirrors the physician-CEO article's core tension about accomplished individuals whose structural constraints prevent them from exercising the independence their credentials imply), none of these connections can be surfaced under the current rules. No reprise is fired.",
+    "input_tokens": 14542,
+    "output_tokens": 1052,
+    "tool_calls": 8
   }
 ]
