@@ -178,5 +178,17 @@
     "input_tokens": 14542,
     "output_tokens": 1052,
     "tool_calls": 8
+  },
+  {
+    "agent": "reprise",
+    "run_id": "2026-04-16",
+    "timestamp": "2026-04-16T08:11:30.509912+00:00",
+    "triggered_by": "ingestion",
+    "trigger_article": "physician-ceo-leadership-pipeline",
+    "fired": false,
+    "skip_reason": "No article in the graph meets the 30-day minimum age requirement. The new article was added 2026-04-16, so only articles added on or before 2026-03-17 would qualify. Every other article in Debjyoti's knowledge graph was added between 2026-04-13 and 2026-04-16 \u2014 all within the past 3 days. There are no sufficiently older articles against which a meaningful reprise could be surfaced.",
+    "input_tokens": 7635,
+    "output_tokens": 737,
+    "tool_calls": 4
   }
 ]

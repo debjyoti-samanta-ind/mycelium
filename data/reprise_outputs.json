@@ -64,5 +64,16 @@
     "output_tokens": 1052,
     "tool_calls": 8,
     "skip_reason": "No article in the graph meets the 30-day recency threshold. The new article was added on 2026-04-16, and every other article in the graph was added between 2026-04-13 and 2026-04-16 \u2014 a gap of at most 3 days. The rule requires the surfaced article to have been added at least 30 days prior. While there are genuinely interesting thematic resonances (e.g., 'Twenty Years Later: The Lasting Lessons of Enron' mirrors the physician-CEO article's core tension about accomplished individuals whose structural constraints prevent them from exercising the independence their credentials imply), none of these connections can be surfaced under the current rules. No reprise is fired."
+  },
+  {
+    "run_id": "2026-04-16",
+    "triggered_by": "ingestion",
+    "trigger_article": "physician-ceo-leadership-pipeline",
+    "fired": false,
+    "model": "claude-sonnet-4-6",
+    "input_tokens": 7635,
+    "output_tokens": 737,
+    "tool_calls": 4,
+    "skip_reason": "No article in the graph meets the 30-day minimum age requirement. The new article was added 2026-04-16, so only articles added on or before 2026-03-17 would qualify. Every other article in Debjyoti's knowledge graph was added between 2026-04-13 and 2026-04-16 \u2014 all within the past 3 days. There are no sufficiently older articles against which a meaningful reprise could be surfaced."
   }
 ]
