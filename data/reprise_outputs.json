@@ -97,5 +97,16 @@
     "output_tokens": 1179,
     "tool_calls": 6,
     "skip_reason": "No article in the graph clears the 30-day recency threshold. Every article was added between April 13\u201316, 2026, meaning the oldest articles are only 3 days prior to the new article (added April 16, 2026). The rule requires the surfaced article to have been added at least 30 days before the new one. Despite strong thematic candidates \u2014 particularly 'Twenty Years Later: The Lasting Lessons of Enron,' whose board-level failure to question, challenge, or surface dissent maps precisely onto the advocacy-vs-inquiry dynamic the new article diagnoses \u2014 none qualify under the timing constraint. No reprise fired."
+  },
+  {
+    "run_id": "2026-04-16",
+    "triggered_by": "ingestion",
+    "trigger_article": "what-you-dont-know-about-making-decisions",
+    "fired": false,
+    "model": "claude-sonnet-4-6",
+    "input_tokens": 10155,
+    "output_tokens": 1089,
+    "tool_calls": 4,
+    "skip_reason": "No article in Debjyoti's knowledge graph meets the 30-day recency threshold required to qualify as a reprise. The new article was added on 2026-04-16, meaning a qualifying article must have been added on or before 2026-03-17. Every other article in the graph was added between 2026-04-13 and 2026-04-16 \u2014 a gap of at most 3 days. While several articles (particularly 'Twenty Years Later: The Lasting Lessons of Enron' and 'Building an Ethically Strong Organization') have thematic resonance with the new article's argument about advocacy culture suppressing honest information-sharing, the minimum age requirement cannot be waived. No reprise is surfaced."
   }
 ]
