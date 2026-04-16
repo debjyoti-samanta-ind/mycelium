@@ -1,187 +1,273 @@
 import steelmanOutputs from '../../data/steelman_outputs.json'
-import repriseOutputs from '../../data/reprise_outputs.json'
+import repriseOutputs   from '../../data/reprise_outputs.json'
 import blindSpotOutputs from '../../data/blind_spot_outputs.json'
+
+// Each agent has a distinct identity color
+const AGENT_COLORS = {
+  Steelman:   '#e11d48', // rose   — confrontational, challenges consensus
+  Reprise:    '#d97706', // amber  — warm, surfaces memory
+  'Blind Spot': '#7c3aed', // violet — reveals what you can't see
+}
 
 function getMostRecentFired(outputs) {
   const fired = outputs.filter(o => o.fired)
   return fired.length > 0 ? fired[fired.length - 1] : null
 }
 
-function AgentHeader({ name, runId, neverFired }) {
+function hexToRgba(hex, alpha) {
+  const r = parseInt(hex.slice(1, 3), 16)
+  const g = parseInt(hex.slice(3, 5), 16)
+  const b = parseInt(hex.slice(5, 7), 16)
+  return `rgba(${r},${g},${b},${alpha})`
+}
+
+function AgentCard({ name, children, neverFired, runId }) {
+  const color = AGENT_COLORS[name] || '#78716c'
   return (
-    <div className="flex items-baseline justify-between mb-4">
-      <h2 className="text-lg font-semibold text-stone-800">{name}</h2>
-      {neverFired ? (
-        <span className="text-xs text-stone-400">Active — no output yet</span>
-      ) : (
-        <span className="text-xs text-stone-400">{runId}</span>
-      )}
-    </div>
+    <section
+      className="bg-white rounded-2xl overflow-hidden"
+      style={{
+        borderTop:  `3px solid ${color}`,
+        boxShadow: `0 1px 0 rgba(0,0,0,0.03), 0 4px 0 ${hexToRgba(color, 0.25)}, 0 8px 24px rgba(0,0,0,0.05)`,
+      }}
+    >
+      {/* Card header */}
+      <div className="flex items-center justify-between px-6 py-4 border-b border-stone-100">
+        <div className="flex items-center gap-2.5">
+          <span
+            className="w-2 h-2 rounded-full"
+            style={{ backgroundColor: color }}
+          />
+          <h2 className="serif text-xl font-bold" style={{ color }}>
+            {name}
+          </h2>
+        </div>
+        {neverFired ? (
+          <span className="text-[11px] text-stone-400 font-medium">Waiting for first run</span>
+        ) : (
+          <span className="text-[11px] text-stone-400">{runId}</span>
+        )}
+      </div>
+      <div className="px-6 py-5">{children}</div>
+    </section>
   )
 }
 
-function ArticleTag({ slug }) {
+function SectionLabel({ children, color }) {
   return (
-    <span className="inline-block bg-stone-100 text-stone-600 text-xs px-2 py-0.5 rounded mr-1 mb-1">
+    <p className="text-[10px] font-semibold uppercase tracking-widest mb-1.5"
+      style={{ color: color ? hexToRgba(color, 0.6) : '#a8a29e' }}>
+      {children}
+    </p>
+  )
+}
+
+function ArticleTag({ slug, color }) {
+  return (
+    <span
+      className="inline-block text-[11px] px-2 py-0.5 rounded-full font-medium mr-1.5 mb-1.5"
+      style={{
+        backgroundColor: color ? hexToRgba(color, 0.08) : '#f5f5f4',
+        color:           color || '#78716c',
+        border:          `1px solid ${color ? hexToRgba(color, 0.2) : '#e7e5e4'}`,
+      }}
+    >
       {slug}
     </span>
   )
 }
 
+function NeverFired({ description }) {
+  return (
+    <p className="text-sm text-stone-400 leading-relaxed">{description}</p>
+  )
+}
+
+function TokenMeta({ output, color }) {
+  return (
+    <p className="text-[11px] mt-4 pt-3 border-t border-stone-100"
+      style={{ color: color ? hexToRgba(color, 0.5) : '#a8a29e' }}>
+      {output.input_tokens + output.output_tokens} tokens · {output.tool_calls} tool calls
+    </p>
+  )
+}
+
+// ── Steelman ─────────────────────────────────────────────────────────────────
 function SteelmanSection() {
   const output = getMostRecentFired(steelmanOutputs)
+  const color  = AGENT_COLORS['Steelman']
 
   return (
-    <section className="bg-white border border-stone-200 rounded-xl p-6">
-      <AgentHeader name="Steelman" runId={output?.run_id} neverFired={!output} />
+    <AgentCard name="Steelman" neverFired={!output} runId={output?.run_id}>
       {!output ? (
-        <p className="text-sm text-stone-400">
-          Steelman fires after each ingestion batch once you have 8+ articles.
-          It will appear here after its first output.
-        </p>
+        <NeverFired description="Fires after each ingestion once you have 8+ articles. Finds the dominant consensus in your graph and writes the strongest argument against it — using only evidence from your own reading." />
       ) : (
         <div className="space-y-5">
           <div>
-            <p className="text-xs font-semibold text-stone-400 uppercase tracking-wide mb-1">Consensus challenged</p>
-            <p className="text-sm text-stone-700">{output.consensus?.claim}</p>
+            <SectionLabel color={color}>Consensus challenged</SectionLabel>
+            <p className="text-[15px] text-stone-800 font-medium leading-snug">{output.consensus?.claim}</p>
             <div className="mt-2">
               {(output.consensus?.supporting_articles || []).map(slug => (
-                <ArticleTag key={slug} slug={slug} />
+                <ArticleTag key={slug} slug={slug} color={color} />
               ))}
             </div>
           </div>
+
           <div>
-            <p className="text-xs font-semibold text-stone-400 uppercase tracking-wide mb-2">Counter-argument</p>
+            <SectionLabel color={color}>Counter-argument</SectionLabel>
             <p className="text-sm text-stone-700 leading-relaxed whitespace-pre-wrap">
               {output.steelman?.argument}
             </p>
           </div>
+
+          {output.steelman?.key_tension_used && (
+            <div
+              className="pl-4 py-2 rounded-r-lg text-sm text-stone-700 leading-relaxed italic"
+              style={{ borderLeft: `3px solid ${hexToRgba(color, 0.4)}` }}
+            >
+              {output.steelman.key_tension_used}
+            </div>
+          )}
+
           <div>
-            <p className="text-xs font-semibold text-stone-400 uppercase tracking-wide mb-1">Grounded in</p>
+            <SectionLabel color={color}>Grounded in</SectionLabel>
             <div>
               {(output.steelman?.grounded_in || []).map(slug => (
-                <ArticleTag key={slug} slug={slug} />
+                <ArticleTag key={slug} slug={slug} color={color} />
               ))}
             </div>
           </div>
-          <p className="text-xs text-stone-400">
-            {output.input_tokens + output.output_tokens} tokens · {output.tool_calls} tool calls
-          </p>
+
+          <TokenMeta output={output} color={color} />
         </div>
       )}
-    </section>
+    </AgentCard>
   )
 }
 
+// ── Reprise ──────────────────────────────────────────────────────────────────
 function RepriseSection() {
   const output = getMostRecentFired(repriseOutputs)
+  const color  = AGENT_COLORS['Reprise']
 
   return (
-    <section className="bg-white border border-stone-200 rounded-xl p-6">
-      <AgentHeader name="Reprise" runId={output?.run_id} neverFired={!output} />
+    <AgentCard name="Reprise" neverFired={!output} runId={output?.run_id}>
       {!output ? (
-        <p className="text-sm text-stone-400">
-          Reprise fires after each ingestion batch once you have 5+ articles.
-          It will appear here after its first output.
-        </p>
+        <NeverFired description="Fires after each ingestion once you have 5+ articles and the graph is at least 30 days old. Surfaces an older article that has become newly relevant because of what you just added." />
       ) : (
         <div className="space-y-5">
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-xs font-semibold text-stone-400 uppercase tracking-wide mb-1">You just read</p>
-              <p className="text-sm text-stone-700">{output.new_article?.title}</p>
+            <div
+              className="rounded-xl p-4"
+              style={{ backgroundColor: hexToRgba(color, 0.06), border: `1px solid ${hexToRgba(color, 0.15)}` }}
+            >
+              <SectionLabel color={color}>You just read</SectionLabel>
+              <p className="text-sm text-stone-800 font-medium leading-snug">
+                {output.new_article?.title}
+              </p>
             </div>
-            <div>
-              <p className="text-xs font-semibold text-stone-400 uppercase tracking-wide mb-1">Go back to</p>
-              <p className="text-sm text-stone-700">{output.surfaced_article?.title}</p>
-              <p className="text-xs text-stone-400 mt-0.5">Added {output.surfaced_article?.date_added}</p>
+            <div
+              className="rounded-xl p-4"
+              style={{ backgroundColor: hexToRgba(color, 0.06), border: `1px solid ${hexToRgba(color, 0.15)}` }}
+            >
+              <SectionLabel color={color}>Go back to</SectionLabel>
+              <p className="text-sm text-stone-800 font-medium leading-snug">
+                {output.surfaced_article?.title}
+              </p>
+              <p className="text-[11px] text-stone-400 mt-1">
+                Added {output.surfaced_article?.date_added}
+              </p>
             </div>
           </div>
+
           <div>
-            <p className="text-xs font-semibold text-stone-400 uppercase tracking-wide mb-2">Why now</p>
-            <p className="text-sm text-stone-700 leading-relaxed">
-              {output.relevance_explanation}
-            </p>
+            <SectionLabel color={color}>Why now</SectionLabel>
+            <p className="text-sm text-stone-700 leading-relaxed">{output.relevance_explanation}</p>
           </div>
-          <p className="text-xs text-stone-400">
-            {output.input_tokens + output.output_tokens} tokens · {output.tool_calls} tool calls
-          </p>
+
+          <TokenMeta output={output} color={color} />
         </div>
       )}
-    </section>
+    </AgentCard>
   )
 }
 
+// ── Blind Spot ────────────────────────────────────────────────────────────────
 function BlindSpotSection() {
   const output = getMostRecentFired(blindSpotOutputs)
+  const color  = AGENT_COLORS['Blind Spot']
 
   return (
-    <section className="bg-white border border-stone-200 rounded-xl p-6">
-      <AgentHeader name="Blind Spot" runId={output?.run_id} neverFired={!output} />
+    <AgentCard name="Blind Spot" neverFired={!output} runId={output?.run_id}>
       {!output ? (
-        <p className="text-sm text-stone-400">
-          Blind Spot fires on the 1st of each month once you have 10+ articles.
-          It will appear here after its first output.
-        </p>
+        <NeverFired description="Fires on the 1st of each month once you have 10+ articles. Identifies the most important adjacent domain you are systematically ignoring — and explains which questions in your current reading it would help you answer." />
       ) : (
         <div className="space-y-5">
           <div>
-            <p className="text-xs font-semibold text-stone-400 uppercase tracking-wide mb-1">
+            <SectionLabel color={color}>
               Your reading gap
               {output.blind_spot?.persistent_gap && (
-                <span className="ml-2 text-amber-600 normal-case font-normal">· Also flagged last month</span>
+                <span className="ml-2 normal-case font-normal tracking-normal text-amber-500">· Also flagged last month</span>
               )}
-            </p>
-            <p className="text-sm font-medium text-stone-800">{output.blind_spot?.domain}</p>
-            <p className="text-sm text-stone-500 mt-0.5">{output.blind_spot?.why_adjacent}</p>
+            </SectionLabel>
+            <p className="text-xl font-bold text-stone-900">{output.blind_spot?.domain}</p>
+            <p className="text-sm text-stone-500 mt-1">{output.blind_spot?.why_adjacent}</p>
           </div>
+
+          {output.blind_spot?.open_questions_it_addresses?.length > 0 && (
+            <div>
+              <SectionLabel color={color}>Questions it would answer</SectionLabel>
+              <ul className="space-y-2">
+                {output.blind_spot.open_questions_it_addresses.map((q, i) => (
+                  <li key={i} className="flex gap-2.5 text-sm text-stone-700">
+                    <span className="select-none shrink-0 mt-0.5" style={{ color: hexToRgba(color, 0.6) }}>—</span>
+                    <span className="leading-relaxed">{q}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {output.blind_spot?.explanation && (
+            <div>
+              <SectionLabel color={color}>Why this matters</SectionLabel>
+              <p className="text-sm text-stone-700 leading-relaxed whitespace-pre-wrap">
+                {output.blind_spot.explanation}
+              </p>
+            </div>
+          )}
+
           <div>
-            <p className="text-xs font-semibold text-stone-400 uppercase tracking-wide mb-2">Questions it would answer</p>
-            <ul className="space-y-1">
-              {(output.blind_spot?.open_questions_it_addresses || []).map((q, i) => (
-                <li key={i} className="text-sm text-stone-700 flex gap-2">
-                  <span className="text-stone-300 shrink-0">—</span>
-                  <span>{q}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <p className="text-xs font-semibold text-stone-400 uppercase tracking-wide mb-2">Why this matters</p>
-            <p className="text-sm text-stone-700 leading-relaxed whitespace-pre-wrap">
-              {output.blind_spot?.explanation}
-            </p>
-          </div>
-          <div>
-            <p className="text-xs font-semibold text-stone-400 uppercase tracking-wide mb-1">Raised by</p>
+            <SectionLabel color={color}>Raised by</SectionLabel>
             <div>
               {(output.blind_spot?.grounded_in || []).map(slug => (
-                <ArticleTag key={slug} slug={slug} />
+                <ArticleTag key={slug} slug={slug} color={color} />
               ))}
             </div>
           </div>
-          <p className="text-xs text-stone-400">
-            {output.input_tokens + output.output_tokens} tokens · {output.tool_calls} tool calls
-            · {output.graph_snapshot?.total_articles} articles in graph at time of run
-          </p>
+
+          <TokenMeta output={output} color={color} />
         </div>
       )}
-    </section>
+    </AgentCard>
   )
 }
 
+// ── Page ──────────────────────────────────────────────────────────────────────
 export default function AgentsPage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-xl font-semibold text-stone-900">Agents</h1>
-        <p className="text-sm text-stone-500 mt-1">
+    <div>
+      <div className="mb-8">
+        <h1 className="serif text-4xl font-bold text-stone-900 leading-tight mb-2">Agents</h1>
+        <p className="text-stone-500 text-[15px] leading-relaxed">
           Three learning tools that analyse your graph and surface insights automatically.
         </p>
       </div>
-      <SteelmanSection />
-      <RepriseSection />
-      <BlindSpotSection />
+      <div className="space-y-6">
+        <SteelmanSection />
+        <RepriseSection />
+        <BlindSpotSection />
+      </div>
     </div>
   )
 }
