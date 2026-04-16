@@ -33,7 +33,7 @@ function AgentCard({ name, children, neverFired, runId }) {
   const tooltip = AGENT_TOOLTIPS[name]
   return (
     <section
-      className="bg-white rounded-2xl overflow-hidden"
+      className="bg-white rounded-2xl"
       style={{
         borderTop:  `3px solid ${color}`,
         boxShadow: `0 1px 0 rgba(0,0,0,0.03), 0 4px 0 ${hexToRgba(color, 0.25)}, 0 8px 24px rgba(0,0,0,0.05)`,
