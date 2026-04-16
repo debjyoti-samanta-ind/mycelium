@@ -75,5 +75,16 @@
     "output_tokens": 737,
     "tool_calls": 4,
     "skip_reason": "No article in the graph meets the 30-day minimum age requirement. The new article was added 2026-04-16, so only articles added on or before 2026-03-17 would qualify. Every other article in Debjyoti's knowledge graph was added between 2026-04-13 and 2026-04-16 \u2014 all within the past 3 days. There are no sufficiently older articles against which a meaningful reprise could be surfaced."
+  },
+  {
+    "run_id": "2026-04-16",
+    "triggered_by": "ingestion",
+    "trigger_article": "what-you-dont-know-about-making-decisions",
+    "fired": false,
+    "model": "claude-sonnet-4-6",
+    "input_tokens": 7715,
+    "output_tokens": 755,
+    "tool_calls": 4,
+    "skip_reason": "No article in the graph was added at least 30 days before the new article (date_added: 2026-04-16). Every other article in the knowledge graph was added between April 13\u201316, 2026, making the maximum gap only 3 days. The 30-day eligibility rule cannot be satisfied by any candidate, so no reprise can be surfaced."
   }
 ]

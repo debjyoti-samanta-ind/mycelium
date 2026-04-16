@@ -190,5 +190,17 @@
     "input_tokens": 7635,
     "output_tokens": 737,
     "tool_calls": 4
+  },
+  {
+    "agent": "reprise",
+    "run_id": "2026-04-16",
+    "timestamp": "2026-04-16T08:14:19.448575+00:00",
+    "triggered_by": "ingestion",
+    "trigger_article": "what-you-dont-know-about-making-decisions",
+    "fired": false,
+    "skip_reason": "No article in the graph was added at least 30 days before the new article (date_added: 2026-04-16). Every other article in the knowledge graph was added between April 13\u201316, 2026, making the maximum gap only 3 days. The 30-day eligibility rule cannot be satisfied by any candidate, so no reprise can be surfaced.",
+    "input_tokens": 7715,
+    "output_tokens": 755,
+    "tool_calls": 4
   }
 ]
