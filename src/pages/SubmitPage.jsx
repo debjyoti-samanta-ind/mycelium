@@ -126,17 +126,39 @@ export default function SubmitPage() {
     }
   }
 
+  const isDemoMode = import.meta.env.VITE_DEMO_MODE === 'true'
+
   if (!isConfigured) {
     return (
       <div className="max-w-xl mx-auto py-12">
         <div className="card-3d p-6">
-          <h2 className="text-base font-semibold text-stone-900 mb-2">One-time setup needed</h2>
-          <p className="text-sm text-stone-600 leading-relaxed">
-            Create a{' '}
-            <code className="bg-stone-100 px-1.5 py-0.5 rounded text-xs font-mono">.env.local</code>{' '}
-            file in the project root with your GitHub token. See{' '}
-            <strong>README.md</strong> for step-by-step instructions.
-          </p>
+          {isDemoMode ? (
+            <>
+              <h2 className="text-base font-semibold text-stone-900 mb-2">Read-only demo</h2>
+              <p className="text-sm text-stone-600 leading-relaxed">
+                This is a live read-only instance of my personal knowledge graph.
+                Article submission is disabled here.{' '}
+                <a
+                  href="https://github.com/debjyoti-samanta-ind/mycelium"
+                  className="underline text-stone-700 hover:text-stone-900"
+                  target="_blank" rel="noreferrer"
+                >
+                  Fork the repo
+                </a>{' '}
+                to run your own.
+              </p>
+            </>
+          ) : (
+            <>
+              <h2 className="text-base font-semibold text-stone-900 mb-2">One-time setup needed</h2>
+              <p className="text-sm text-stone-600 leading-relaxed">
+                Create a{' '}
+                <code className="bg-stone-100 px-1.5 py-0.5 rounded text-xs font-mono">.env.local</code>{' '}
+                file in the project root with your GitHub token. See{' '}
+                <strong>README.md</strong> for step-by-step instructions.
+              </p>
+            </>
+          )}
         </div>
       </div>
     )

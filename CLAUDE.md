@@ -157,6 +157,8 @@ Claude Code must not say a phase is complete until it has explicitly confirmed e
   graph.json            — Nodes, edges, and evaluated_pairs
   alerts.json           — Sent alert log with last_alerted_at timestamp (Phase 3)
   dashboard.json        — Precomputed dashboard stats (recomputed after every ingestion)
+  agent_log.json        — All agent run records (fired / skipped, reason, output summary)
+  reprise_outputs.json  — Full Reprise agent outputs (one entry per run that fired)
   config.json           — Topic colour map and app settings
 /.github
   /workflows            — All agent logic lives here
@@ -164,12 +166,15 @@ Claude Code must not say a phase is complete until it has explicitly confirmed e
     connect.yml         — Triggered after ingest; finds connections with Sonnet
     alerts.yml          — Weekly cron (Sunday); sends consolidated surprise alert email (max 3, ranked by domain surprise)
     digest.yml          — Monthly cron (1st of month); generates digest with Sonnet; supports target_month override
+    agents.yml          — Triggered after connect; runs Reprise (Steelman paused); commits agent_log.json + reprise_outputs.json
   /scripts
     ingest.py           — Article extraction (Haiku)
     connect.py          — Connection finding (Sonnet); four-test evaluation (specific claims, direct relationship, non-derivability, generality); records all evaluated pairs to prevent re-evaluation; edges include claim_a and claim_b fields
     alerts.py           — Consolidated weekly surprise alert email (no Claude); ranks by domain bucket distance
     digest.py           — Monthly digest synthesis (Sonnet); idempotent (skips if file exists)
-    compute_dashboard.py — Dashboard stat computation (no Claude, pure Python)
+    compute_dashboard.py — Dashboard stat computation (no Claude, pure Python); normalises UK/US spelling variants in domain names
+    steelman.py         — Steelman agent (Sonnet tool-use loop); PAUSED — repetition risk, pending post-check deduplication
+    reprise.py          — Reprise agent (Sonnet tool-use loop); fires after each ingestion; enforces 30-day minimum on surfaced articles
 CLAUDE.md               — This file
 README.md               — Setup instructions for Debjyoti
 ```
@@ -271,149 +276,83 @@ If Claude Code is about to implement something that would increase API costs mea
 | 4 | Memory — monthly digests + time-filtered graph | Complete |
 | 5 | Books — anchor nodes | Parked |
 | 6 | Dashboard — momentum + reading intelligence | Complete |
-| 7 | Agents — Prediction Tracker, Steelman, So What, Second-Order Effects | Planned |
+| 7 | Agents — Steelman (paused), Reprise, Blind Spot | In Progress |
 | 8 | Public repo — one-time MVP export with demo data | Parked |
 
 ---
 
 ## Phase 7 — Agents detail
 
-Phase 7 adds four agentic learning tools. Unlike earlier phases which process inputs and find patterns, these agents observe the current state of the graph, make a judgment, and produce an output that feeds back into Debjyoti's thinking. The Opinions feature was deliberately removed because it told Debjyoti what to think. These agents instead create conditions for him to think better.
+Phase 7 adds three agentic learning tools. Unlike earlier phases which process inputs and find patterns, these agents explore the current state of the graph, make independent judgments, and produce outputs that feed back into Debjyoti's thinking.
 
-**Why these four were chosen:**
-The goal is to move reading from passive absorption to active reasoning. Each agent targets a specific thinking skill: tracking whether ideas hold up over time (Prediction Tracker), stress-testing emerging beliefs (Steelman), forcing application of abstract ideas (So What?), and building systems thinking (Second-Order Effects).
+**Core architectural principle — true agents, not scripts:** All three agents are built using Claude's tool-use API in a multi-step agent loop. Claude drives the process — it decides which tools to call, what to look at, and when it's done. Python is scaffolding that executes tool calls and maintains the loop. No hardcoded thresholds or fixed decision logic in the agent behaviour.
 
----
+**Why these three were chosen:**
+Each agent targets a different failure mode of reading:
+- **Steelman** — you absorb dominant views without noticing. This forces confrontation with the best opposing argument.
+- **Reprise** — memory fades. This closes the gap between past and present reading by surfacing old articles that have become newly relevant.
+- **Blind Spot** — you read through the same intellectual lenses without noticing. This identifies the most important adjacent domain you are systematically ignoring.
 
-### Agent 1 — Prediction Tracker
-
-**What it does:** At ingestion time, extracts falsifiable predictions from each new article — claims the article makes about how things will unfold. Stores them in `data/predictions.json` with a review date 6–12 months out. Weekly, resurfaces predictions whose review date has passed and prompts Debjyoti to score them (right / wrong / unclear). Builds a scorecard of which intellectual frameworks in his reading have actually been right.
-
-**Why it's valuable:** Most reading is passive. This creates skin in the game — it teaches Debjyoti whose thinking to trust, including his own.
-
-**Trigger:** Extraction runs as part of the ingest workflow (after article is saved). Review surfaces weekly.
-
-**Model:** Haiku for extraction (structured, high-frequency). No Claude needed for weekly review surfacing — pure logic.
-
-**Estimated cost:** ~$0.05/month
-
-**Storage:** `data/predictions.json`
-```json
-{
-  "predictions": [
-    {
-      "slug": "article-slug",
-      "prediction": "exact falsifiable claim from the article",
-      "review_date": "YYYY-MM-DD",
-      "scored": false,
-      "score": null
-    }
-  ]
-}
-```
+**Implementation status:** Reprise is live. Steelman is built but paused. Blind Spot is not yet started.
 
 ---
 
-### Agent 2 — Steelman
+### Agent 1 — Steelman
 
-**What it does:** Monitors the graph for stance imbalance — when articles on the same topic cluster around a single stance (e.g. 4 optimistic AI articles, 0 pessimistic). When imbalance is detected, calls Sonnet to write the strongest possible counter-argument against the apparent consensus. Not a strawman — a genuine steel-man built from first principles.
+**Value add:** You absorb dominant views in your reading without realising it. Steelman finds the most important consensus in your graph and writes the strongest possible argument against it — built from your specific articles and their actual claims, not generic domain knowledge. It makes you uncomfortable in a useful way.
 
-**Why it's valuable:** Most people read in confirmation mode without noticing. This forces Debjyoti to confront the best version of the opposing view, not a weak one.
+**Status:** Built, paused. Repetition risk: the agent consistently selects the most-connected cluster, producing similar challenges on consecutive runs. Will be re-enabled once post-check deduplication is implemented (Python compares `supporting_articles` slugs against recent runs before sending the email).
 
-**Trigger:** Runs after each ingestion — checks for stance imbalance across topic tags. Only fires a Sonnet call when imbalance threshold is met (e.g. 3+ articles on same topic, 80%+ same stance).
-
-**Model:** Sonnet (requires genuine argumentative judgment, not pattern matching).
-
-**Estimated cost:** ~$0.10/month (occasional, not every ingestion)
-
-**Storage:** `data/steelmans.json`
-```json
-{
-  "steelmans": [
-    {
-      "topic": "AI development",
-      "dominant_stance": "optimistic",
-      "article_slugs": ["slug-a", "slug-b", "slug-c"],
-      "steelman": "The strongest argument against this consensus...",
-      "date_generated": "YYYY-MM-DD"
-    }
-  ]
-}
-```
+**Design:**
+- Trigger: fires after every ingestion via `agents.yml`
+- Tools Claude can call: `get_graph_summary`, `get_article`, `get_cluster`, `get_recent_steelmans`, `finish`
+- Output: a structured counter-argument built from the user's actual article claims, 200–250 words
+- Storage: logs to `data/agent_log.json`; full outputs would go to `data/steelman_outputs.json` (not committed while paused)
+- Model: Sonnet; ~3,500–4,000 tokens per run
 
 ---
 
-### Agent 3 — So What?
+### Agent 2 — Reprise
 
-**What it does:** When a cluster of reinforce edges forms (3+ articles reinforcing the same idea from different angles), calls Sonnet to ask: "What would a decision-maker do differently if they believed all of this?" Converts abstract intellectual connections into concrete implications and action signals.
+**Value add:** Your biggest enemy as a reader is forgetting. Reprise surfaces an old article that has become newly relevant because of what you just added — connecting your past reading to your present reading in a way you wouldn't have made yourself. The value compounds: the older and larger the graph, the more powerful this becomes.
 
-**Why it's valuable:** The gap between reading and doing is wide. Most insights stay abstract. This forces application — it asks what the ideas actually demand of the reader.
+**Status:** Live.
 
-**Trigger:** Runs after connect.yml completes — detects newly formed reinforce clusters (not previously flagged). Only fires when a cluster of 3+ reinforce edges shares overlapping articles.
-
-**Model:** Sonnet (synthesis and application judgment required).
-
-**Estimated cost:** ~$0.10/month
-
-**Storage:** `data/sowhat.json`
-```json
-{
-  "insights": [
-    {
-      "cluster_slugs": ["slug-a", "slug-b", "slug-c"],
-      "shared_idea": "one sentence describing the crystallised belief",
-      "so_what": "What a decision-maker would do differently if they believed this",
-      "date_generated": "YYYY-MM-DD"
-    }
-  ]
-}
-```
+**Design:**
+- Trigger: fires after every ingestion via `agents.yml`, immediately after connect
+- Tools Claude can call: `get_new_article`, `get_all_articles`, `get_connections`, `finish`
+- Logic: Claude reads the newly ingested article, scans the reading history, selects the one older article whose meaning has most changed in light of the new one, explains the reframing
+- Enforces a 30-day minimum: will not surface an article added within the last 30 days
+- Fires with `fired = false` (and logs reason) if no sufficiently old article qualifies
+- Output: emailed to GMAIL_RECIPIENT; full output stored in `data/reprise_outputs.json`
+- Storage: every run (fired or not) logged to `data/agent_log.json`
+- Model: Sonnet; ~3,500–4,500 tokens per run
 
 ---
 
-### Agent 4 — Second-Order Effects
+### Agent 3 — Blind Spot
 
-**What it does:** When a new article is ingested, takes its central argument and generates 2nd and 3rd order consequences — what follows if the claim is true, and what follows from that. Forces systems thinking rather than isolated fact absorption.
+**Value add:** You read the same topics through the same intellectual lenses without noticing. Blind Spot identifies the most important adjacent domain you are systematically ignoring — and explains specifically which questions in your current reading that missing domain would help you answer. Fires monthly. Low cost, high leverage.
 
-**Why it's valuable:** Most articles present a finding without following it to its logical implications. This makes the implications explicit and shows Debjyoti where an idea leads.
+**Status:** Not yet started.
 
-**Trigger:** Runs as part of the ingest workflow for every new article.
-
-**Model:** Sonnet (causal chain reasoning requires judgment).
-
-**Estimated cost:** ~$0.10/month
-
-**Storage:** Added as a field to each article's JSON file:
-```json
-"second_order_effects": [
-  "1st order: ...",
-  "2nd order: ...",
-  "3rd order: ..."
-]
-```
+**Design:** TBD — to be brainstormed before building begins.
 
 ---
 
-### Phase 7 UI
+### Phase 7 observability
 
-All four agents surface in a new **Agents** tab in the nav. Layout:
-- Four sections, one per agent
-- Prediction Tracker: list of pending predictions with score buttons
-- Steelman: latest steelman per topic, expandable
-- So What?: list of crystallised beliefs with their implications
-- Second-Order Effects: per-article, accessible from the Articles tab (new expandable section on each article card)
+All three agents log every run to `data/agent_log.json` — whether they fired or explicitly chose not to. A widget on the Dashboard surfaces recent agent activity. The weekly email includes a summary of what each agent did or skipped that week.
 
 ### Phase 7 cost summary
 
-| Agent | Trigger | Model | Est. cost/month |
-|---|---|---|---|
-| Prediction Tracker | Per ingestion | Haiku | ~$0.05 |
-| Steelman | Per ingestion (conditional) | Sonnet | ~$0.10 |
-| So What? | Post-connect (conditional) | Sonnet | ~$0.10 |
-| Second-Order Effects | Per ingestion | Sonnet | ~$0.10 |
-| **Total** | | | **~$0.35/month** |
+All three agents use Sonnet for their reasoning loops.
 
-Combined with existing pipeline (~$1.50/month), total stays well under the $2/month budget.
+- **Reprise:** ~3,500–4,500 tokens per run. At 5 articles/week that is ~20 runs/month → ~$0.10–$0.15/month.
+- **Steelman:** paused. Similar cost to Reprise when active.
+- **Blind Spot:** not yet built. Expected to be low cost (monthly cadence, focused context).
+
+Combined additional cost expected to stay under $0.30/month, keeping the total well within the $2/month budget.
 
 ---
 
