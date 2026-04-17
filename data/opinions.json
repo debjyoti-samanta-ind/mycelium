@@ -1,0 +1,45 @@
+{
+  "generated_at": "2026-04-13",
+  "opinions": [
+    {
+      "theme": "Does AI integration displace workers or restructure work around new skill hierarchies?",
+      "article_slugs": [
+        "2026-business-leaders-outlook-expectations-trends",
+        "ai-pm-learning-roadmap"
+      ],
+      "position": "Your reading is converging on a view that AI displacement is real but unevenly distributed and skill-contingent — not a blunt headcount reduction. Business leaders are cautious but not panicked (27% expect AI headcount impact, 48% still plan to hire), while the AI PM roadmap reveals that those who master prompt engineering, evaluation design, and context architecture will sit above those who don't. The emerging opinion is that AI creates a new competence gradient rather than simply eliminating jobs.",
+      "tension": "If AI PM skills are learnable and increasingly commoditized through no-code tools and roadmaps like this one, the skill hierarchy may compress faster than expected — undermining the premise that mastering these skills confers durable advantage.",
+      "updated_at": "2026-04-13"
+    },
+    {
+      "theme": "Can micro-level resilience persist when macro-level structural conditions are genuinely deteriorating?",
+      "article_slugs": [
+        "2026-business-leaders-outlook-expectations-trends",
+        "geopolitics-geometry-global-trade-2026-update"
+      ],
+      "position": "Your reading is building toward a skeptical position: the confidence gap between company-level optimism and macro pessimism is not a sign of resilience but of a lag — businesses haven't yet felt the full downstream effects of trade reorientation, tariff cost pass-throughs, and geopolitical fragmentation. The trade article shows that regional actors like the EU are already getting squeezed even as headline trade numbers look healthy, suggesting the macro deterioration will eventually puncture micro confidence.",
+      "tension": "The data also shows genuine adaptation — US importers replaced two-thirds of the China gap, ASEAN is thriving, and midsize businesses are still expanding headcount — which means some of the micro-optimism may be warranted rather than delusional, complicating the lag narrative.",
+      "updated_at": "2026-04-13"
+    },
+    {
+      "theme": "Are tariffs a disruptive shock or a forcing function that accelerates structural trade realignment?",
+      "article_slugs": [
+        "geopolitics-geometry-global-trade-2026-update",
+        "2026-business-leaders-outlook-expectations-trends"
+      ],
+      "position": "Your reading leans toward viewing tariffs as a forcing function rather than a pure negative shock — the global trade data shows that trade grew faster than output despite tariffs, new supplier relationships formed rapidly, and AI-related trade boomed in parallel. But at the firm level, 61% of business leaders report negative cost impacts, which means the macro-level adaptation is being subsidized by firm-level pain that doesn't show up cleanly in aggregate growth figures.",
+      "tension": "The realignment benefiting ASEAN and emerging markets may be a one-time arbitrage rather than a durable structural shift — if geopolitical blocs harden further, even these new trade routes face the same fragmentation risk that disrupted US-China flows.",
+      "updated_at": "2026-04-13"
+    },
+    {
+      "theme": "Is AI's economic footprint primarily a trade and infrastructure story rather than a productivity story?",
+      "article_slugs": [
+        "geopolitics-geometry-global-trade-2026-update",
+        "ai-pm-learning-roadmap"
+      ],
+      "position": "Your reading is pointing toward an underappreciated insight: AI's near-term economic impact is showing up more visibly in physical trade flows — semiconductors, data center equipment accounting for a third of global trade growth — than in measurable firm-level productivity gains. Meanwhile, the AI PM roadmap reveals how much friction still exists in building AI products that actually work (fallback strategies, latency, evaluation pipelines), suggesting the productivity payoff remains immature and unevenly realized.",
+      "tension": "If AI infrastructure investment is driving trade growth now, there is an implicit bet that productivity gains will follow at scale — but the product-building complexity documented in the AI PM roadmap suggests the translation from infrastructure to output is neither automatic nor fast.",
+      "updated_at": "2026-04-13"
+    }
+  ]
+}

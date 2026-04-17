@@ -1,0 +1,462 @@
+{
+  "nodes": [
+    {
+      "id": "2026-business-leaders-outlook-expectations-trends",
+      "type": "article"
+    },
+    {
+      "id": "geopolitics-geometry-global-trade-2026-update",
+      "type": "article"
+    },
+    {
+      "id": "attention-equation-consumer-attention-battles",
+      "type": "article"
+    },
+    {
+      "id": "twenty-years-lasting-lessons-enron",
+      "type": "article"
+    },
+    {
+      "id": "building-ethically-strong-organization",
+      "type": "article"
+    },
+    {
+      "id": "whats-your-edge-rethinking-expertise-ai",
+      "type": "article"
+    },
+    {
+      "id": "physician-ceo-leadership-pipeline",
+      "type": "article"
+    },
+    {
+      "id": "fashion-reduce-tier-2-emissions-decarbonization",
+      "type": "article"
+    },
+    {
+      "id": "investing-living-better-quality-life-business",
+      "type": "article"
+    },
+    {
+      "id": "4-things-resilient-teams-do",
+      "type": "article"
+    },
+    {
+      "id": "what-you-dont-know-about-making-decisions",
+      "type": "article"
+    },
+    {
+      "id": "science-of-consciousness",
+      "type": "article"
+    },
+    {
+      "id": "what-will-ai-mean-for-humanity",
+      "type": "article"
+    }
+  ],
+  "edges": [
+    {
+      "source": "attention-equation-consumer-attention-battles",
+      "target": "geopolitics-geometry-global-trade-2026-update",
+      "type": "adjacent",
+      "claim_a": "There are 25,000 times more hours of content produced annually on YouTube than on traditional television networks and streaming services combined",
+      "claim_b": "Chinese exporters cut prices by an average of 8 percent to find buyers in new markets",
+      "explanation": "In both cases, a structural abundance of supply (content volume; export goods) forces unit value compression as producers compete for scarce high-quality demand (focused attention; willing buyers), demonstrating that supply-side expansion without corresponding demand scarcity collapses per-unit value across media economics and trade economics respectively.",
+      "date_added": "2026-04-15"
+    },
+    {
+      "source": "2026-business-leaders-outlook-expectations-trends",
+      "target": "whats-your-edge-rethinking-expertise-ai",
+      "type": "adjacent",
+      "claim_a": "27% of leaders anticipate AI-related headcount impact in 2026",
+      "claim_b": "For every percentage point increase in AI adoption, demand for management roles emphasizing judgment increases by 2.5% to 7.5%",
+      "explanation": "Both claims instantiate the same formal relationship across different empirical contexts: AI adoption displaces undifferentiated labor while simultaneously increasing proportional demand for roles requiring non-automatable judgment, generating the prediction that net headcount effects mask compositional shifts toward higher-order roles that neither article alone makes explicit.",
+      "date_added": "2026-04-15"
+    },
+    {
+      "source": "2026-business-leaders-outlook-expectations-trends",
+      "target": "geopolitics-geometry-global-trade-2026-update",
+      "type": "reinforce",
+      "claim_a": "61% of respondents report negative tariff impacts on their costs",
+      "claim_b": "Chinese exporters cut prices by an average of 8 percent to find buyers in new markets",
+      "explanation": "Both claims assert the same causal mechanism — tariffs impose cost pressure that forces economic actors to absorb or redistribute that pressure — operating in different empirical contexts: US business leaders absorbing higher input costs domestically, and Chinese exporters compressing margins to remain competitive in displaced export markets.",
+      "date_added": "2026-04-15"
+    },
+    {
+      "source": "physician-ceo-leadership-pipeline",
+      "target": "whats-your-edge-rethinking-expertise-ai",
+      "type": "adjacent",
+      "claim_a": "Physicians typically enter the workforce in their thirties after intensive training but with limited exposure to business practices, whereas their nonclinical peers have spent years working with budgets and building strategic experience",
+      "claim_b": "For every percentage point increase in AI adoption, demand for management roles emphasizing judgment increases by 2.5% to 7.5%",
+      "explanation": "Both claims instantiate the same formal structure: accumulated experiential practice in a domain generates compounding positional advantage that credentialed knowledge alone cannot substitute, such that the gap between practitioners with lived exposure and those without widens as the value of judgment-based roles increases — a prediction neither article makes alone about how experience-as-practice diverges from knowledge-as-content under conditions of role specialization.",
+      "date_added": "2026-04-16"
+    },
+    {
+      "source": "investing-living-better-quality-life-business",
+      "target": "attention-equation-consumer-attention-battles",
+      "type": "adjacent",
+      "claim_a": "Approximately 60% of buyers are willing to pay a premium for products promoting healthy living",
+      "claim_b": "Attention value ranges from $33 per hour for live sports to $0.05 per hour for podcasts across 20 media formats",
+      "explanation": "In both cases, consumer willingness to pay a premium concentrates in high-intent, high-focus engagement contexts rather than distributing proportionally across volume of consumption or product availability — scarcity of genuine intent, not abundance of supply, determines unit value — a formal relationship that generates the prediction, absent from either article, that QoL premium pricing will concentrate in high-intent purchase occasions rather than scale linearly with the breadth of QoL product offerings.",
+      "date_added": "2026-04-16"
+    },
+    {
+      "source": "2026-business-leaders-outlook-expectations-trends",
+      "target": "4-things-resilient-teams-do",
+      "type": "evolve",
+      "claim_a": "Too much confidence causes complacency and blindness to approaching adversity; too little prevents necessary risk-taking",
+      "claim_b": "Innovation Economy respondents report 82% company optimism but 33% expect recession or believe we are already in one",
+      "explanation": "Article B establishes that confidence operates on an inverted-U curve where excess produces adversity-blindness, and Article B's limiting condition — that calibrated confidence requires accurate threat perception — is empirically instantiated by Article A's Innovation Economy data, where peak company-level optimism (82%) coexists with the highest recession expectation rate (33%), demonstrating that the overconfidence-blindness mechanism breaks down when actors simultaneously hold high performance confidence and accurate macro-threat models, adding a scope boundary: overconfidence causes blindness only when threat perception is also suppressed.",
+      "date_added": "2026-04-16"
+    },
+    {
+      "source": "what-you-dont-know-about-making-decisions",
+      "target": "whats-your-edge-rethinking-expertise-ai",
+      "type": "reinforce",
+      "claim_a": "Advocacy approaches to group decision-making cause participants to present information selectively and withhold conflicting data to win debates",
+      "claim_b": "Using generative AI reduces human creative thinking and produces more homogeneous ideas",
+      "explanation": "Both claims assert the same causal mechanism: when a process optimizes for convergence toward a winning position (advocacy consensus; AI-generated answers), it suppresses the generation and surfacing of divergent information, degrading the epistemic quality of group output.",
+      "date_added": "2026-04-16"
+    },
+    {
+      "source": "what-you-dont-know-about-making-decisions",
+      "target": "4-things-resilient-teams-do",
+      "type": "evolve",
+      "claim_a": "Inquiry requires leaders to balance divergence during early discussions with unity during implementation",
+      "claim_b": "Too much confidence causes complacency and blindness to approaching adversity; too little prevents necessary risk-taking",
+      "explanation": "Claim B adds a specific limiting condition to the divergence-unity balance mechanism in Claim A: collective confidence level functions as a variable that must itself be calibrated within an optimal range, meaning the divergence-to-unity transition Claim A prescribes is bounded by a confidence threshold that determines whether that transition produces adaptive action or complacency.",
+      "date_added": "2026-04-16"
+    },
+    {
+      "source": "what-you-dont-know-about-making-decisions",
+      "target": "what-will-ai-mean-for-humanity",
+      "type": "adjacent",
+      "claim_a": "Advocacy approaches to group decision-making cause participants to present information selectively and withhold conflicting data to win debates",
+      "claim_b": "83% of ChatGPT users could not quote their own essays one minute after submission, compared to 11% in control groups",
+      "explanation": "In both cases, optimizing for a performance output (winning the debate; producing the essay) decouples the agent from genuine ownership of the cognitive content generated, via a mechanism where the goal of persuasion or production displaces the internal encoding that would otherwise occur — a formal identity between strategic self-presentation and AI-mediated offloading as rival routes to the same epistemic dispossession, generating a prediction neither article makes: that any process structurally rewarding output over process will produce agents who cannot access or defend the knowledge nominally attributed to them.",
+      "date_added": "2026-04-16"
+    },
+    {
+      "source": "what-will-ai-mean-for-humanity",
+      "target": "whats-your-edge-rethinking-expertise-ai",
+      "type": "reinforce",
+      "claim_a": "ChatGPT users showed significantly less brain activity during essay writing than those using internet search or their own intelligence alone",
+      "claim_b": "Using generative AI reduces human creative thinking and produces more homogeneous ideas",
+      "explanation": "Both claims assert the identical causal mechanism — generative AI offloading cognitive work suppresses the neural/creative processes humans would otherwise exercise — observed in different empirical contexts (brain activity measurement vs. creative output assessment).",
+      "date_added": "2026-04-16"
+    }
+  ],
+  "evaluated_pairs": [
+    [
+      "attention-equation-consumer-attention-battles",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "whats-your-edge-rethinking-expertise-ai",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "whats-your-edge-rethinking-expertise-ai",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "whats-your-edge-rethinking-expertise-ai",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "twenty-years-lasting-lessons-enron",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "twenty-years-lasting-lessons-enron",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "geopolitics-geometry-global-trade-2026-update",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "attention-equation-consumer-attention-battles"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "fashion-reduce-tier-2-emissions-decarbonization"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "fashion-reduce-tier-2-emissions-decarbonization"
+    ],
+    [
+      "fashion-reduce-tier-2-emissions-decarbonization",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "fashion-reduce-tier-2-emissions-decarbonization",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "fashion-reduce-tier-2-emissions-decarbonization",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "fashion-reduce-tier-2-emissions-decarbonization",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "fashion-reduce-tier-2-emissions-decarbonization",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "physician-ceo-leadership-pipeline"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "attention-equation-consumer-attention-battles"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "fashion-reduce-tier-2-emissions-decarbonization"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "fashion-reduce-tier-2-emissions-decarbonization",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "whats-your-edge-rethinking-expertise-ai",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "4-things-resilient-teams-do",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "4-things-resilient-teams-do",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "4-things-resilient-teams-do",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "what-you-dont-know-about-making-decisions"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "what-you-dont-know-about-making-decisions"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "what-you-dont-know-about-making-decisions"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
+      "fashion-reduce-tier-2-emissions-decarbonization"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "what-will-ai-mean-for-humanity"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "science-of-consciousness"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "what-will-ai-mean-for-humanity"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "science-of-consciousness"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "what-will-ai-mean-for-humanity"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "science-of-consciousness"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
+      "what-will-ai-mean-for-humanity"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
+      "science-of-consciousness"
+    ],
+    [
+      "fashion-reduce-tier-2-emissions-decarbonization",
+      "what-will-ai-mean-for-humanity"
+    ],
+    [
+      "fashion-reduce-tier-2-emissions-decarbonization",
+      "science-of-consciousness"
+    ],
+    [
+      "what-will-ai-mean-for-humanity",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "what-will-ai-mean-for-humanity",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "what-will-ai-mean-for-humanity",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "what-will-ai-mean-for-humanity",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "what-will-ai-mean-for-humanity",
+      "science-of-consciousness"
+    ],
+    [
+      "what-will-ai-mean-for-humanity",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "what-will-ai-mean-for-humanity",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "science-of-consciousness"
+    ],
+    [
+      "whats-your-edge-rethinking-expertise-ai",
+      "science-of-consciousness"
+    ],
+    [
+      "4-things-resilient-teams-do",
+      "science-of-consciousness"
+    ],
+    [
+      "twenty-years-lasting-lessons-enron",
+      "science-of-consciousness"
+    ],
+    [
+      "science-of-consciousness",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "science-of-consciousness",
+      "building-ethically-strong-organization"
+    ]
+  ]
+}

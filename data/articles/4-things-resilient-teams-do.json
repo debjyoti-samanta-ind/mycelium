@@ -1,0 +1,40 @@
+{
+  "slug": "4-things-resilient-teams-do",
+  "title": "The 4 Things Resilient Teams Do",
+  "source": "Harvard Business Review",
+  "url": "https://hbr.org/2019/07/the-4-things-resilient-teams-do",
+  "date_added": "2026-04-16",
+  "published_date": "2019-07-19",
+  "content_type": "essay",
+  "read_depth": "full",
+  "summary": "Resilient teams, distinct from resilient individuals, succeed through four shared attributes: collective confidence in task completion, shared mental models of roles and coordination, ability to improvise by reconfiguring existing knowledge, and psychological safety to voice unconventional ideas. While individual resilience is built independently, team resilience must be deliberately cultivated by leadership through activities before, during, and after adversity. The authors draw on surveys of nearly 2,000 NCAA coaches and work with business leaders to demonstrate that sports strategies for building team resilience transfer directly to organizational contexts.",
+  "central_argument": "Team leaders can systematically build resilient teams by developing collective confidence, shared mental models, improvisational capacity, and psychological safety before adversity strikes.",
+  "key_claims": [
+    "Resilient teams have four attributes: collective task confidence, shared mental models of teamwork, improvisational ability, and psychological safety",
+    "Too much confidence causes complacency and blindness to approaching adversity; too little prevents necessary risk-taking",
+    "Shared mental models must be both accurate and agreed-upon; having only one or the other creates delayed or incorrect responses",
+    "Team psychological safety enables members to voice unconventional ideas without fear of ostracization or ridicule",
+    "Improvisation requires intimate familiarity with each team member's knowledge, skills, and abilities",
+    "Leaders should build these attributes through three key moments: before adversity, during an adverse event, and after adversity subsides"
+  ],
+  "key_tensions": [
+    "The article argues against the assumption that individual resilience automatically translates to team resilience",
+    "It complicates the notion that high confidence is uniformly beneficial, showing the dangers of overconfidence",
+    "It pushes back against teams operating without explicit shared mental models, which creates uncoordinated responses"
+  ],
+  "domain": "organizational behavior",
+  "stance": "optimistic",
+  "key_entities": [
+    "Team psychological safety",
+    "NCAA coaches survey (n=2000)",
+    "Shared mental models framework",
+    "Bill Belichick (2017 Patriots example)",
+    "Sully Sullenberger (Miracle on Hudson)",
+    "Apollo 13 mission operations team"
+  ],
+  "topic_tags": [
+    "business",
+    "productivity",
+    "leadership"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "topic_colours": {
+    "ai": "#7F77DD",
+    "technology": "#7F77DD",
+    "productivity": "#1D9E75",
+    "business": "#BA7517",
+    "society": "#D85A30",
+    "science": "#888780",
+    "health": "#4a7c59",
+    "politics": "#c0392b",
+    "economics": "#e17055",
+    "culture": "#F4C0D1",
+    "default": "#B4B2A9"
+  },
+  "edge_colours": {
+    "reinforce": "#4a7c59",
+    "contradict": "#c0392b",
+    "evolve": "#6c5ce7",
+    "adjacent": "#e17055"
+  },
+  "app_name": "Mycelium",
+  "background_colour": "#fafaf8"
+}

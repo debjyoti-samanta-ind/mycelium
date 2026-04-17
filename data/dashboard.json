@@ -1,0 +1,69 @@
+{
+  "computed_at": "2026-04-16",
+  "reading": {
+    "total_articles": 13,
+    "this_month": 13,
+    "last_month": 0,
+    "month_delta": 13,
+    "active_since": "2026-04",
+    "months_active": 1,
+    "domain_distribution": [
+      {
+        "domain": "organizational behavior",
+        "count": 7
+      },
+      {
+        "domain": "economics",
+        "count": 2
+      },
+      {
+        "domain": "media economics",
+        "count": 1
+      },
+      {
+        "domain": "cognitive science",
+        "count": 1
+      },
+      {
+        "domain": "corporate governance",
+        "count": 1
+      },
+      {
+        "domain": "philosophy of technology",
+        "count": 1
+      }
+    ],
+    "stance_distribution": {
+      "optimistic": 7,
+      "ambivalent": 3,
+      "neutral": 2,
+      "pessimistic": 1
+    },
+    "depth_vs_breadth": {
+      "mode": "broad",
+      "top_domain": "organizational behavior",
+      "top_domain_count": 7,
+      "domains_this_month": 6,
+      "last_broad_month": "2026-04"
+    },
+    "neglected_topic": null
+  },
+  "graph": {
+    "total_nodes": 13,
+    "total_edges": 10,
+    "density": 0.128,
+    "island_count": 4,
+    "island_rate": 0.308,
+    "most_connected_node": {
+      "slug": "whats-your-edge-rethinking-expertise-ai",
+      "edge_count": 4
+    },
+    "edge_type_distribution": {
+      "reinforce": 3,
+      "contradict": 0,
+      "evolve": 2,
+      "adjacent": 5
+    },
+    "contradiction_density": 0.0
+  }
+}

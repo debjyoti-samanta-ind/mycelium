@@ -1,0 +1,40 @@
+{
+  "slug": "fashion-reduce-tier-2-emissions-decarbonization",
+  "title": "Sustainable style: How fashion can reduce Tier 2 emissions",
+  "source": "McKinsey",
+  "url": "https://www.mckinsey.com/industries/retail/our-insights/sustainable-style-how-fashion-can-reduce-tier-2-emissions",
+  "date_added": "2026-04-16",
+  "published_date": "2025-03",
+  "content_type": "essay",
+  "read_depth": "full",
+  "summary": "Tier 2 production (fabric manufacturing and treatment) accounts for 45-70% of fashion brands' Scope 3 emissions and represents the industry's biggest decarbonization opportunity. Two complementary routes exist: suppliers can implement technical decarbonization levers like renewable energy to achieve cost savings up to $250 per metric ton CO2e, while brands can incentivize lower-emission suppliers to cut emissions 20-50% without changing sourcing countries. Analysis of over 9,000 suppliers shows that up to 50% of Tier 2 emission reductions can be achieved near cost-neutrally, making this strategy more cost-efficient than relying solely on low-impact materials.",
+  "central_argument": "Fashion brands can achieve significant cost-efficient decarbonization by working directly with fragmented Tier 2 suppliers through technical improvements and emission-intensity incentives rather than continuing to focus narrowly on low-impact material selection.",
+  "key_claims": [
+    "Tier 2 production accounts for 45-70% of fashion brands' Scope 3 emissions",
+    "Up to 50% of Tier 2 emission abatement can be achieved in a near-cost-neutral way",
+    "Technical decarbonization levers can deliver cost savings of up to $250 per metric ton of CO2e",
+    "Brands can cut emissions by 20-50% by selecting suppliers with better emission profiles without changing manufacturing country of origin",
+    "Full decarbonization for an average-size Tier 2 cotton supplier costs approximately $30 per metric ton CO2e (1% cost increase)",
+    "Low-impact material selection is an insufficient and expensive decarbonization strategy compared to Tier 2 supplier engagement",
+    "Fashion brands typically lack direct relationships with Tier 2 suppliers due to fragmented supplier landscape"
+  ],
+  "key_tensions": [
+    "Current fashion industry focus on low-impact materials is insufficient and economically inefficient versus the demonstrated cost-effectiveness of Tier 2 supplier decarbonization",
+    "The complexity and fragmentation of Tier 2 supplier networks versus the necessity of direct brand engagement for emission reduction",
+    "Theoretical achievability of supplier decarbonization versus real-world implementation challenges that inflate costs 30-40% above projections"
+  ],
+  "domain": "organizational behavior",
+  "stance": "optimistic",
+  "key_entities": [
+    "McKinsey Retail and Sustainability Practices",
+    "Made2Flow",
+    "Global Fashion Agenda (GFA)",
+    "Renewable Energy Initiative",
+    "marginal abatement cost curve (MACC)"
+  ],
+  "topic_tags": [
+    "business",
+    "sustainability",
+    "economics"
+  ]
+}

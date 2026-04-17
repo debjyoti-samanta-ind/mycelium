@@ -1,0 +1,35 @@
+{
+  "slug": "physician-ceo-leadership-pipeline",
+  "title": "The Next Specialty: The Physician CEO",
+  "source": "McKinsey",
+  "url": "https://www.mckinsey.com/industries/healthcare/our-insights/the-next-specialty-the-physician-ceo",
+  "date_added": "2026-04-16",
+  "published_date": "2025-06",
+  "content_type": "essay",
+  "read_depth": "full",
+  "summary": "Nearly 60 percent of surveyed US physician leaders aspire to become CEOs, yet only 15 percent of current healthcare CEOs have clinical backgrounds, revealing a significant untapped leadership pipeline. Physicians face two critical barriers to executive advancement: genuine gaps in business and financial acumen developed during clinical training, and negative external perceptions about their leadership readiness despite their demonstrated operational excellence. Closing this gap requires intentional business leadership training that mirrors the rigor of medical education, enabling physicians to translate their clinical expertise into enterprise-wide impact.",
+  "central_argument": "Physician leaders represent an underutilized CEO talent pool whose clinical expertise and patient-centered values can address healthcare's complexity, but realizing this potential requires closing skills gaps in financial and strategic knowledge and addressing external perception barriers through structured leadership development.",
+  "key_claims": [
+    "Nearly 60 percent of surveyed US physician leaders expressed interest in becoming a CEO, compared to roughly 15 percent of current US healthcare CEOs who come from clinical backgrounds",
+    "60 percent of physician leaders cite skills and experience gaps as a top challenge to transitioning to leadership positions, while 52 percent cite negative external perceptions about their business capabilities",
+    "Physician leaders rate their confidence in financial acumen, market and regulatory shifts, and M&A at 3.3 to 3.9 out of 5, the lowest scores among 17 leadership dimensions assessed",
+    "Over half of surveyed physicians cite broadening their impact on patient care as a top motivator for expanding their leadership mandate",
+    "Physicians typically enter the workforce in their thirties after intensive training but with limited exposure to business practices, whereas their nonclinical peers have spent years working with budgets and building strategic experience"
+  ],
+  "key_tensions": [
+    "The article pushes back against the assumption that physicians lack leadership capability, noting they report great confidence in operational excellence, leading large teams, and strategic expertise—areas CEOs and recruiters identify as essential",
+    "The article complicates the narrative that business acumen is purely a knowledge gap, revealing instead a self-reinforcing cycle where perception barriers prevent physicians from gaining the experience needed to develop fluency"
+  ],
+  "domain": "organizational behavior",
+  "stance": "optimistic",
+  "key_entities": [
+    "McKinsey Physician Leadership Survey (2025)",
+    "McKinsey Healthcare and CEO Excellence Practices",
+    "Four seasons of CEO tenure framework"
+  ],
+  "topic_tags": [
+    "business",
+    "health",
+    "leadership"
+  ]
+}

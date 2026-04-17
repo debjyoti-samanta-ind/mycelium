@@ -1,0 +1,40 @@
+{
+  "slug": "whats-your-edge-rethinking-expertise-ai",
+  "title": "What's Your Edge? Rethinking Expertise in the Age of AI",
+  "source": "MIT Sloan Management Review",
+  "url": "https://sloanreview.mit.edu/article/whats-your-edge-rethinking-expertise-in-the-age-of-ai/",
+  "date_added": "2026-04-14",
+  "published_date": null,
+  "content_type": "essay",
+  "read_depth": "full",
+  "summary": "As AI democratizes access to knowledge and information, the traditional value proposition of expensive experts erodes, requiring organizations to reconceptualize what expertise means. Human value increasingly derives from meta-expertise—the ability to ask better questions, synthesize insights across domains, exercise judgment under uncertainty, and navigate ethical tradeoffs—rather than from information access alone. Organizations must redesign talent hierarchies and learning strategies to develop these irreplaceable cognitive and interpersonal capabilities before cognitive atrophy and intellectual homogenization undermine competitive advantage.",
+  "central_argument": "AI's democratization of knowledge shifts the source of competitive advantage from access to information to meta-expertise in asking questions, exercising judgment, and synthesizing across domains—capabilities that require fundamental restructuring of organizational hierarchies and talent development.",
+  "key_claims": [
+    "Knowledge commoditization shifts value from content to context",
+    "AI cannot bear the weight of consequences or accountability for decisions with real stakes",
+    "Using generative AI reduces human creative thinking and produces more homogeneous ideas",
+    "When millions of people receive similar AI-generated answers, intellectual convergence flattens diverse thinking that drives innovation",
+    "For every percentage point increase in AI adoption, demand for management roles emphasizing judgment increases by 2.5% to 7.5%",
+    "Meta-expertise requires three capabilities: creative synthesis across unrelated domains, contextual wisdom from lived experience, and ethical navigation of competing interests",
+    "Traditional hierarchies based on information access are becoming obsolete"
+  ],
+  "key_tensions": [
+    "The article argues against the assumption that junior analysts with AI can replace senior strategists because expertise's value lies in judgment and question-framing, not information retrieval",
+    "It complicates the narrative of AI as pure efficiency gain by highlighting cognitive atrophy risk and the loss of creative problem-solving when humans outsource thinking",
+    "It pushes back on static knowledge management models, arguing that AI reveals knowledge dynamically, not as fixed assets to retrieve"
+  ],
+  "domain": "organizational behaviour",
+  "stance": "ambivalent",
+  "key_entities": [
+    "University of Toronto research on generative AI and creative thinking",
+    "IESE Business School study on AI adoption and job postings (2010-2022)",
+    "McKinsey report on AI governance and workflow redesign",
+    "Accenture, Cognizant, EY case studies on role hierarchy redesign"
+  ],
+  "topic_tags": [
+    "ai",
+    "business",
+    "productivity",
+    "technology"
+  ]
+}

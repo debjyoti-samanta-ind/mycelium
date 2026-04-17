@@ -1,0 +1,36 @@
+{
+  "slug": "science-of-consciousness",
+  "title": "The science of consciousness",
+  "source": "MIT News",
+  "url": "https://news.mit.edu/2025/science-of-consciousness-1118",
+  "date_added": "2026-04-16",
+  "published_date": null,
+  "content_type": "news",
+  "read_depth": "full",
+  "summary": "MIT has launched the Consciousness Club, an interdisciplinary initiative co-led by philosopher Matthias Michel and neuroscientist Earl Miller, funded by the MIT Human Insight Collaborative to bridge philosophy and cognitive neuroscience. The project aims to advance consciousness research through monthly expert talks, improved measurement tools, and collaboration across Boston-area institutions. Understanding consciousness objectively has practical applications in anesthesia, mental health treatment, and public health outcomes.",
+  "central_argument": "Consciousness can and should be studied scientifically by treating it as a central rather than peripheral research focus, with direct implications for medical practice and public health.",
+  "key_claims": [
+    "The brain operates with two distinct visual systems—one conscious and one non-conscious—each responsible for different types of motor commands",
+    "Consciousness serves planning rather than reactive behavior",
+    "There is a measurable temporal lag between stimulus presentation and subjective conscious experience",
+    "Understanding consciousness mechanisms can improve pre- and post-surgical outcomes, particularly for elderly patients at risk of cognitive decline from anesthesia",
+    "Mental health disorders interact with anesthesia drugs in ways that severely impact patient care, making consciousness research clinically relevant"
+  ],
+  "key_tensions": [
+    "The article pushes back against treating consciousness as a sideline rather than a central focus area for cognitive science research",
+    "It argues against the notion that consciousness cannot be studied scientifically, counter to historical skepticism in the field"
+  ],
+  "domain": "cognitive science",
+  "stance": "optimistic",
+  "key_entities": [
+    "Matthias Michel",
+    "Earl Miller",
+    "Melvyn Goodale's two visual systems theory",
+    "Emery Brown",
+    "MIT Human Insight Collaborative"
+  ],
+  "topic_tags": [
+    "science",
+    "health"
+  ]
+}
