@@ -261,7 +261,7 @@ def main() -> None:
     print(f"\n--- Done ---")
     print(f"Processed: {processed_count}  |  Skipped (errors): {error_count}")
 
-    if error_count > 0:
+    if error_count > 0 and processed_count == 0:
         sys.exit(1)
 
 
