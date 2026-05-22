@@ -17,7 +17,7 @@ const DOMAIN_BUCKETS = [
   { name: 'Tech & AI',       color: '#6366f1', keywords: ['tech', 'software', 'ai', 'digital', 'data', 'machine learning', 'computer'] },
   { name: 'Science & Mind',  color: '#0d9488', keywords: ['science', 'biology', 'physics', 'neuro', 'cognitive', 'psychology', 'complexity', 'evolutionary'] },
   { name: 'Business & Econ', color: '#d97706', keywords: ['business', 'econom', 'financ', 'marketing', 'management', 'organizational', 'organisational', 'geopolit', 'trade'] },
-  { name: 'Humanities',      color: '#dc6b3f', keywords: ['philosoph', 'histor', 'sociol', 'political', 'media', 'culture', 'anthropol', 'ethics'] },
+  { name: 'Humanities',      color: '#db2777', keywords: ['philosoph', 'histor', 'sociol', 'political', 'media', 'culture', 'anthropol', 'ethics'] },
   { name: 'Other',           color: '#78716c', keywords: [] },
 ]
 

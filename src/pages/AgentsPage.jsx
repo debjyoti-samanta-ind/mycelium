@@ -48,7 +48,7 @@ function AgentCard({ name, children, neverFired, runId }) {
             <span className="relative inline-flex items-center group ml-0.5 cursor-default">
               <span className="w-4 h-4 rounded-full text-[9px] font-bold flex items-center justify-center leading-none select-none"
                 style={{ backgroundColor: hexToRgba(color, 0.12), color }}>?</span>
-              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-20 w-80 text-white text-xs rounded-xl px-4 py-3 leading-relaxed opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-normal"
+              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 w-80 text-white text-xs rounded-xl px-4 py-3 leading-relaxed opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-normal"
                 style={{ backgroundColor: '#1c1917' }}>
                 {tooltip}
                 <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent" style={{ borderTopColor: '#1c1917' }} />

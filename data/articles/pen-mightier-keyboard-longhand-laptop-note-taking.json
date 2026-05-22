@@ -1,0 +1,38 @@
+{
+  "slug": "pen-mightier-keyboard-longhand-laptop-note-taking",
+  "title": "The Pen Is Mightier Than the Keyboard: Advantages of Longhand Over Laptop Note Taking",
+  "source": "Psychological Science",
+  "url": "https://journals.sagepub.com/doi/10.1177/0956797614524581",
+  "date_added": "2026-04-25",
+  "published_date": "2014-06-01",
+  "content_type": "essay",
+  "read_depth": "full",
+  "summary": "This study compares laptop and longhand note-taking across three experiments, finding that students who take notes longhand perform better on conceptual questions than those using laptops. The research argues that laptops enable verbatim transcription of lectures, which results in shallower cognitive processing and poorer retention. The findings suggest that the mechanical speed advantage of typing undermines the encoding benefits that come from the generative, paraphrasing work required by slower handwriting.",
+  "central_argument": "Laptop note taking impairs learning because typing speed enables verbatim transcription, which produces shallower cognitive processing than the generative note taking naturally induced by handwriting.",
+  "key_claims": [
+    "Students using laptops performed worse on conceptual questions than students taking longhand notes",
+    "Laptop note takers tend to transcribe lectures verbatim rather than process and reframe information",
+    "Verbatim note taking indicates relatively shallow cognitive processing compared to generative note taking",
+    "Detriments from verbatim note taking are more prominent for conceptual than factual items",
+    "Previous studies testing laptop versus longhand note taking either explicitly instructed verbatim transcription or used stimuli that ensured all note taking would be verbatim, limiting real-world applicability"
+  ],
+  "key_tensions": [
+    "The contrast between students' self-reported belief that laptops are beneficial versus empirical research showing they impair performance",
+    "The tension between the external-storage benefits of having more complete notes (facilitated by laptops) and the encoding costs of shallower processing from verbatim transcription",
+    "Prior studies' findings of laptop advantages were only demonstrated under artificial conditions that don't reflect natural classroom note-taking behavior"
+  ],
+  "domain": "cognitive science",
+  "stance": "pessimistic",
+  "key_entities": [
+    "encoding hypothesis (DiVesta & Gray)",
+    "external-storage hypothesis (Kiewra)",
+    "verbatim versus generative note taking (Craik & Lockhart)",
+    "levels of processing theory"
+  ],
+  "topic_tags": [
+    "science",
+    "education",
+    "technology",
+    "cognition"
+  ]
+}

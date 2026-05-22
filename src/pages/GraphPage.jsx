@@ -23,7 +23,7 @@ const DOMAIN_BUCKETS = [
   { name: 'Tech & AI',       color: '#6366f1', keywords: ['tech', 'software', 'ai', 'digital', 'data', 'machine learning', 'computer'] },
   { name: 'Science & Mind',  color: '#0d9488', keywords: ['science', 'biology', 'physics', 'neuro', 'cognitive', 'psychology', 'complexity', 'evolutionary'] },
   { name: 'Business & Econ', color: '#d97706', keywords: ['business', 'econom', 'financ', 'marketing', 'management', 'organizational', 'organisational', 'geopolit', 'trade'] },
-  { name: 'Humanities',      color: '#dc6b3f', keywords: ['philosoph', 'histor', 'sociol', 'political', 'media', 'culture', 'anthropol', 'ethics'] },
+  { name: 'Humanities',      color: '#db2777', keywords: ['philosoph', 'histor', 'sociol', 'political', 'media', 'culture', 'anthropol', 'ethics'] },
 ]
 const DOMAIN_DEFAULT_COLOR = '#78716c'
 
@@ -40,6 +40,14 @@ function getDomainColor(node) {
     if (bucket.keywords.some(k => domain.includes(k))) return bucket.color
   }
   return DOMAIN_DEFAULT_COLOR
+}
+
+function getNodeBucket(node) {
+  const domain = (articleMap[node.id]?.domain || '').toLowerCase()
+  for (const bucket of DOMAIN_BUCKETS) {
+    if (bucket.keywords.some(k => domain.includes(k))) return bucket.name
+  }
+  return 'Other'
 }
 
 function matchesSearch(node, query) {
@@ -85,6 +93,7 @@ export default function GraphPage({ graphData }) {
   const [appliedFrom, setAppliedFrom]     = useState('')
   const [appliedTo,   setAppliedTo]       = useState('')
   const containerRef = useRef(null)
+  const graphRef     = useRef(null)
   const [dimensions, setDimensions]       = useState({ width: 800, height: 600 })
 
   // Measure container and update on resize
@@ -199,6 +208,47 @@ export default function GraphPage({ graphData }) {
     })
   }
 
+  const handleFitToScreen = useCallback(() => {
+    const fg = graphRef.current
+    if (!fg) return
+    const hasConnected = fgData.nodes.some(n => !islandNodes.has(n.id))
+    fg.zoomToFit(400, 40, hasConnected ? (n => !islandNodes.has(n.id)) : undefined)
+  }, [fgData, islandNodes])
+
+  // Configure d3 forces whenever graph data changes
+  useEffect(() => {
+    const fg = graphRef.current
+    if (!fg || !fgData.nodes.length) return
+
+    fg.d3Force('charge')?.strength(-350)
+    fg.d3Force('link')?.distance(120)
+
+    // Pull same-domain nodes toward their group's mean position
+    fg.d3Force('cluster', alpha => {
+      const centroids = {}
+      const counts    = {}
+      fgData.nodes.forEach(node => {
+        const b = getNodeBucket(node)
+        if (!centroids[b]) { centroids[b] = { x: 0, y: 0 }; counts[b] = 0 }
+        centroids[b].x += node.x || 0
+        centroids[b].y += node.y || 0
+        counts[b]++
+      })
+      Object.keys(centroids).forEach(b => {
+        centroids[b].x /= counts[b]
+        centroids[b].y /= counts[b]
+      })
+      fgData.nodes.forEach(node => {
+        const c = centroids[getNodeBucket(node)]
+        if (!c) return
+        node.vx -= (node.x - c.x) * alpha * 0.15
+        node.vy -= (node.y - c.y) * alpha * 0.15
+      })
+    })
+
+    fg.d3ReheatSimulation()
+  }, [fgData])
+
   const hasNodes = (graphData.nodes || []).length > 0
 
   return (
@@ -250,8 +300,21 @@ export default function GraphPage({ graphData }) {
             ))}
           </div>
 
-          {/* Date filter — pushed to the right */}
-          <div className="flex items-center gap-1.5 ml-auto">
+          {/* Fit to screen — pushed to the right */}
+          <button
+            onClick={handleFitToScreen}
+            title="Fit all nodes to screen"
+            className="ml-auto flex items-center gap-1.5 text-[11px] px-3 py-1.5 rounded-lg bg-stone-800 text-white hover:bg-stone-700 active:bg-stone-900 transition-colors font-medium shadow-sm"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/>
+              <path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/>
+            </svg>
+            Fit to screen
+          </button>
+
+          {/* Date filter */}
+          <div className="flex items-center gap-1.5">
             <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-400 mr-0.5">Date</span>
             {PRESETS.map(p => (
               <button
@@ -325,6 +388,7 @@ export default function GraphPage({ graphData }) {
           </div>
         ) : (
           <ForceGraph2D
+            ref={graphRef}
             graphData={fgData}
             width={dimensions.width}
             height={dimensions.height}

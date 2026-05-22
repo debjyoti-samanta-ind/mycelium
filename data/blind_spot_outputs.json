@@ -1,1 +1,39 @@
-[]
+[
+  {
+    "run_id": "2026-05",
+    "triggered_by": "monthly_cron",
+    "fired": true,
+    "graph_snapshot": {
+      "total_articles": 16,
+      "represented_domains": [
+        "organizational behaviour",
+        "economics",
+        "corporate governance",
+        "philosophy of technology",
+        "media economics",
+        "organizational behavior",
+        "cognitive science"
+      ]
+    },
+    "model": "claude-sonnet-4-6",
+    "input_tokens": 18932,
+    "output_tokens": 1383,
+    "tool_calls": 11,
+    "blind_spot": {
+      "domain": "Cognitive science of learning and skill acquisition \u2014 specifically how deliberate struggle, desirable difficulty, and generative processing build durable expertise and judgment",
+      "why_adjacent": "Debjyoti's reading is saturated with questions about human cognition under technological pressure: AI eroding deep thinking, handwriting outperforming typing, older brains holding pattern-recognition advantages, and the organizational value of judgment that can't be outsourced. These articles repeatedly invoke cognitive mechanisms as the *crux* of their arguments but treat them as axioms rather than objects of inquiry. The science of how expertise and judgment are actually built \u2014 through effortful retrieval, interleaving, spaced practice, and productive failure \u2014 is the missing foundation that would let him evaluate, not just accept, those claims.",
+      "open_questions_it_addresses": [
+        "In 'What's Your Edge? Rethinking Expertise in the Age of AI', the article asserts that 'cognitive atrophy' follows AI over-reliance and that meta-expertise requires 'lived experience' \u2014 but on what cognitive mechanisms does this rely? How much struggle is required to build genuine judgment, and what kinds of practice actually produce it?",
+        "In 'What will AI mean for humanity?', the Harvard panel argues that 'brain development requires struggle' and that tasks too easy prevent cognitive bloom \u2014 but what does the learning science actually say about the dose and type of difficulty that promotes growth versus the kind that just creates frustration?",
+        "In 'Peak Brain Power Comes After 50', crystallized intelligence and pattern recognition are invoked as the aging brain's advantage \u2014 but the article treats these as fixed accumulations rather than examining how they are actively constructed. What training conditions actually produce the rapid pattern recognition seen in chess masters, and can it be deliberately cultivated at any age?"
+      ],
+      "grounded_in": [
+        "whats-your-edge-rethinking-expertise-ai",
+        "what-will-ai-mean-for-humanity",
+        "peak-brain-power-comes-after-50",
+        "pen-mightier-keyboard-longhand-laptop-note-taking"
+      ],
+      "explanation": "Four of Debjyoti's most-connected articles converge on the same unanswered question: how is human cognitive competence actually built and preserved? 'What's Your Edge' warns against cognitive atrophy from AI but offers no model of how expertise forms. 'What will AI mean for humanity' cites neuroscience showing reduced brain engagement from ChatGPT but doesn't explain what conditions would produce the opposite. 'Peak Brain Power' relies on crystallized intelligence and pattern recognition as if they accumulate passively with age. The pen-vs-keyboard study shows generative processing beats verbatim transcription, but stops short of the richer science behind why. The domain of learning science \u2014 specifically desirable difficulties, retrieval practice, interleaving, and the conditions that convert experience into genuine expertise \u2014 is entirely absent from his reading, yet it would directly evaluate the claims all four articles are built on. This isn't a peripheral topic; it is the empirical backbone that either validates or undermines the practical conclusions he is reading toward."
+    }
+  }
+]

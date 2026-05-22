@@ -1,0 +1,51 @@
+name: Monthly Digest
+
+on:
+  schedule:
+    - cron: '0 8 1 * *'  # 1st of every month at 8am UTC — covers previous calendar month
+  workflow_dispatch:
+    inputs:
+      target_month:
+        description: 'Month to generate digest for (YYYY-MM). Leave blank to use previous calendar month.'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mycelium-data
+  cancel-in-progress: false
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: pip install anthropic
+
+      - name: Run monthly digest
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          GMAIL_RECIPIENT: ${{ secrets.GMAIL_RECIPIENT }}
+          TARGET_MONTH: ${{ github.event.inputs.target_month }}
+        run: python .github/scripts/digest.py
+
+      - name: Commit digest file
+        run: |
+          git config user.name "Mycelium Bot"
+          git config user.email "mycelium@users.noreply.github.com"
+          git add data/digests/
+          git diff --staged --quiet && echo "No new digest to commit." || git commit -m "chore: add monthly digest [skip ci]"
+          git push

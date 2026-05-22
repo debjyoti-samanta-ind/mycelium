@@ -1,16 +1,20 @@
 {
-  "computed_at": "2026-04-16",
+  "computed_at": "2026-05-11",
   "reading": {
-    "total_articles": 13,
-    "this_month": 13,
-    "last_month": 0,
-    "month_delta": 13,
+    "total_articles": 19,
+    "this_month": 3,
+    "last_month": 16,
+    "month_delta": -13,
     "active_since": "2026-04",
-    "months_active": 1,
+    "months_active": 2,
     "domain_distribution": [
       {
         "domain": "organizational behavior",
-        "count": 7
+        "count": 10
+      },
+      {
+        "domain": "cognitive science",
+        "count": 3
       },
       {
         "domain": "economics",
@@ -21,48 +25,48 @@
         "count": 1
       },
       {
-        "domain": "cognitive science",
+        "domain": "philosophy of technology",
+        "count": 1
+      },
+      {
+        "domain": "philosophy",
         "count": 1
       },
       {
         "domain": "corporate governance",
         "count": 1
-      },
-      {
-        "domain": "philosophy of technology",
-        "count": 1
       }
     ],
     "stance_distribution": {
-      "optimistic": 7,
-      "ambivalent": 3,
-      "neutral": 2,
-      "pessimistic": 1
+      "optimistic": 11,
+      "ambivalent": 4,
+      "pessimistic": 2,
+      "neutral": 2
     },
     "depth_vs_breadth": {
       "mode": "broad",
-      "top_domain": "organizational behavior",
-      "top_domain_count": 7,
-      "domains_this_month": 6,
-      "last_broad_month": "2026-04"
+      "top_domain": "cognitive science",
+      "top_domain_count": 1,
+      "domains_this_month": 3,
+      "last_broad_month": "2026-05"
     },
     "neglected_topic": null
   },
   "graph": {
-    "total_nodes": 13,
-    "total_edges": 10,
-    "density": 0.128,
-    "island_count": 4,
-    "island_rate": 0.308,
+    "total_nodes": 19,
+    "total_edges": 22,
+    "density": 0.129,
+    "island_count": 5,
+    "island_rate": 0.263,
     "most_connected_node": {
       "slug": "whats-your-edge-rethinking-expertise-ai",
-      "edge_count": 4
+      "edge_count": 7
     },
     "edge_type_distribution": {
-      "reinforce": 3,
+      "reinforce": 11,
       "contradict": 0,
-      "evolve": 2,
-      "adjacent": 5
+      "evolve": 4,
+      "adjacent": 7
     },
     "contradiction_density": 0.0
   }

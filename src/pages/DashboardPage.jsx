@@ -63,7 +63,7 @@ function DeltaBadge({ delta }) {
 
 function StatCard({ label, value, sub, tooltip, icon }) {
   return (
-    <div className="card-3d p-4 relative overflow-hidden">
+    <div className="card-3d p-4 relative">
       <div className="flex items-center justify-between mb-2">
         <p className="text-[11px] font-bold text-stone-600 uppercase tracking-[0.12em]">{label}</p>
         {tooltip && <Tooltip text={tooltip} />}
@@ -264,7 +264,7 @@ export default function DashboardPage() {
 
         {/* Reading mode + Neglected topic */}
         <div className="grid grid-cols-2 gap-3">
-          <div className="card-3d p-4 relative overflow-hidden">
+          <div className="card-3d p-4 relative">
             <div className="flex items-center mb-2">
               <p className="text-[11px] font-bold text-stone-600 uppercase tracking-[0.12em]">Reading mode</p>
               <Tooltip text="Deep: more than 60% of this month's articles are in one domain. Broad: no single domain dominates." />
@@ -288,7 +288,7 @@ export default function DashboardPage() {
             )}
           </div>
 
-          <div className="card-3d p-4 relative overflow-hidden">
+          <div className="card-3d p-4 relative">
             <div className="flex items-center mb-2">
               <p className="text-[11px] font-bold text-stone-600 uppercase tracking-[0.12em]">Neglected topic</p>
               <Tooltip text="A domain you've read in before, but haven't touched in over 30 days. A nudge, not a judgement." />

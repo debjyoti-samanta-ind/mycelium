@@ -108,5 +108,71 @@
     "output_tokens": 1089,
     "tool_calls": 4,
     "skip_reason": "No article in Debjyoti's knowledge graph meets the 30-day recency threshold required to qualify as a reprise. The new article was added on 2026-04-16, meaning a qualifying article must have been added on or before 2026-03-17. Every other article in the graph was added between 2026-04-13 and 2026-04-16 \u2014 a gap of at most 3 days. While several articles (particularly 'Twenty Years Later: The Lasting Lessons of Enron' and 'Building an Ethically Strong Organization') have thematic resonance with the new article's argument about advocacy culture suppressing honest information-sharing, the minimum age requirement cannot be waived. No reprise is surfaced."
+  },
+  {
+    "run_id": "2026-04-23",
+    "triggered_by": "ingestion",
+    "trigger_article": "rethinking-saas-apocalypse",
+    "fired": false,
+    "model": "claude-sonnet-4-6",
+    "input_tokens": 9630,
+    "output_tokens": 1449,
+    "tool_calls": 6,
+    "skip_reason": "No article in the graph satisfies the 30-day recency rule. The new article was added on 2026-04-23, and every other article in the graph was added between 2026-04-13 and 2026-04-23 \u2014 a maximum gap of only 10 days. The rule requires the surfaced article to have been added at least 30 days before the new one. Even the strongest conceptual candidate (whats-your-edge-rethinking-expertise-ai, which argues that AI handles the visible knowledge layer while human value lives in invisible meta-expertise \u2014 a compelling mirror to the SaaS article's visible/invisible complexity thesis) was added only 9 days prior. Surfacing any article here would violate the rules, and a rule-breaking reprise is worse than none."
+  },
+  {
+    "run_id": "2026-04-25",
+    "triggered_by": "ingestion",
+    "trigger_article": "pen-mightier-keyboard-longhand-laptop-note-taking",
+    "fired": false,
+    "model": "claude-sonnet-4-6",
+    "input_tokens": 37503,
+    "output_tokens": 2900,
+    "tool_calls": 9,
+    "skip_reason": "No article in the graph satisfies the 30-day recency rule. The new article was added on 2026-04-25, requiring any surfaced article to have been added on or before 2026-03-26. Every other article in the graph was added between 2026-04-13 and 2026-04-23 \u2014 all within 12\u201312 days of the new article, well short of the 30-day minimum. Even the strongest non-obvious conceptual match identified (attention-equation-consumer-attention-battles, which shares a structural argument about quantity-vs-quality metrics across media economics and cognitive science) fails this rule. Firing with a weak candidate would be worse than no reprise."
+  },
+  {
+    "run_id": "2026-05-07",
+    "triggered_by": "ingestion",
+    "trigger_article": "how-to-become-dangerously-articulate",
+    "fired": false,
+    "model": "claude-sonnet-4-6",
+    "input_tokens": 14806,
+    "output_tokens": 1741,
+    "tool_calls": 7,
+    "skip_reason": "Python guard: surfaced article 'pen-mightier-keyboard-longhand-laptop-note-taking' is only 12 day(s) old (minimum 30 required)"
+  },
+  {
+    "run_id": "2026-05-08",
+    "triggered_by": "ingestion",
+    "trigger_article": "how-to-think-like-strategic-genius-5d-thinking",
+    "fired": false,
+    "model": "claude-sonnet-4-6",
+    "input_tokens": 8748,
+    "output_tokens": 982,
+    "tool_calls": 4,
+    "skip_reason": "No article in the knowledge graph meets the 30-day minimum age requirement. The new article was added on 2026-05-08, which means only articles added on or before 2026-04-08 would qualify. The oldest articles in the graph were added on 2026-04-13 (25 days prior), which falls short of the 30-day threshold. There are no eligible candidates to surface."
+  },
+  {
+    "run_id": "2026-05-09",
+    "triggered_by": "ingestion",
+    "trigger_article": "how-to-think-like-strategic-genius-5d-thinking",
+    "fired": false,
+    "model": "claude-sonnet-4-6",
+    "input_tokens": 16215,
+    "output_tokens": 2480,
+    "tool_calls": 6,
+    "skip_reason": "No article in the graph was added at least 30 days before the new article (2026-05-09). The oldest articles date to 2026-04-13, only 26 days prior, and every candidate falls short of the required 30-day minimum. Even though strong thematic reprises exist \u2014 particularly 'peak-brain-power-comes-after-50' (crystallized vs. fluid intelligence maps cleanly onto 5D's vertical vs. horizontal cognition distinction) and 'science-of-consciousness' (empirical substrate for cognitive levels) \u2014 none can be surfaced under the rules. A weak reprise is worse than silence."
+  },
+  {
+    "run_id": "2026-05-11",
+    "triggered_by": "ingestion",
+    "trigger_article": "5-ways-get-dangerously-ahead-twenties",
+    "fired": false,
+    "model": "claude-sonnet-4-6",
+    "input_tokens": 10983,
+    "output_tokens": 1881,
+    "tool_calls": 6,
+    "skip_reason": "Python guard: surfaced article 'peak-brain-power-comes-after-50' is only 18 day(s) old (minimum 30 required)"
   }
 ]

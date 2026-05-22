@@ -148,6 +148,16 @@ export default function ArticleCard({ article, onDelete, isDeleting, domainColor
               ))}
             </div>
           )}
+          {url && (
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-xs text-stone-400 hover:text-stone-600 transition-colors pt-1"
+            >
+              View source →
+            </a>
+          )}
         </div>
       )}
     </div>

@@ -51,6 +51,30 @@
     {
       "id": "what-will-ai-mean-for-humanity",
       "type": "article"
+    },
+    {
+      "id": "rethinking-saas-apocalypse",
+      "type": "article"
+    },
+    {
+      "id": "peak-brain-power-comes-after-50",
+      "type": "article"
+    },
+    {
+      "id": "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "type": "article"
+    },
+    {
+      "id": "how-to-become-dangerously-articulate",
+      "type": "article"
+    },
+    {
+      "id": "how-to-think-like-strategic-genius-5d-thinking",
+      "type": "article"
+    },
+    {
+      "id": "5-ways-get-dangerously-ahead-twenties",
+      "type": "article"
     }
   ],
   "edges": [
@@ -143,6 +167,132 @@
       "claim_b": "Using generative AI reduces human creative thinking and produces more homogeneous ideas",
       "explanation": "Both claims assert the identical causal mechanism — generative AI offloading cognitive work suppresses the neural/creative processes humans would otherwise exercise — observed in different empirical contexts (brain activity measurement vs. creative output assessment).",
       "date_added": "2026-04-16"
+    },
+    {
+      "source": "rethinking-saas-apocalypse",
+      "target": "attention-equation-consumer-attention-battles",
+      "type": "adjacent",
+      "claim_a": "The majority of software development cost and effort occurs after version one, not during initial build",
+      "claim_b": "Digital media generates a smaller share of revenue and profit compared with its share of consumption",
+      "explanation": "In both cases, the activity that dominates production volume (initial software builds; digital media consumption hours) captures a disproportionately small share of total economic value, while the less visible downstream activity (maintenance, integration, compliance; high-focus, high-intent attention) captures the majority — revealing that value concentration inverts production-volume concentration across both industries.",
+      "date_added": "2026-04-23"
+    },
+    {
+      "source": "physician-ceo-leadership-pipeline",
+      "target": "peak-brain-power-comes-after-50",
+      "type": "reinforce",
+      "claim_a": "Physicians typically enter the workforce in their thirties after intensive training but with limited exposure to business practices, whereas their nonclinical peers have spent years working with budgets and building strategic experience",
+      "claim_b": "By midlife, most professionals have encountered hundreds or thousands of variations of the same underlying business problems",
+      "explanation": "Both claims assert the same causal mechanism: years of domain-specific exposure accumulates into practical judgment and strategic competence, with the direct implication that later career entry into a domain (physicians) or later career peak (crystallized intelligence in midlife professionals) reflects the same accumulation-time-to-competence relationship operating in different empirical contexts.",
+      "date_added": "2026-04-23"
+    },
+    {
+      "source": "peak-brain-power-comes-after-50",
+      "target": "what-will-ai-mean-for-humanity",
+      "type": "reinforce",
+      "claim_a": "Chess masters identify strong moves through rapid pattern recognition built from years of experience, not conscious calculation",
+      "claim_b": "Brain development requires struggle; tasks that are too easy prevent cognitive bloom and learning",
+      "explanation": "Both claims assert the same causal mechanism — cognitive struggle and accumulated effortful engagement produce qualitatively superior neural outcomes than bypassing difficulty — instantiated in chess expertise development and AI-assisted essay writing respectively.",
+      "date_added": "2026-04-23"
+    },
+    {
+      "source": "peak-brain-power-comes-after-50",
+      "target": "whats-your-edge-rethinking-expertise-ai",
+      "type": "evolve",
+      "claim_a": "By midlife, most professionals have encountered hundreds or thousands of variations of the same underlying business problems",
+      "claim_b": "Meta-expertise requires three capabilities: creative synthesis across unrelated domains, contextual wisdom from lived experience, and ethical navigation of competing interests",
+      "explanation": "Claim B adds a limiting condition to Claim A's mechanism: accumulated experiential pattern recognition (Claim A) is necessary but insufficient for competitive advantage under AI commoditization — it must be structured into cross-domain synthesis and ethical navigation (Claim B) to retain non-substitutable value, narrowing the predictive scope of experiential depth as a standalone differentiator.",
+      "date_added": "2026-04-23"
+    },
+    {
+      "source": "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "target": "what-will-ai-mean-for-humanity",
+      "type": "reinforce",
+      "claim_a": "Verbatim note taking indicates relatively shallow cognitive processing compared to generative note taking",
+      "claim_b": "ChatGPT users showed significantly less brain activity during essay writing than those using internet search or their own intelligence alone",
+      "explanation": "Both claims assert the identical causal mechanism: offloading linguistic production to an external system (transcription tool / AI) reduces the cognitive processing depth of the user, with reduced processing empirically measured as worse conceptual retention and reduced brain activity respectively.",
+      "date_added": "2026-04-25"
+    },
+    {
+      "source": "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "target": "whats-your-edge-rethinking-expertise-ai",
+      "type": "reinforce",
+      "claim_a": "Verbatim note taking indicates relatively shallow cognitive processing compared to generative note taking",
+      "claim_b": "Using generative AI reduces human creative thinking and produces more homogeneous ideas",
+      "explanation": "Both claims assert the identical mechanism: when a tool removes the cognitive burden of reformulating information (verbatim transcription via keyboard; AI-generated output), the resulting shallow processing degrades the quality of human cognitive output — demonstrated in note-taking performance in one case and creative thinking measures in the other.",
+      "date_added": "2026-04-25"
+    },
+    {
+      "source": "physician-ceo-leadership-pipeline",
+      "target": "how-to-think-like-strategic-genius-5d-thinking",
+      "type": "adjacent",
+      "claim_a": "Physicians typically enter the workforce in their thirties after intensive training but with limited exposure to business practices, whereas their nonclinical peers have spent years working with budgets and building strategic experience",
+      "claim_b": "The 'smart but dumb' phenomenon results from horizontal advancement in one domain paired with vertical cognitive stagnation.",
+      "explanation": "Both claims describe the identical formal structure — deep accumulation within a single domain produces a deficit in a orthogonal capability dimension (business fluency / cognitive vertical development) that domain expertise itself cannot supply, generating a predictable cross-domain performance gap that neither article alone predicts will persist even as domain mastery increases.",
+      "date_added": "2026-05-09"
+    },
+    {
+      "source": "how-to-think-like-strategic-genius-5d-thinking",
+      "target": "what-you-dont-know-about-making-decisions",
+      "type": "reinforce",
+      "claim_a": "Advocacy approaches to group decision-making cause participants to present information selectively and withhold conflicting data to win debates",
+      "claim_b": "Smart people are most likely to think like idiots because they stop thinking too early and defend pre-programmed answers.",
+      "explanation": "Both claims identify the same causal mechanism: the defensive protection of a held position causes premature closure of information processing, producing worse epistemic outcomes — one at the individual cognitive level, one at the group organizational level.",
+      "date_added": "2026-05-09"
+    },
+    {
+      "source": "how-to-think-like-strategic-genius-5d-thinking",
+      "target": "what-will-ai-mean-for-humanity",
+      "type": "reinforce",
+      "claim_a": "Smart people are most likely to think like idiots because they stop thinking too early and defend pre-programmed answers.",
+      "claim_b": "83% of ChatGPT users could not quote their own essays one minute after submission, compared to 11% in control groups",
+      "explanation": "Both claims assert the same causal mechanism: premature cognitive closure — whether from overconfidence in existing knowledge or AI-delegated output — produces the same result of zero genuine cognitive ownership of the conclusion reached.",
+      "date_added": "2026-05-09"
+    },
+    {
+      "source": "how-to-think-like-strategic-genius-5d-thinking",
+      "target": "how-to-become-dangerously-articulate",
+      "type": "reinforce",
+      "claim_a": "Smart people are most likely to think like idiots because they stop thinking too early and defend pre-programmed answers.",
+      "claim_b": "When you only speak from certainty, you are reciting rather than creating.",
+      "explanation": "Both claims assert the identical causal mechanism: premature closure on certainty terminates generative cognitive output and substitutes defensive retrieval of pre-formed content for genuine thinking, operating in Article A's domain of reasoning and Article B's domain of articulation.",
+      "date_added": "2026-05-09"
+    },
+    {
+      "source": "how-to-think-like-strategic-genius-5d-thinking",
+      "target": "whats-your-edge-rethinking-expertise-ai",
+      "type": "reinforce",
+      "claim_a": "Knowing is horizontal (domain expertise) while understanding is vertical (cognitive operating system sophistication).",
+      "claim_b": "Knowledge commoditization shifts value from content to context",
+      "explanation": "Both claims assert the identical mechanism — that accumulation of domain-level information (horizontal/content) loses competitive value relative to the meta-level cognitive capacity to operate on that information (vertical/context) — operating in different empirical contexts: individual cognition versus organizational AI-era competitive advantage.",
+      "date_added": "2026-05-09"
+    },
+    {
+      "source": "how-to-think-like-strategic-genius-5d-thinking",
+      "target": "4-things-resilient-teams-do",
+      "type": "evolve",
+      "claim_a": "Smart people are most likely to think like idiots because they stop thinking too early and defend pre-programmed answers.",
+      "claim_b": "Too much confidence causes complacency and blindness to approaching adversity; too little prevents necessary risk-taking",
+      "explanation": "Claim B adds a precise scope boundary to Claim A's mechanism — premature cognitive closure driven by confidence is not uniformly harmful but operates on an inverted-U curve, such that the failure mode identified in A (overconfident closure) is specifically bounded by an underconfidence failure mode that A does not account for.",
+      "date_added": "2026-05-09"
+    },
+    {
+      "source": "how-to-think-like-strategic-genius-5d-thinking",
+      "target": "5-ways-get-dangerously-ahead-twenties",
+      "type": "reinforce",
+      "claim_a": "Smart people are most likely to think like idiots because they stop thinking too early and defend pre-programmed answers.",
+      "claim_b": "Basic educational content is dead because AI can replicate it at scale; the future belongs to taste and discernment",
+      "explanation": "Both claims assert the identical mechanism: that accumulation of standardized knowledge produces diminishing returns and becomes a liability when the environment selects against it, with Article A locating this in cognitive defensiveness and Article B locating it in labor market obsolescence.",
+      "date_added": "2026-05-11"
+    },
+    {
+      "source": "whats-your-edge-rethinking-expertise-ai",
+      "target": "5-ways-get-dangerously-ahead-twenties",
+      "type": "reinforce",
+      "claim_a": "Knowledge commoditization shifts value from content to context",
+      "claim_b": "Basic educational content is dead because AI can replicate it at scale; the future belongs to taste and discernment",
+      "explanation": "Both claims assert the identical mechanism: AI-scale replication destroys the exchange value of standardized informational content and relocates competitive advantage to the scarce interpretive layer that AI cannot commoditize, operating in organizational strategy and individual career positioning respectively.",
+      "date_added": "2026-05-11"
     }
   ],
   "evaluated_pairs": [
@@ -456,6 +606,378 @@
     ],
     [
       "science-of-consciousness",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "rethinking-saas-apocalypse"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "peak-brain-power-comes-after-50"
+    ],
+    [
+      "rethinking-saas-apocalypse",
+      "physician-ceo-leadership-pipeline"
+    ],
+    [
+      "rethinking-saas-apocalypse",
+      "peak-brain-power-comes-after-50"
+    ],
+    [
+      "rethinking-saas-apocalypse",
+      "attention-equation-consumer-attention-battles"
+    ],
+    [
+      "rethinking-saas-apocalypse",
+      "what-you-dont-know-about-making-decisions"
+    ],
+    [
+      "rethinking-saas-apocalypse",
+      "fashion-reduce-tier-2-emissions-decarbonization"
+    ],
+    [
+      "rethinking-saas-apocalypse",
+      "what-will-ai-mean-for-humanity"
+    ],
+    [
+      "rethinking-saas-apocalypse",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "rethinking-saas-apocalypse",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "rethinking-saas-apocalypse",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "rethinking-saas-apocalypse",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "rethinking-saas-apocalypse",
+      "science-of-consciousness"
+    ],
+    [
+      "rethinking-saas-apocalypse",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "rethinking-saas-apocalypse",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "peak-brain-power-comes-after-50"
+    ],
+    [
+      "peak-brain-power-comes-after-50",
+      "attention-equation-consumer-attention-battles"
+    ],
+    [
+      "peak-brain-power-comes-after-50",
+      "what-you-dont-know-about-making-decisions"
+    ],
+    [
+      "peak-brain-power-comes-after-50",
+      "fashion-reduce-tier-2-emissions-decarbonization"
+    ],
+    [
+      "peak-brain-power-comes-after-50",
+      "what-will-ai-mean-for-humanity"
+    ],
+    [
+      "peak-brain-power-comes-after-50",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "peak-brain-power-comes-after-50",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "peak-brain-power-comes-after-50",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "peak-brain-power-comes-after-50",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "peak-brain-power-comes-after-50",
+      "science-of-consciousness"
+    ],
+    [
+      "peak-brain-power-comes-after-50",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "peak-brain-power-comes-after-50",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "investing-living-better-quality-life-business"
+    ],
+    [
+      "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "rethinking-saas-apocalypse"
+    ],
+    [
+      "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "physician-ceo-leadership-pipeline"
+    ],
+    [
+      "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "peak-brain-power-comes-after-50"
+    ],
+    [
+      "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "attention-equation-consumer-attention-battles"
+    ],
+    [
+      "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "what-you-dont-know-about-making-decisions"
+    ],
+    [
+      "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "fashion-reduce-tier-2-emissions-decarbonization"
+    ],
+    [
+      "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "what-will-ai-mean-for-humanity"
+    ],
+    [
+      "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "science-of-consciousness"
+    ],
+    [
+      "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "how-to-become-dangerously-articulate"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "how-to-become-dangerously-articulate"
+    ],
+    [
+      "rethinking-saas-apocalypse",
+      "how-to-become-dangerously-articulate"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "how-to-become-dangerously-articulate"
+    ],
+    [
+      "peak-brain-power-comes-after-50",
+      "how-to-become-dangerously-articulate"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "how-to-become-dangerously-articulate"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
+      "how-to-become-dangerously-articulate"
+    ],
+    [
+      "fashion-reduce-tier-2-emissions-decarbonization",
+      "how-to-become-dangerously-articulate"
+    ],
+    [
+      "what-will-ai-mean-for-humanity",
+      "how-to-become-dangerously-articulate"
+    ],
+    [
+      "how-to-become-dangerously-articulate",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "how-to-become-dangerously-articulate",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "how-to-become-dangerously-articulate",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "how-to-become-dangerously-articulate",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "how-to-become-dangerously-articulate",
+      "science-of-consciousness"
+    ],
+    [
+      "how-to-become-dangerously-articulate",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "how-to-become-dangerously-articulate",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "how-to-think-like-strategic-genius-5d-thinking"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "how-to-think-like-strategic-genius-5d-thinking"
+    ],
+    [
+      "rethinking-saas-apocalypse",
+      "how-to-think-like-strategic-genius-5d-thinking"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "how-to-think-like-strategic-genius-5d-thinking"
+    ],
+    [
+      "peak-brain-power-comes-after-50",
+      "how-to-think-like-strategic-genius-5d-thinking"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "how-to-think-like-strategic-genius-5d-thinking"
+    ],
+    [
+      "how-to-think-like-strategic-genius-5d-thinking",
+      "what-you-dont-know-about-making-decisions"
+    ],
+    [
+      "how-to-think-like-strategic-genius-5d-thinking",
+      "fashion-reduce-tier-2-emissions-decarbonization"
+    ],
+    [
+      "how-to-think-like-strategic-genius-5d-thinking",
+      "what-will-ai-mean-for-humanity"
+    ],
+    [
+      "how-to-think-like-strategic-genius-5d-thinking",
+      "how-to-become-dangerously-articulate"
+    ],
+    [
+      "how-to-think-like-strategic-genius-5d-thinking",
+      "2026-business-leaders-outlook-expectations-trends"
+    ],
+    [
+      "how-to-think-like-strategic-genius-5d-thinking",
+      "whats-your-edge-rethinking-expertise-ai"
+    ],
+    [
+      "how-to-think-like-strategic-genius-5d-thinking",
+      "4-things-resilient-teams-do"
+    ],
+    [
+      "how-to-think-like-strategic-genius-5d-thinking",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "how-to-think-like-strategic-genius-5d-thinking",
+      "science-of-consciousness"
+    ],
+    [
+      "how-to-think-like-strategic-genius-5d-thinking",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "how-to-think-like-strategic-genius-5d-thinking",
+      "building-ethically-strong-organization"
+    ],
+    [
+      "pen-mightier-keyboard-longhand-laptop-note-taking",
+      "5-ways-get-dangerously-ahead-twenties"
+    ],
+    [
+      "investing-living-better-quality-life-business",
+      "5-ways-get-dangerously-ahead-twenties"
+    ],
+    [
+      "rethinking-saas-apocalypse",
+      "5-ways-get-dangerously-ahead-twenties"
+    ],
+    [
+      "physician-ceo-leadership-pipeline",
+      "5-ways-get-dangerously-ahead-twenties"
+    ],
+    [
+      "peak-brain-power-comes-after-50",
+      "5-ways-get-dangerously-ahead-twenties"
+    ],
+    [
+      "attention-equation-consumer-attention-battles",
+      "5-ways-get-dangerously-ahead-twenties"
+    ],
+    [
+      "how-to-think-like-strategic-genius-5d-thinking",
+      "5-ways-get-dangerously-ahead-twenties"
+    ],
+    [
+      "what-you-dont-know-about-making-decisions",
+      "5-ways-get-dangerously-ahead-twenties"
+    ],
+    [
+      "fashion-reduce-tier-2-emissions-decarbonization",
+      "5-ways-get-dangerously-ahead-twenties"
+    ],
+    [
+      "what-will-ai-mean-for-humanity",
+      "5-ways-get-dangerously-ahead-twenties"
+    ],
+    [
+      "how-to-become-dangerously-articulate",
+      "5-ways-get-dangerously-ahead-twenties"
+    ],
+    [
+      "2026-business-leaders-outlook-expectations-trends",
+      "5-ways-get-dangerously-ahead-twenties"
+    ],
+    [
+      "whats-your-edge-rethinking-expertise-ai",
+      "5-ways-get-dangerously-ahead-twenties"
+    ],
+    [
+      "4-things-resilient-teams-do",
+      "5-ways-get-dangerously-ahead-twenties"
+    ],
+    [
+      "5-ways-get-dangerously-ahead-twenties",
+      "twenty-years-lasting-lessons-enron"
+    ],
+    [
+      "5-ways-get-dangerously-ahead-twenties",
+      "science-of-consciousness"
+    ],
+    [
+      "5-ways-get-dangerously-ahead-twenties",
+      "geopolitics-geometry-global-trade-2026-update"
+    ],
+    [
+      "5-ways-get-dangerously-ahead-twenties",
       "building-ethically-strong-organization"
     ]
   ]

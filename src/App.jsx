@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import SubmitPage from './pages/SubmitPage.jsx'
 import ArticleListPage from './pages/ArticleListPage.jsx'
@@ -6,7 +6,9 @@ import GraphPage from './pages/GraphPage.jsx'
 import DigestsPage from './pages/DigestsPage.jsx'
 import DashboardPage from './pages/DashboardPage.jsx'
 import AgentsPage from './pages/AgentsPage.jsx'
-import graphDataStatic from '../data/graph.json'
+
+const EMPTY_GRAPH = { nodes: [], edges: [], evaluated_pairs: [] }
+const POLL_INTERVAL = 5 * 60 * 1000
 
 // ── Nav icons (Feather-style inline SVGs) ────────────────────────────────────
 const Icon = ({ children }) => (
@@ -78,15 +80,38 @@ const SIDEBAR_COLLAPSED = 56
 export default function App() {
   const location  = useLocation()
   const [collapsed, setCollapsed] = useState(false)
-  const [graphData, setGraphData] = useState(graphDataStatic)
+  const [graphData, setGraphData] = useState(EMPTY_GRAPH)
+  const graphRef = useRef(EMPTY_GRAPH)
   const isGraph = location.pathname === '/graph'
+
+  useEffect(() => {
+    async function loadGraph() {
+      try {
+        const res = await fetch(`/data/graph.json?t=${Date.now()}`)
+        if (!res.ok) return
+        const data = await res.json()
+        graphRef.current = data
+        setGraphData(data)
+      } catch {
+        // silently ignore — graph stays as last loaded state
+      }
+    }
+    loadGraph()
+    const id = setInterval(loadGraph, POLL_INTERVAL)
+    return () => clearInterval(id)
+  }, [])
   const w = collapsed ? SIDEBAR_COLLAPSED : SIDEBAR_EXPANDED
 
   function removeFromGraph(slug) {
-    setGraphData(prev => ({
-      nodes: prev.nodes.filter(n => n.id !== slug),
-      edges: prev.edges.filter(e => e.source !== slug && e.target !== slug),
-    }))
+    setGraphData(prev => {
+      const next = {
+        ...prev,
+        nodes: prev.nodes.filter(n => n.id !== slug),
+        edges: prev.edges.filter(e => e.source !== slug && e.target !== slug),
+      }
+      graphRef.current = next
+      return next
+    })
   }
 
   return (

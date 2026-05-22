@@ -1,13 +1,6 @@
 node_modules/
 dist/
-dist-ssr/
-.vite/
-
-# Local environment — never commit API keys or tokens
 .env
 .env.local
-.env.*.local
-
-# OS
 .DS_Store
-Thumbs.db
+*.log

@@ -134,9 +134,13 @@ export async function deleteArticle(slug, url) {
   }
   await putFile('data/graph.json', graphSha, graph, `chore: remove article ${slug} [skip ci]`)
 
-  // 2. Delete the article JSON file
-  const { sha: articleSha } = await getFile(`data/articles/${slug}.json`)
-  await deleteFileOnGitHub(`data/articles/${slug}.json`, articleSha, `chore: delete article ${slug} [skip ci]`)
+  // 2. Delete the article JSON file (skip if already deleted)
+  try {
+    const { sha: articleSha } = await getFile(`data/articles/${slug}.json`)
+    await deleteFileOnGitHub(`data/articles/${slug}.json`, articleSha, `chore: delete article ${slug} [skip ci]`)
+  } catch (err) {
+    if (err.message !== 'Not Found') throw err
+  }
 
   // 3. Remove URL from queue.json so it won't be re-ingested
   const { parsed: queue, sha: queueSha } = await getFile('data/queue.json')
