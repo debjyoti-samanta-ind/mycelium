@@ -38,7 +38,7 @@ All article data is bundled at build time via `import.meta.glob` — the fronten
 
 ### 1. Fork this repo
 
-Click **Fork** on GitHub. Keep all files including `/data/` — you’ll replace the demo articles as you add your own.
+Click **Fork** on GitHub. The `/data/` folder contains demo articles to show the app working out of the box. To start with a clean graph, delete the files inside `data/articles/`, reset `data/graph.json` to `{"nodes":[],"edges":[],"evaluated_pairs":[]}`, and clear the arrays in `data/agent_log.json`, `data/alerts.json`, `data/reprise_outputs.json`, and `data/dashboard.json`.
 
 ### 2. Add GitHub Secrets
 
@@ -108,6 +108,12 @@ Open `localhost:5174`, paste any article URL, and click Submit. GitHub Actions p
 | 6 | Complete | Dashboard with reading momentum tracking |
 | 7 | In Progress | Autonomous learning agents (Reprise, Steelman, Blind Spot) |
 | 8 | Parked | Standalone public demo repo |
+
+---
+
+## Want to build it from scratch?
+
+[GETTING_STARTED.md](./GETTING_STARTED.md) walks through every phase with the exact Claude Code prompts used to build it. Fork, open the repo in Claude Code, and follow along.
 
 ---
 
