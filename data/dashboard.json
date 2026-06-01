@@ -1,10 +1,10 @@
 {
-  "computed_at": "2026-05-11",
+  "computed_at": "2026-06-01",
   "reading": {
     "total_articles": 19,
-    "this_month": 3,
-    "last_month": 16,
-    "month_delta": -13,
+    "this_month": 0,
+    "last_month": 3,
+    "month_delta": -3,
     "active_since": "2026-04",
     "months_active": 2,
     "domain_distribution": [
@@ -21,49 +21,53 @@
         "count": 2
       },
       {
-        "domain": "media economics",
-        "count": 1
-      },
-      {
         "domain": "philosophy of technology",
         "count": 1
       },
       {
-        "domain": "philosophy",
+        "domain": "media economics",
         "count": 1
       },
       {
         "domain": "corporate governance",
+        "count": 1
+      },
+      {
+        "domain": "philosophy",
         "count": 1
       }
     ],
     "stance_distribution": {
       "optimistic": 11,
       "ambivalent": 4,
-      "pessimistic": 2,
-      "neutral": 2
+      "neutral": 2,
+      "pessimistic": 2
     },
     "depth_vs_breadth": {
-      "mode": "broad",
-      "top_domain": "cognitive science",
-      "top_domain_count": 1,
-      "domains_this_month": 3,
+      "mode": null,
+      "top_domain": null,
+      "top_domain_count": 0,
+      "domains_this_month": 0,
       "last_broad_month": "2026-05"
     },
-    "neglected_topic": null
+    "neglected_topic": {
+      "domain": "economics",
+      "last_article_date": "2026-04-13",
+      "weeks_ago": 7
+    }
   },
   "graph": {
     "total_nodes": 19,
-    "total_edges": 22,
-    "density": 0.129,
-    "island_count": 5,
-    "island_rate": 0.263,
+    "total_edges": 24,
+    "density": 0.14,
+    "island_count": 4,
+    "island_rate": 0.211,
     "most_connected_node": {
       "slug": "whats-your-edge-rethinking-expertise-ai",
-      "edge_count": 7
+      "edge_count": 8
     },
     "edge_type_distribution": {
-      "reinforce": 11,
+      "reinforce": 13,
       "contradict": 0,
       "evolve": 4,
       "adjacent": 7
