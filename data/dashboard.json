@@ -1,5 +1,5 @@
 {
-  "computed_at": "2026-07-01",
+  "computed_at": "2026-08-01",
   "reading": {
     "total_articles": 19,
     "this_month": 0,
@@ -21,7 +21,7 @@
         "count": 2
       },
       {
-        "domain": "philosophy of technology",
+        "domain": "corporate governance",
         "count": 1
       },
       {
@@ -29,19 +29,19 @@
         "count": 1
       },
       {
-        "domain": "corporate governance",
+        "domain": "media economics",
         "count": 1
       },
       {
-        "domain": "media economics",
+        "domain": "philosophy of technology",
         "count": 1
       }
     ],
     "stance_distribution": {
       "optimistic": 11,
       "ambivalent": 4,
-      "neutral": 2,
-      "pessimistic": 2
+      "pessimistic": 2,
+      "neutral": 2
     },
     "depth_vs_breadth": {
       "mode": null,
@@ -53,7 +53,7 @@
     "neglected_topic": {
       "domain": "economics",
       "last_article_date": "2026-04-13",
-      "weeks_ago": 11
+      "weeks_ago": 15
     }
   },
   "graph": {
