@@ -1,5 +1,5 @@
 {
-  "computed_at": "2026-09-01",
+  "computed_at": "2026-10-01",
   "reading": {
     "total_articles": 19,
     "this_month": 0,
@@ -21,11 +21,7 @@
         "count": 2
       },
       {
-        "domain": "media economics",
-        "count": 1
-      },
-      {
-        "domain": "corporate governance",
+        "domain": "philosophy",
         "count": 1
       },
       {
@@ -33,7 +29,11 @@
         "count": 1
       },
       {
-        "domain": "philosophy",
+        "domain": "media economics",
+        "count": 1
+      },
+      {
+        "domain": "corporate governance",
         "count": 1
       }
     ],
@@ -53,7 +53,7 @@
     "neglected_topic": {
       "domain": "economics",
       "last_article_date": "2026-04-13",
-      "weeks_ago": 20
+      "weeks_ago": 24
     }
   },
   "graph": {
